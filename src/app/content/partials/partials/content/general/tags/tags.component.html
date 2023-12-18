@@ -1,0 +1,54 @@
+<ng-container *ngIf="!readonly">
+
+    <mat-form-field class="mat-form-field-fluid">
+
+        <mat-label>
+            <ng-content select=[mTagsLabel]></ng-content>
+        </mat-label>
+
+        <mat-chip-list [formControl]="ngControl.control" #chipList>
+            <mat-chip *ngFor="let data of selectedData" [selectable]="selectable" [removable]="removable"
+                (removed)="remove(data)">
+                {{ data.Name }}
+
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+
+            </mat-chip>
+
+            <input #tagsInput [formControl]="tagsCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                (matChipInputTokenEnd)="add($event)">
+
+        </mat-chip-list>
+
+        <mat-error>
+            <ng-content select=[mTagsError]></ng-content>
+        </mat-error>
+
+        <mat-hint align="start">
+            <ng-content select=[mTagsHint]></ng-content>
+        </mat-hint>
+
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+
+            <mat-option *ngFor="let data of filteredData | async" [value]="data">
+                {{data.Name}}
+            </mat-option>
+
+        </mat-autocomplete>
+
+    </mat-form-field>
+
+</ng-container>
+
+<ng-container *ngIf="readonly">
+
+    <mat-chip-list>
+
+        <mat-chip *ngFor="let data of selectedData">
+            {{ data.Name }}
+        </mat-chip>
+
+    </mat-chip-list>
+
+</ng-container>

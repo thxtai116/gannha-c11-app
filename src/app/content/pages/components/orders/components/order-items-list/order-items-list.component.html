@@ -1,0 +1,102 @@
+<ng-container *ngIf="order">
+
+    <div class="m-widget4">
+
+        <div *ngFor="let item of order.OrderItems" class="m-widget4__item">
+
+            <div class="m-widget4__img m-widget4__img--logo">
+
+                <img style="max-width: 45px; max-height: 45px" src="{{ item.Product.Picture }}" alt="">
+
+            </div>
+
+            <div class="m-widget4__info">
+
+                <span class="m-widget4__title">
+
+                    {{ item.Product.Name }}
+
+                </span>
+
+                <br>
+
+                <span class="m-widget4__sub">
+
+                    {{ item.Product.Sku }}
+
+                </span>
+
+            </div>
+
+            <div class="m-widget4__info">
+
+                <span class="m-widget4__title">
+
+                    x{{ item.Quantity }}
+
+                </span>
+
+            </div>
+
+            <span class="m-widget4__ext">
+
+                <span class="m-widget4__number m--font-brand">
+
+                    {{ item.UnitPrice * item.Quantity | currency: 'VND' : 'symbol' : '1.0' : 'fr' }}
+                </span>
+
+            </span>
+
+        </div>
+
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="m-summary">
+        <div class="m-summary__item">
+            <div class="m-summary__title">
+                <img style="min-width: 45px" src="">
+                {{ 'FORM.FIELDS.ORDER_SUBTOTAL' | translate }}
+            </div>
+
+            <div class="m-summary__value m--font-brand">
+                {{ viewData.orderItemsSubTotal | currency: 'VND' : 'symbol' : '1.0' : 'fr' }}
+            </div>
+        </div>
+
+        <div class="m-summary__item">
+            <div class="m-summary__title">
+                <img style="min-width: 45px" src="">
+                {{ 'FORM.FIELDS.ORDER_DISCOUNT' | translate }}
+            </div>
+
+            <div class="m-summary__value m--font-brand">
+                {{ (viewData.orderItemsDiscount + order.OrderDiscount) | currency: 'VND' : 'symbol' : '1.0' : 'fr' }}
+            </div>
+        </div>
+
+        <div class="m-summary__item">
+            <div class="m-summary__title">
+                <img style="min-width: 45px" src="">
+                {{ 'FORM.FIELDS.ORDER_SHIPPING' | translate }}
+            </div>
+
+            <div class="m-summary__value m--font-brand">
+                {{ (order.OrderShipping) | currency: 'VND' : 'symbol' : '1.0' : 'fr' }}
+            </div>
+        </div>
+
+        <div class="m-summary__item">
+            <div class="m-summary__title">
+                <img style="min-width: 45px" src="">
+                {{ 'FORM.FIELDS.ORDER_TOTAL' | translate }}
+            </div>
+
+            <div class="m-summary__final_value m--font-success">
+                {{ (viewData.orderItemsSubTotal - viewData.orderItemsDiscount - order.OrderDiscount + order.OrderShipping) | currency: 'VND' : 'symbol' : '1.0' : 'fr' }}
+            </div>
+        </div>
+    </div>
+
+</ng-container>

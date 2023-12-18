@@ -1,0 +1,143 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a [routerLink]="['/users']" class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button type="button" class="btn btn-primary m-btn m-btn--icon text-uppercase"
+                (click)="changeRole()">
+                <span>
+                    <i class="fa fa-exchange-alt"></i>
+                    <span translate="USERS.CHANGE_ROLE">CHANGE_ROLE</span>
+                </span>
+            </button>
+
+            <button *ngIf="viewData.user && viewData.user.Locked" type="button"
+                class="btn btn-success m-btn m-btn--icon text-uppercase" (click)="activate()">
+                <span>
+                    <i class="fa fa-toggle-on"></i>
+                    <span translate="COMMON.ACTIVATE">ACTIVATE</span>
+                </span>
+            </button>
+
+            <button *ngIf="viewData.user && !viewData.user.Locked" type="button"
+                class="btn btn-danger m-btn m-btn--icon text-uppercase" (click)="deactivate()">
+                <span>
+                    <i class="fa fa-toggle-off"></i>
+                    <span translate="COMMON.DEACTIVATE">DEACTIVATE</span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form class="m-form ">
+
+            <div class="row">
+
+                <div class="col-xl-12">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.FULL_NAME">NAME</span>
+                            </label>
+
+                            <label class="col-xl-10 col-lg-10 col-form-label">
+                                <span class="m--font-brand">{{ viewModel.user.Name }}</span>
+                            </label>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.EMAIL">EMAIL</span>
+                            </label>
+
+                            <label class="col-xl-10 col-lg-10 col-form-label">
+                                <span class="m--font-brand">{{ viewModel.user.Email }}</span>
+                            </label>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.ROLE">ROLE</span>
+                            </label>
+
+                            <label class="col-xl-10 col-lg-10 col-form-label">
+                                <span class="m--font-brand">{{ viewModel.user.Role }}</span>
+                            </label>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.PHONE">PHONE</span>
+                            </label>
+
+                            <label class="col-xl-10 col-lg-10 col-form-label">
+                                <span class="m--font-brand">{{ viewModel.user.Phone }}</span>
+                            </label>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.JOINED_DATE">JOINED_DATE</span>
+                            </label>
+
+                            <label class="col-xl-10 col-lg-10 col-form-label">
+                                <span
+                                    class="m--font-brand">{{ viewModel.user.JoinedDay | date : 'dd MMM, yyyy' }}</span>
+                            </label>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="COMMON.STATUS">STATUS</span>
+                            </label>
+
+                            <label class="col-xl-9 col-lg-3">
+
+                                <m-object-status-badge [status]="viewModel.user.Status"></m-object-status-badge>
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+</m-portlet>

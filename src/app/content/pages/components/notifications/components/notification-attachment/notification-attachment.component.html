@@ -1,0 +1,75 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTools>
+
+        <i *ngIf="!readonly && viewData.attachmentType.length > 0" class="fa fa-paperclip text-primary pointer"
+            (click)="attachFile()"></i>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form class="m-form">
+
+            <div class="!readonly m-form__filtration">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-12 m--margin-bottom-10-mobile">
+
+                        <div class="m-form__control">
+
+                            <mat-form-field class="mat-form-field-fluid">
+
+                                <mat-select [(value)]="viewData.attachmentType"
+                                    (selectionChange)="onAttachmentTypeChange()">
+                                    <mat-option value="0">
+                                        {{ 'NOTIFICATIONS.ATTACHMENT_TYPES.SELLING_POINT' | translate }}
+                                    </mat-option>
+                                    <mat-option value="1">
+                                        {{ 'NOTIFICATIONS.ATTACHMENT_TYPES.BRAND' | translate }}
+                                    </mat-option>
+                                    <mat-option value="2">
+                                        {{ 'NOTIFICATIONS.ATTACHMENT_TYPES.CATEGORY' | translate }}
+                                    </mat-option>
+                                    <mat-option value="3">
+                                        {{ 'NOTIFICATIONS.ATTACHMENT_TYPES.COLLECTION' | translate }}
+                                    </mat-option>
+                                </mat-select>
+
+                                <mat-hint align="start">
+                                    <strong>{{ 'COMMON.SELECT' | translate }}</strong>
+                                    <span class="text-lowercase">
+                                        {{ 'NOTIFICATIONS.ATTACHMENT_CONTENT' | translate }}</span>
+                                </mat-hint>
+
+                            </mat-form-field>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="m-form__section m-form__section--first">
+
+                <div class="form-group m-form__group row">
+
+                    <label class="col-xl-12 col-lg-12 col-form-label">
+
+                        <ng-template #displayer></ng-template>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+</m-portlet>

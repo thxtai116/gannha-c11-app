@@ -1,0 +1,118 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button type="button" class="btn btn-primary m-btn m-btn--icon text-uppercase" (click)="refresh()">
+                <span>
+                    <i class="fa fa-sync-alt"></i>
+                    <span translate="COMMON.REFRESH"></span>
+                </span>
+            </button>
+
+            <button type="button" class="btn btn-primary m-btn m-btn--icon text-uppercase" [routerLink]="['create']">
+                <span>
+                    <i class="fa fa-plus"></i>
+                    <span translate="RECRUITERS.CREATE"></span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="mat-table__wrapper">
+
+            <mat-table class="mat-elevation-z8" [dataSource]="dataSource">
+
+                <ng-container matColumnDef="Index">
+                    <mat-header-cell *matHeaderCellDef [ngClass]="'mat-cell--index'">#
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let recruiter; let i = index;" [ngClass]="'mat-cell--index'">
+                        {{ i + 1 + paginator.pageIndex * paginator.pageSize }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Title">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.TITLE' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let recruiter">
+                        <a [routerLink]="['/recruiters', recruiter.Id]">{{ recruiter.Title }}</a>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Name">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.NAME' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let recruiter">
+                        {{ recruiter.Name }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Email">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.EMAIL' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let recruiter">
+                        {{ recruiter.Email }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Phone">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.PHONE' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let recruiter">
+                        {{ recruiter.PhoneNumber }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Actions">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.ACTIONS' | translate }}</mat-header-cell>
+
+                    <mat-cell *matCellDef="let recruiter">
+
+                        <button type="button" mat-icon-button color="primary"
+                            matTooltip="{{ 'RECRUITERS.EDIT' | translate }}"
+                            [routerLink]="['/recruiters', recruiter.Id]">
+                            <i class="fa fa-edit"></i>
+                        </button>
+
+                        <button type="button" mat-icon-button color="warn"
+                            matTooltip="{{ 'RECRUITERS.DELETE' | translate }}" (click)="delete(recruiter.Id)">
+                            <i class="fas fa-trash"></i>
+                        </button>
+
+                    </mat-cell>
+
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="viewData.displayedColumns"></mat-header-row>
+
+                <mat-row *matRowDef="let row; columns: viewData.displayedColumns; let i = index;"></mat-row>
+            </mat-table>
+
+            <div class="mat-table__message" *ngIf="!dataSource.hasItems">
+                {{ 'TABLE.NO_RECORDS' | translate }}
+            </div>
+
+        </div>
+
+        <div class="mat-table__bottom">
+
+            <mat-spinner [diameter]="20" *ngIf="viewControl.loading$ | async"></mat-spinner>
+
+            <mat-paginator [pageSize]="paginator.pageSize" [pageSizeOptions]="[10, 20, 50]"
+                [length]="dataSource.paginatorTotal$ | async" [showFirstLastButtons]="true"></mat-paginator>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

@@ -1,0 +1,15 @@
+<agm-map style="width: 100%; height: 450px;" [latitude]="agmLat" [longitude]="agmLng" [zoom]="agmMapZoom" [maxZoom]="19"
+    [fitBounds]="true">
+
+    <agm-marker *ngFor="let marker of markers; let i = index" [latitude]="marker.Latitude"
+        [longitude]="marker.Longitude" [label]="marker.Label" [agmFitBounds]="true">
+
+        <agm-info-window>
+
+            <span>{{ marker.Description }}</span>
+
+        </agm-info-window>
+
+    </agm-marker>
+
+</agm-map>

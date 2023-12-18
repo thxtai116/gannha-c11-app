@@ -1,0 +1,13 @@
+<ng-container *ngIf="readonly">
+
+    {{ viewModel.wardName.length === 0 ? 'N/A' : viewModel.wardName }}
+
+</ng-container>
+
+<ng-container *ngIf="!readonly">
+
+    <m-single-select [data]="viewData.wards$" [(ngModel)]="viewForm.wardId" (change)="onWardChange()">
+        <span mSingleSelectLabel>{{ 'ADDRESS.WARD' | translate }}</span>
+    </m-single-select>
+
+</ng-container>

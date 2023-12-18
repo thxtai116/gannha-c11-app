@@ -1,0 +1,342 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text text-uppercase">
+                <span translate="SUBMISSION.BASIC_INFO"></span>
+            </h3>
+        </div>
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="m-form">
+
+            <div class="row">
+
+                <div class="col-xl-12 col-lg-12">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="form-group m-form__group row" *ngIf="submission.Status.Id == 4">
+
+                            <div class="col-xl-6 col-lg-6">
+
+                                <h5>
+                                    <span translate="SUBMISSION.INTERVIEW_INFORMATION"></span>
+                                </h5>
+
+                                <div class="form-group m-form__group row">
+                                    <label class="col-xl-4 col-lg-4 col-form-label">
+                                        <span translate="SUBMISSION.INTERVIEW_TYPE"></span>
+                                    </label>
+
+                                    <label class="col-xl-8 col-lg-8 col-form-label">
+                                        <span
+                                            class="m--font-brand">{{ submission.Interview.IsOnline ? 'Online' : 'Offline' }}</span>
+                                    </label>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <label class="col-xl-4 col-lg-4 col-form-label">
+                                        <span translate="SUBMISSION.INTERVIEW_TIME"></span>
+                                    </label>
+
+                                    <label class="col-xl-8 col-lg-8 col-form-label">
+                                        <span
+                                            class="m--font-brand">{{ submission.Interview.Time | date : 'dd MMM, yyyy - HH:mm' }}</span>
+                                    </label>
+                                </div>
+
+                                <div class="form-group m-form__group row" *ngIf="!submission.Interview.IsOnline">
+                                    <label class="col-xl-4 col-lg-4 col-form-label">
+                                        <span translate="SUBMISSION.INTERVIEW_LOCATION"></span>
+                                    </label>
+
+                                    <label class="col-xl-8 col-lg-8 col-form-label">
+                                        <span class="m--font-brand">{{ submission.Interview.Location }}</span>
+                                    </label>
+                                </div>
+
+                                <div class="form-group m-form__group row" *ngIf="!submission.Interview.IsOnline">
+                                    <label class="col-xl-4 col-lg-4 col-form-label">
+                                        <span translate="SUBMISSION.INTERVIEW_NOTE"></span>
+                                    </label>
+
+                                    <label class="col-xl-8 col-lg-8 col-form-label">
+                                        <span class="m--font-brand">{{ submission.Interview.Note }}</span>
+                                    </label>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-xl-6 col-lg-6">
+
+                                <h5>
+                                    <span translate="SUBMISSION.BASIC_INFORMATION"></span>
+                                </h5>
+
+                                <div class="form-group m-form__group row">
+                                    <label class="col-xl-4 col-lg-4 col-form-label">
+                                        <span translate="SUBMISSION.STATUS"></span>
+                                    </label>
+
+                                    <label class="col-xl-8 col-lg-8 col-form-label">
+
+                                        <span class="m--font-boldest"
+                                            [style.color]="submission.Status.Color">{{ submission.Status.Name | mLanguage }}</span>
+
+                                    </label>
+                                </div>
+
+                                <div class="form-group m-form__group row" *ngIf="submission.Status.Reason">
+                                    <label class="col-xl-4 col-lg-4 col-form-label">
+                                        <span translate="SUBMISSION.REJECT_REASONS"></span>
+                                    </label>
+
+                                    <label class="col-xl-8 col-lg-8 col-form-label">
+
+                                        <span
+                                            class="m--font-bold m--font-danger">{{ submission.Status.Reason.join(', ') }}</span>
+                                    </label>
+                                </div>
+
+
+                                <div class="form-group m-form__group row">
+                                    <label class="col-xl-4 col-lg-4 col-form-label">
+                                        <span translate="SUBMISSION.FULL_NAME"></span>
+                                    </label>
+
+                                    <label class="col-xl-8 col-lg-8 col-form-label">
+                                        <span class="m--font-brand">{{ submission.FullName }}</span>
+                                    </label>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <label class="col-xl-4 col-lg-4 col-form-label">
+                                        <span translate="SUBMISSION.GENDER"></span>
+                                    </label>
+
+                                    <label class="col-xl-8 col-lg-8 col-form-label">
+                                        <span class="m--font-brand">{{ submission.Gender | genderName }}</span>
+                                    </label>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <label class="col-xl-4 col-lg-4 col-form-label">
+                                        <span translate="SUBMISSION.EMAIL"></span>
+                                    </label>
+
+                                    <label class="col-xl-8 col-lg-8 col-form-label">
+                                        <span class="m--font-brand">{{ submission.Email }}</span>
+                                    </label>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <label class="col-xl-4 col-lg-4 col-form-label">
+                                        <span translate="SUBMISSION.PHONE"></span>
+                                    </label>
+
+                                    <label class="col-xl-8 col-lg-8 col-form-label">
+                                        <span class="m--font-brand">{{ submission.Phone }}</span>
+                                    </label>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <label class="col-xl-4 col-lg-4 col-form-label">
+                                        <span translate="SUBMISSION.APPLIED_UNIT"></span>
+                                    </label>
+
+                                    <label class="col-xl-8 col-lg-8 col-form-label">
+                                        <span class="m--font-brand">{{ submission.UnitName | mLanguage }}</span>
+                                    </label>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <label class="col-xl-4 col-lg-4 col-form-label">
+                                        <span translate="SUBMISSION.WORKING_ADDRESS"></span>
+                                    </label>
+
+                                    <label class="col-xl-8 col-lg-8 col-form-label">
+                                        <span class="m--font-brand">{{ submission.WorkingAddress }}</span>
+                                    </label>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <label class="col-xl-4 col-lg-4 col-form-label">
+                                        <span translate="SUBMISSION.APPLIED_JOB"></span>
+                                    </label>
+
+                                    <label class="col-xl-8 col-lg-8 col-form-label">
+                                        <span class="m--font-brand">{{ job.Title }}</span>
+                                    </label>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <label class="col-xl-4 col-lg-4 col-form-label">
+                                        <span translate="SUBMISSION.CREATED_AT"></span>
+                                    </label>
+
+                                    <label class="col-xl-8 col-lg-8 col-form-label">
+                                        <span
+                                            class="m--font-brand">{{ submission.CreatedAt | date : 'dd MMM, yyyy HH:mm:ss' }}</span>
+                                    </label>
+                                </div>
+
+                            </div>
+
+                            <div class="col-xl-6 col-lg-6">
+
+                                <h5>
+                                    <span translate="SUBMISSION.ADVANCED_INFORMATION"></span>
+                                </h5>
+
+                                <div class="form-group m-form__group row">
+                                    <label class="col-xl-4 col-lg-4 col-form-label">
+                                        <span translate="SUBMISSION.EDUCATION"></span>
+                                    </label>
+
+                                    <label class="col-xl-8 col-lg-8 col-form-label">
+                                        <span class="m--font-brand">{{ submission.Education | degreeName }}</span>
+                                    </label>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <label class="col-xl-4 col-lg-4 col-form-label">
+                                        <span translate="SUBMISSION.GRADUATE_YEAR"></span>
+                                    </label>
+
+                                    <label class="col-xl-8 col-lg-8 col-form-label">
+                                        <span class="m--font-brand">{{ submission.GraduateYear }}</span>
+                                    </label>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <label class="col-xl-4 col-lg-4 col-form-label">
+                                        <span translate="SUBMISSION.MAJOR"></span>
+                                    </label>
+
+                                    <label class="col-xl-8 col-lg-8 col-form-label">
+                                        <span class="m--font-brand">{{ submission.Major }}</span>
+                                    </label>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <label class="col-xl-4 col-lg-4 col-form-label">
+                                        <span translate="SUBMISSION.SCHOOL_NAME"></span>
+                                    </label>
+
+                                    <label class="col-xl-8 col-lg-8 col-form-label">
+                                        <span class="m--font-brand">{{ submission.SchoolName }}</span>
+                                    </label>
+                                </div>
+
+                                <div class="form-group m-form__group row">
+                                    <label class="col-xl-4 col-lg-4 col-form-label">
+                                        <span translate="SUBMISSION.EXPERIENCES"></span>
+                                    </label>
+
+                                    <label class="col-xl-8 col-lg-8 col-form-label">
+                                        <span class="m--font-brand">{{ submission.Experiences }}</span>
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-xl-12 col-lg-12">
+
+                                <h5>
+                                    <span> CMND </span>
+                                </h5>
+
+                                <div class="form-group m-form__group row">
+                                    <label class="col-xl-5 col-lg-5 col-form-label">
+                                        <img class="img-fluid" [src]="submission.IdentityCardFront" />
+                                    </label>
+
+                                    <label class="col-xl-5 col-lg-5 col-form-label">
+                                        <img class="img-fluid" [src]="submission.IdentityCardBack" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletFooter>
+
+        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+
+            <div class="m-form__actions m-form__actions--solid">
+
+                <div class="row">
+
+                    <div class="col-xl-6 col-lg-6">
+
+                        <div class="m-buttons--wrapper">
+
+                            <button class="btn btn-primary m-btn m-btn--icon text-uppercase" type="button"
+                                (click)="onExport()">
+                                <span>
+                                    <i class="fa fa-file-export"></i>
+                                    <span translate="COMMON.EXPORT"></span>
+                                </span>
+                            </button>
+
+                            <button type="button" *ngIf="submission.Status.Id == 4"
+                                class="btn btn-primary m-btn m-btn--icon text-uppercase" (click)="editInterview()">
+                                <span>
+                                    <i class="fa fa-edit"></i>
+                                    <span translate="SUBMISSION.EDIT_INTERVIEW"></span>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6">
+
+                        <div class="m-buttons--wrapper text-right">
+
+                            <button *ngFor="let status of submission.NextStatus" class="btn m-btn text-uppercase"
+                                type="button" style="color: white;" (click)="updateStatus(status.Id)"
+                                [style.background-color]="status.Color">
+                                {{ status.Name | mLanguage }}
+                            </button>
+
+                            <button class="btn btn-default m-btn m-btn--icon text-uppercase" type="button"
+                                cdkFocusInitial (click)="onCancel()">
+                                <span>
+                                    <i class="fa fa-times"></i>
+                                    <span translate="COMMON.CLOSE">CANCEL</span>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

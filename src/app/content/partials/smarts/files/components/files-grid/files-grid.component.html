@@ -1,0 +1,97 @@
+<div style="display: none;">{{ acceptedFiles.length }}</div>
+<div class="files-list">
+
+    <div class="file-container m-animate-fade-in" *ngFor="let item of acceptedFiles"
+        [ngClass]="{'file-container--selected': item.Selected}">
+
+        <div class="image-holder" (click)="itemClick(item)">
+
+            <ng-container [ngSwitch]="item.ResourceType">
+
+                <ng-container *ngSwitchCase="'Folder'">
+
+                    <img src="./assets/app/media/img/icons/folder.png" class="resource-folder">
+
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'File'">
+
+                    <img class="resource-file" src="./assets/app/media/img/icons/pdf.png">
+
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'Video'">
+
+                    <img *ngIf="item.Thumbnail && item.Thumbnail.length > 0" class="resource-file"
+                        src="./assets/app/media/img/icons/file_video.svg">
+
+                    <img *ngIf="!item.Thumbnail || item.Thumbnail.length === 0" class="resource-file"
+                        src="./assets/app/media/img/icons/upload_to_cloud.gif"
+                        title="{{ 'RESOURCES.UPLOADING_VIDEO' | translate }}">
+
+                </ng-container>
+
+                <ng-container *ngSwitchDefault>
+
+                    <img *ngIf="!item.Thumbnail || item.Thumbnail.length === 0" src="{{ item.Url }}"
+                        class="resource-image" onerror="this.src='./assets/app/media/img/bg/img_not_found.jpg'"
+                        title="Url">
+
+                    <img *ngIf="item.Thumbnail && item.Thumbnail.length > 0" src="{{ item.Thumbnail }}"
+                        class="resource-image" (error)="updateUrl($event,item)" title="Thumbnail">
+
+                </ng-container>
+
+            </ng-container>
+
+        </div>
+
+        <div class="file-footer" title="{{ item.Name }}">
+
+            <div class="file-footer__title ">
+
+                {{ item.Name }}
+
+            </div>
+
+            <div class="file-footer__buttons">
+
+                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+
+                    <mat-icon>more_vert</mat-icon>
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <mat-menu #menu="matMenu">
+
+            <button type="button" mat-menu-item (click)="remove(item)">
+
+                <mat-icon color="warn">delete_sweep</mat-icon>
+                <span translate="RESOURCES.BUTTONS.DELETE"></span>
+
+            </button>
+
+            <button type="button" mat-menu-item (click)="edit(item)">
+
+                <mat-icon color="primary">edit</mat-icon>
+                <span translate="RESOURCES.BUTTONS.EDIT"></span>
+
+            </button>
+
+            <button *ngIf="item.ResourceType === 'Video' && item.Thumbnail && item.Thumbnail.length > 0" type="button"
+                mat-menu-item (click)="play(item)">
+
+                <mat-icon color="primary">play_circle_outline</mat-icon>
+                <span translate="RESOURCES.BUTTONS.PLAY_VIDEO"></span>
+
+            </button>
+
+        </mat-menu>
+
+    </div>
+
+</div>

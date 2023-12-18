@@ -1,0 +1,128 @@
+<ng-container *ngIf="readonly">
+
+    <div class="form-group m-form__group row">
+
+        <label class="col-xl-12 col-lg-12 col-form-label">
+
+            <div class="mat-label-alike">
+                <span translate="ADDRESS.COUNTRY"></span>
+            </div>
+
+            <div class="m--font-brand">
+
+                <m-countries-selector [country]="viewData.initValues.country" (onChange)="onCountryChange($event)">
+                </m-countries-selector>
+
+            </div>
+
+        </label>
+
+    </div>
+
+    <div class="form-group m-form__group row">
+
+        <label class="col-xl-12 col-lg-12 col-form-label">
+
+            <div class="mat-label-alike">
+                <span translate="ADDRESS.PROVINCE"></span>
+            </div>
+
+            <div class="m--font-brand">
+
+                <m-provinces-selector [country]="viewData.initValues.country" [province]="viewData.initValues.province"
+                    (onChange)="onProvinceChange($event)">
+                </m-provinces-selector>
+
+            </div>
+
+        </label>
+
+    </div>
+
+    <div class="form-group m-form__group row">
+
+        <label class="col-xl-12 col-lg-12 col-form-label">
+
+            <div class="mat-label-alike">
+                <span translate="ADDRESS.DISTRICT"></span>
+            </div>
+
+            <div class="m--font-brand">
+
+                <m-districts-selector [province]="viewData.initValues.province"
+                    [district]="viewData.initValues.district">
+                </m-districts-selector>
+
+            </div>
+
+        </label>
+
+    </div>
+
+    <div class="form-group m-form__group row">
+
+        <label class="col-xl-12 col-lg-12 col-form-label">
+
+            <div class="mat-label-alike">
+                <span translate="ADDRESS.WARD"></span>
+            </div>
+
+            <div class="m--font-brand">
+
+                <m-wards-selector [district]="viewData.initValues.district" [ward]="viewData.initValues.ward">
+                </m-wards-selector>
+
+            </div>
+
+        </label>
+
+    </div>
+
+</ng-container>
+
+<ng-container *ngIf="!readonly">
+
+    <div class="form-group m-form__group row">
+
+        <div class="col-xl-12 col-lg-12">
+
+            <m-countries-selector [required]="required" [readonly]="readonly" [country]="viewData.initValues.country"
+                (onChange)="onCountryChange($event)"></m-countries-selector>
+        </div>
+
+    </div>
+
+    <div class="form-group m-form__group row">
+
+        <div class="col-xl-12 col-lg-12">
+
+            <m-provinces-selector [readonly]="readonly" [country]="viewData.initValues.country"
+                [province]="viewData.initValues.province" (onChange)="onProvinceChange($event)"></m-provinces-selector>
+
+        </div>
+
+    </div>
+
+    <div class="form-group m-form__group row">
+
+        <div class="col-xl-12 col-lg-12">
+
+            <m-districts-selector [readonly]="readonly" [province]="viewData.initValues.province"
+                [district]="viewData.initValues.district" (onChange)="onDistrictChange($event)"></m-districts-selector>
+
+        </div>
+
+    </div>
+
+    <div class="form-group m-form__group row">
+
+        <div class="col-xl-12 col-lg-12">
+
+            <m-wards-selector [readonly]="readonly" [district]="viewData.initValues.district"
+                [ward]="viewData.initValues.ward" (onChange)="onWardChange($event)"></m-wards-selector>
+
+        </div>
+
+    </div>
+
+</ng-container>

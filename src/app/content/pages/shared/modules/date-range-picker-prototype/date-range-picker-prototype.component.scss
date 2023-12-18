@@ -1,0 +1,16 @@
+::ng-deep .mat-menu-panel {
+  padding: 0 !important;
+  max-width: none !important;
+
+  .mat-menu-content {
+    padding: 0 10 0 0 !important;
+  }
+
+  .md-drppicker {
+    box-shadow: unset !important;
+
+    .inline {
+      display: unset;
+    }
+  }
+}

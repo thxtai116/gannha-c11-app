@@ -1,0 +1,179 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a [routerLink]="['/users']" class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+            <button type="button" class="btn btn-success m-btn m-btn--icon text-uppercase" (click)="save()">
+                <span>
+                    <i class="fa fa-save"></i>
+                    <span translate="COMMON.SAVE"></span>
+                </span>
+            </button>
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form class="m-form" id="m_form" [formGroup]="form">
+
+            <div class="row">
+
+                <div class="col-xl-6 col-lg-6">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-xl-6 col-lg-6">
+
+                                <mat-form-field class="mat-form-field-fluid">
+
+                                    <mat-label>
+                                        <span translate="FORM.FIELDS.FIRST_NAME">FIRST_NAME</span>
+                                    </mat-label>
+
+                                    <input matInput formControlName="FirstName">
+
+                                    <mat-error *ngIf="form.get('FirstName').invalid && form.get('FirstName').touched">
+                                        <m-error-parser [ngControl]="form.get('FirstName')">
+                                        </m-error-parser>
+                                    </mat-error>
+
+                                </mat-form-field>
+
+                            </div>
+
+                            <div class="col-xl-6 col-lg-6">
+
+                                <mat-form-field class="mat-form-field-fluid">
+
+                                    <mat-label>
+                                        <span translate="FORM.FIELDS.LAST_NAME">LAST_NAME</span>
+                                    </mat-label>
+
+                                    <input matInput formControlName="LastName">
+
+                                    <mat-error *ngIf="form.get('LastName').invalid && form.get('LastName').touched">
+                                        <m-error-parser [ngControl]="form.get('LastName')">
+                                        </m-error-parser>
+                                    </mat-error>
+
+                                </mat-form-field>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-xl-6 col-lg-6">
+
+                                <mat-form-field class="mat-form-field-fluid">
+
+                                    <mat-label>
+                                        <span translate="FORM.FIELDS.EMAIL">EMAIL</span>
+                                    </mat-label>
+
+                                    <input matInput formControlName="Email">
+
+                                    <mat-error *ngIf="form.get('Email').invalid && form.get('Email').touched">
+                                        <m-error-parser [ngControl]="form.get('Email')">
+                                        </m-error-parser>
+                                    </mat-error>
+
+                                </mat-form-field>
+
+                            </div>
+
+                            <div class="col-xl-6 col-lg-6">
+
+                                <mat-form-field class="mat-form-field-fluid">
+
+                                    <mat-label>
+                                        <span translate="FORM.FIELDS.PHONE">PHONE</span>
+                                    </mat-label>
+
+                                    <input matInput formControlName="Phone">
+
+                                    <mat-error *ngIf="form.get('Phone').invalid && form.get('Phone').touched">
+                                        <m-error-parser [ngControl]="form.get('Phone')">
+                                        </m-error-parser>
+                                    </mat-error>
+
+                                </mat-form-field>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-xl-6 col-lg-6">
+
+                                <mat-form-field class="mat-form-field-fluid">
+
+                                    <mat-label>
+                                        <span translate="FORM.FIELDS.ROLE">ROLE</span>
+                                    </mat-label>
+
+                                    <mat-select formControlName="Role">
+
+                                        <ng-container *ngFor="let role of viewData.acceptableRoles">
+
+                                            <mat-option value="{{ role.Id }}">{{ role.Name }}
+                                            </mat-option>
+
+                                        </ng-container>
+
+                                    </mat-select>
+
+                                    <mat-error *ngIf="form.get('Role').invalid && form.get('Role').touched">
+                                        <m-error-parser [ngControl]="form.get('Role')">
+                                        </m-error-parser>
+                                    </mat-error>
+
+                                </mat-form-field>
+
+                            </div>
+
+                            <div class="col-xl-6 col-lg-6">
+
+                                <mat-form-field class="mat-form-field-fluid">
+
+                                    <mat-label>
+                                        <span translate="FORM.FIELDS.CONTRACT_CODE">CONTRACT_CODE</span>
+                                    </mat-label>
+
+                                    <input matInput formControlName="ContractCode">
+
+                                </mat-form-field>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+</m-portlet>

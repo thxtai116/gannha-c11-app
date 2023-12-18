@@ -1,0 +1,75 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletBody>
+
+        <div class="m-form">
+
+            <div class="form-group m-form__group row">
+
+                <div class="col-xl-12 col-lg-12">
+
+                    <ng-template dynamic-files-manager></ng-template>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletFooter>
+
+        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+
+            <div class="m-form__actions m-form__actions--solid">
+
+                <div class="row">
+
+                    <div class="col-xl-8 col-lg-8 col-form-label">
+
+                        <ng-container *ngIf="viewData.config && viewData.config.Limitted">
+
+                            <span translate="RESOURCES.LIMITTED_HINT"></span>:
+                            {{ viewData.files.length }}/{{ viewData.config.Limitted }}
+
+                            <i *ngIf="viewData.files.length === viewData.config.Limitted"
+                                class="fas fa-info-circle m-animate-blink m--font-warning"></i>
+
+                        </ng-container>
+
+                    </div>
+
+                    <div class="col-xl-4 col-lg-4">
+
+                        <div class="button-group text-right">
+
+                            <button *ngIf="viewData.files.length > 0" type="button"
+                                class="btn btn-success m-btn m-btn--icon text-uppercase" (click)="onSubmit()">
+                                <span>
+                                    <i class="fa fa-check"></i>
+                                    <span translate="BUTTONS.CONFIRM"></span>
+                                </span>
+                            </button>
+
+                            <button type="button" class="btn btn-default m-btn m-btn--icon text-uppercase" type="button"
+                                cdkFocusInitial (click)="onCancel()">
+                                <span>
+                                    <i class="fa fa-times"></i>
+                                    <span translate="BUTTONS.CLOSE"></span>
+                                </span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

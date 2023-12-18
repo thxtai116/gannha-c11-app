@@ -1,0 +1,24 @@
+<agm-map style="width: 100%; height: 450px;" [latitude]="agmLat" [longitude]="agmLng" [zoom]="agmMapZoom"
+    (mapClick)="mapClicked($event)">
+
+    <agm-marker *ngIf="agmMarker.lat !== 0" [latitude]="agmMarker.lat" [longitude]="agmMarker.lng"
+        [label]="agmMarker.label" [markerDraggable]="agmMarker.draggable" (dragEnd)="markerDragEnd(agmMarker, $event)">
+        <!-- <agm-info-window>
+            <span>Le' Info Window</span>
+        </agm-info-window> -->
+    </agm-marker>
+
+    <!-- <agm-polyline [editable]="true">
+
+        <agm-polyline-point [latitude]="agmMarker.lat" [longitude]="agmMarker.lng">
+        </agm-polyline-point>
+        <agm-polyline-point [latitude]="agmMarker.lat + 1" [longitude]="agmMarker.lng + 1">
+        </agm-polyline-point>
+
+        <agm-icon-sequence [strokeColor]="'grey'" [repeat]="'20px'" [offset]="0" [strokeWeight]="3" [scale]="2"
+            [strokeOpacity]="100" [path]="'M 0,-2 0,2'">
+        </agm-icon-sequence>
+
+    </agm-polyline> -->
+
+</agm-map>

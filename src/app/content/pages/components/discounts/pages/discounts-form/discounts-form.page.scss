@@ -1,0 +1,13 @@
+.btn-group__auto-width {
+  width: 100%;
+
+  .mat-button-toggle {
+    min-width: 50px;
+
+    flex: 1 1 100%;
+    box-sizing: border-box;
+    align-items: center;
+    flex-direction: row;
+    display: flex;
+  }
+}

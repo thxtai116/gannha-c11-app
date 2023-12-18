@@ -1,0 +1,275 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a [routerLink]="['/tenants']" class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+            <button type="button" class="btn btn-success m-btn m-btn--icon text-uppercase" (click)="save()">
+                <span>
+                    <i class="fa fa-save"></i>
+                    <span translate="COMMON.SAVE"></span>
+                </span>
+            </button>
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form class="m-form" id="m_form" [formGroup]="viewForm.formGroup">
+
+            <div class="row">
+
+                <div class="col-xl-12 col-lg-12">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-lg-6 col-xl-6">
+
+                                <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                                    <ng-container mPortletHeadTitle>
+
+                                        <div class="m-portlet__head-title">
+                                            <h3 class="m-portlet__head-text">
+                                                <span>
+                                                    {{ 'TENANTS.TENANT_INFO' | translate }}
+                                                </span>
+                                            </h3>
+                                        </div>
+
+                                    </ng-container>
+
+                                    <ng-container mPortletBody>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-xl-12 col-lg-12">
+
+                                                <mat-form-field class="mat-form-field-fluid">
+
+                                                    <mat-label>
+                                                        <span translate="TENANTS.NAME">NAME</span>
+                                                    </mat-label>
+
+                                                    <input matInput formControlName="CompanyName">
+
+                                                    <mat-error
+                                                        *ngIf="viewForm.formGroup.get('CompanyName').invalid && viewForm.formGroup.get('CompanyName').touched">
+                                                        <m-error-parser
+                                                            [ngControl]="viewForm.formGroup.get('CompanyName')">
+                                                        </m-error-parser>
+                                                    </mat-error>
+
+                                                </mat-form-field>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-xl-12 col-lg-12">
+
+                                                <mat-form-field class="mat-form-field-fluid">
+
+                                                    <mat-label>
+                                                        <span translate="FORM.FIELDS.PHONE">PHONE</span>
+                                                    </mat-label>
+
+                                                    <input matInput formControlName="CompanyPhone">
+
+                                                    <mat-error
+                                                        *ngIf="viewForm.formGroup.get('CompanyPhone').invalid && viewForm.formGroup.get('CompanyPhone').touched">
+                                                        <m-error-parser
+                                                            [ngControl]="viewForm.formGroup.get('CompanyPhone')">
+                                                        </m-error-parser>
+                                                    </mat-error>
+
+                                                </mat-form-field>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-xl-12 col-lg-12">
+
+                                                <mat-form-field class="mat-form-field-fluid">
+
+                                                    <mat-label>
+                                                        <span translate="FORM.FIELDS.ADDRESS">ADDRESS</span>
+                                                    </mat-label>
+
+                                                    <input matInput formControlName="CompanyAddress">
+
+                                                    <mat-error
+                                                        *ngIf="viewForm.formGroup.get('CompanyAddress').invalid && viewForm.formGroup.get('CompanyAddress').touched">
+                                                        <m-error-parser
+                                                            [ngControl]="viewForm.formGroup.get('CompanyAddress')">
+                                                        </m-error-parser>
+                                                    </mat-error>
+
+                                                </mat-form-field>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-xl-12 col-lg-12">
+
+                                                <mat-form-field class="mat-form-field-fluid">
+
+                                                    <mat-label>
+                                                        <span translate="FORM.FIELDS.TAXCODE">TAXCODE</span>
+                                                    </mat-label>
+
+                                                    <input matInput formControlName="TaxCode">
+
+                                                    <mat-error
+                                                        *ngIf="viewForm.formGroup.get('TaxCode').invalid && viewForm.formGroup.get('TaxCode').touched">
+                                                        <m-error-parser [ngControl]="viewForm.formGroup.get('TaxCode')">
+                                                        </m-error-parser>
+                                                    </mat-error>
+
+                                                </mat-form-field>
+
+                                            </div>
+
+                                        </div>
+
+                                    </ng-container>
+
+                                </m-portlet>
+
+                            </div>
+
+                            <div class="col-lg-6 col-xl-6">
+
+                                <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                                    <ng-container mPortletHeadTitle>
+
+                                        <div class="m-portlet__head-title">
+                                            <h3 class="m-portlet__head-text">
+                                                <span>
+                                                    {{ 'TENANTS.OWNER_INFO' | translate }}
+                                                </span>
+                                            </h3>
+                                        </div>
+
+                                    </ng-container>
+
+                                    <ng-container mPortletBody>
+
+
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-xl-12 col-lg-12">
+
+                                                <mat-form-field class="mat-form-field-fluid">
+
+                                                    <mat-label>
+                                                        <span translate="FORM.FIELDS.FIRST_NAME">OWNER_FIRST_NAME</span>
+                                                    </mat-label>
+
+                                                    <input matInput formControlName="FirstName">
+
+                                                    <mat-error
+                                                        *ngIf="viewForm.formGroup.get('FirstName').invalid && viewForm.formGroup.get('FirstName').touched">
+                                                        <m-error-parser
+                                                            [ngControl]="viewForm.formGroup.get('FirstName')">
+                                                        </m-error-parser>
+                                                    </mat-error>
+
+                                                </mat-form-field>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-xl-12 col-lg-12">
+
+                                                <mat-form-field class="mat-form-field-fluid">
+
+                                                    <mat-label>
+                                                        <span translate="FORM.FIELDS.LAST_NAME">OWNER_LAST_NAME</span>
+                                                    </mat-label>
+
+                                                    <input matInput formControlName="LastName">
+
+                                                    <mat-error
+                                                        *ngIf="viewForm.formGroup.get('LastName').invalid && viewForm.formGroup.get('LastName').touched">
+                                                        <m-error-parser
+                                                            [ngControl]="viewForm.formGroup.get('LastName')">
+                                                        </m-error-parser>
+                                                    </mat-error>
+
+                                                </mat-form-field>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-xl-12 col-lg-12">
+
+                                                <mat-form-field class="mat-form-field-fluid">
+
+                                                    <mat-label>
+                                                        <span translate="FORM.FIELDS.EMAIL">OWNER_EMAIL</span>
+                                                    </mat-label>
+
+                                                    <input matInput formControlName="Email">
+
+                                                    <mat-error
+                                                        *ngIf="viewForm.formGroup.get('Email').invalid && viewForm.formGroup.get('Email').touched">
+                                                        <m-error-parser [ngControl]="viewForm.formGroup.get('Email')">
+                                                        </m-error-parser>
+                                                    </mat-error>
+
+                                                </mat-form-field>
+
+                                            </div>
+
+                                        </div>
+
+                                    </ng-container>
+
+                                </m-portlet>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+</m-portlet>

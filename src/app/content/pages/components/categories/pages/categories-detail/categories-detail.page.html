@@ -1,0 +1,337 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a [routerLink]="['/brand-categories']"
+            class="btn btn-secondary m-btn m-btn--icon m--margin-right-10 text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span>{{ 'COMMON.BACK' | translate }}</span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+            <button type="button" *ngIf="!viewControl.editMode"
+                class="btn btn-primary m-btn m-btn--icon text-uppercase" (click)="edit()">
+                <span>
+                    <i class="fa fa-edit"></i>
+                    <span>{{ 'COMMON.EDIT' | translate }}</span>
+                </span>
+            </button>
+        </div>
+
+        <div class="m-buttons--wrapper">
+            <button type="button" *ngIf="viewControl.editMode"
+                class="btn btn-success m-btn m-btn--icon text-uppercase" (click)="save()">
+                <span>
+                    <i class="fa fa-save"></i>
+                    <span>{{ 'COMMON.SAVE' | translate }}</span>
+                </span>
+            </button>
+        </div>
+
+        <div class="m-buttons--wrapper">
+            <button type="button" *ngIf="viewControl.editMode"
+                class="btn btn-secondary m-btn m-btn--icon text-uppercase" (click)="cancel()">
+                <span>
+                    <i class="fa fa-times"></i>
+                    <span>{{ 'COMMON.CANCEL' | translate }}</span>
+                </span>
+            </button>
+        </div>
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form *ngIf="!viewControl.editMode" class="m-form" [formGroup]="viewForm.formGroup">
+
+            <div class="row">
+
+                <div class="col-xl-6">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span>{{ 'FORM.FIELDS.VINAME' | translate }}</span>
+                            </label>
+
+                            <label class="col-xl-10 col-lg-10 col-form-label">
+                                <span class="m--font-brand">{{ viewModel.category.Name | mLanguage }}</span>
+                            </label>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span>{{ 'FORM.FIELDS.ENNAME' | translate }}</span>
+                            </label>
+
+                            <label class="col-xl-10 col-lg-10 col-form-label">
+                                <span class="m--font-brand">{{ viewModel.category.Name | mLanguage : "en" }}</span>
+                            </label>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span>{{ 'FORM.FIELDS.ORDER' | translate }}</span>
+                            </label>
+
+                            <label class="col-xl-4 col-lg-4 col-form-label">
+                                <span class="m--font-brand">{{ viewModel.category.Order }}</span>
+                            </label>
+
+                            <label class="col-xl-6 col-lg-6 col-form-label">
+                                <span class="m--font-brand" *ngIf="viewModel.category.PublicService">
+                                    {{ 'FORM.FIELDS.PUBLIC_SERVICE' | translate }}
+                                </span>
+                            </label>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span>{{ 'FORM.FIELDS.TAGS' | translate }}</span>
+                            </label>
+
+                            <label class="col-xl-10 col-lg-10 col-form-label">
+
+                                <mat-chip-list>
+
+                                    <mat-chip color="primary" selected="true"
+                                        *ngFor="let cat of viewModel.category.Tags">
+                                        {{ cat }}
+                                    </mat-chip>
+
+                                </mat-chip-list>
+
+                            </label>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span>{{ 'FORM.FIELDS.ICON' | translate }}</span>
+                            </label>
+
+                            <div class="col-xl-9 col-lg-9">
+
+                                <m-icons-carousel [readonly]="true" formControlName="Icon">
+
+                                </m-icons-carousel>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="COMMON.STATUS">STATUS</span>
+                            </label>
+
+                            <div class="col-xl-4 col-lg-4">
+
+                                <m-object-status-badge [status]="viewModel.category.Status"></m-object-status-badge>
+
+                                <button *ngIf="viewModel.category.Status == 2" mat-icon-button color="primary"
+                                    (click)="deactivate()">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+
+                                <button *ngIf="viewModel.category.Status == 8 || viewModel.category.Status == 0"
+                                    mat-icon-button color="primary" (click)="activate()">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form *ngIf="viewControl.editMode" class="m-form" [formGroup]="viewForm.formGroup">
+
+            <div class="row">
+
+                <div class="col-xl-6">
+
+                    <div class="form-group m-form__group row" *ngIf="parentName && parentName.length > 0">
+                        <label class="col-xl-2 col-lg-2 col-form-label">
+                            <span>{{ 'CATEGORIES.PARENT_CATEGORY' | translate }}</span>
+                        </label>
+
+                        <div class="col-xl-10 col-lg-10">
+
+                            <mat-form-field class="mat-form-field-fluid">
+
+                                <input matInput readonly value="{{ parentName }}">
+
+                            </mat-form-field>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <label class="col-xl-2 col-lg-2 col-form-label">
+                            <span>{{ 'FORM.FIELDS.VINAME' | translate }}</span>
+                            <span class="m--font-danger">&nbsp;(*)</span>
+                        </label>
+
+                        <div class="col-xl-10 col-lg-10">
+
+                            <mat-form-field class="mat-form-field-fluid">
+
+                                <input matInput formControlName="ViName">
+
+                                <mat-error
+                                    *ngIf="viewForm.formGroup.get('ViName').invalid && viewForm.formGroup.get('ViName').touched">
+                                    <m-error-parser [ngControl]="viewForm.formGroup.get('ViName')">
+                                    </m-error-parser>
+                                </mat-error>
+
+                            </mat-form-field>
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <label class="col-xl-2 col-lg-2 col-form-label">
+                            <span>{{ 'FORM.FIELDS.ENNAME' | translate }}</span>
+                            <span class="m--font-danger">&nbsp;(*)</span>
+                        </label>
+
+                        <div class="col-xl-10 col-lg-10">
+
+                            <mat-form-field class="mat-form-field-fluid">
+
+                                <input matInput formControlName="EnName">
+
+                                <mat-error
+                                    *ngIf="viewForm.formGroup.get('EnName').invalid && viewForm.formGroup.get('EnName').touched">
+                                    <m-error-parser [ngControl]="viewForm.formGroup.get('EnName')">
+                                    </m-error-parser>
+                                </mat-error>
+
+                            </mat-form-field>
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <label class="col-xl-2 col-lg-2 col-form-label">
+                            <span>{{ 'FORM.FIELDS.ORDER' | translate }}</span>
+                            <span class="m--font-danger">&nbsp;(*)</span>
+                        </label>
+
+                        <div class="col-xl-4 col-lg-4">
+
+                            <mat-form-field class="mat-form-field-fluid">
+
+                                <input matInput formControlName="Order">
+
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="col-xl-6 col-lg-6 col-form-label">
+
+                            <mat-checkbox formControlName="PublicService">{{ 'FORM.FIELDS.PUBLIC_SERVICE' | translate }}
+                            </mat-checkbox>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <label class="col-xl-2 col-lg-2 col-form-label">
+                            <span>{{ 'FORM.FIELDS.TAGS' | translate }}</span>
+                        </label>
+
+                        <div class="col-xl-10 col-lg-10">
+
+                            <m-tags formControlName="Tags">
+                            </m-tags>
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <label class="col-xl-2 col-lg-2 col-form-label">
+                            <span>{{ 'FORM.FIELDS.ICON' | translate }}</span>
+                            <span class="m--font-danger">&nbsp;(*)</span>
+                        </label>
+
+                        <div class="col-xl-2 col-lg-2">
+
+                            <m-icons-carousel [readonly]="false" formControlName="Icon">
+                            </m-icons-carousel>
+
+                            <button mat-icon-button color="primary" matTooltip="UPLOAD" (click)="uploadIcon()">
+                                <mat-icon>cloud_upload</mat-icon>
+                            </button>
+
+                            <mat-error
+                                *ngIf="viewForm.formGroup.get('Icon').invalid && viewForm.formGroup.get('Icon').touched">
+                                <m-error-parser [ngControl]="viewForm.formGroup.get('Icon')">
+                                </m-error-parser>
+                            </mat-error>
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <label class="col-xl-2 col-lg-2 col-form-label">
+                            <span translate="COMMON.STATUS">STATUS</span>
+                        </label>
+
+                        <div class="col-xl-4 col-lg-4">
+
+                            <m-object-status-badge [status]="viewModel.category.Status"></m-object-status-badge>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </form>
+
+    </ng-container>
+    <input type="file" [hidden]="true" style="display: none;" (change)="fileChange($event)" accept="image/png" multiple
+        #fileInputMulti>
+
+</m-portlet>

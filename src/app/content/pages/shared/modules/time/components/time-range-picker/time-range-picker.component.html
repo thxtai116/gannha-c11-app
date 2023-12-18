@@ -1,0 +1,55 @@
+<div class="form-group row">
+
+    <div class="col-lg-5">
+
+        <div class="row">
+            <div class="col-lg-6">
+                <mat-form-field class="mat-form-field-fluid">
+                    <mat-select [(value)]="selectedOpenHour" [disabled]="readonly"
+                        (selectionChange)="onOpenHourChange($event)">
+                        <mat-option *ngFor="let hour of hourOptions" [value]="hour">{{hour}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+                <mat-form-field class="mat-form-field-fluid">
+                    <mat-select [(value)]="selectedOpenMinute" [disabled]="readonly"
+                        (selectionChange)="onOpenMinuteChange($event)">
+                        <mat-option *ngFor="let minute of minuteOptions" [value]="minute">{{minute}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-2" style="align-content: center; align-content: center">
+
+        <label style="margin-top: 14px; margin-left: 16px">-</label>
+
+    </div>
+
+    <div class="col-lg-5">
+
+        <div class="row">
+            <div class="col-lg-6">
+                <mat-form-field class="mat-form-field-fluid">
+                    <mat-select [(value)]="selectedCloseHour" [disabled]="readonly"
+                        (selectionChange)="onCloseHourChange($event)">
+                        <mat-option *ngFor=" let hour of hourOptions" [value]="hour">{{hour}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-lg-6">
+                <mat-form-field class="mat-form-field-fluid">
+                    <mat-select [(value)]="selectedCloseMinute" [disabled]="readonly"
+                        (selectionChange)="onCloseMinuteChange($event)">
+                        <mat-option *ngFor=" let minute of minuteOptions" [value]="minute">{{minute}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+</div>

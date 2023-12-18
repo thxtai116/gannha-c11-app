@@ -1,0 +1,128 @@
+<m-portlet>
+
+    <ng-container mPortletHeadTitle>
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text text-uppercase">
+                <span translate="ACTION_API.CALL_TO_ACTION.NAME"></span>
+            </h3>
+        </div>
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <ng-container *ngIf="readonly">
+
+            This is readonly
+
+        </ng-container>
+
+        <ng-container *ngIf="!readonly">
+
+            <form class="m-form" [formGroup]="viewForm">
+
+                <div class="row">
+
+                    <div class="col-xl-12">
+
+                        <div class="m-form__section m-form__section--first">
+
+                            <div class="form-group m-form__group row">
+
+                                <label class="col-xl-12 col-lg-12">
+
+                                    <mat-form-field class="mat-form-field-fluid">
+
+                                        <mat-label>
+                                            <span translate="ACTION_API.CALL_TO_ACTION.TITLE"></span>
+                                        </mat-label>
+
+                                        <input matInput formControlName="Title">
+
+                                        <mat-error
+                                            *ngIf="viewForm.get('Title').invalid && viewForm.get('Title').touched">
+                                            <m-error-parser [ngControl]="viewForm.get('Title')">
+                                            </m-error-parser>
+                                        </mat-error>
+
+                                    </mat-form-field>
+
+                                </label>
+
+                            </div>
+
+                            <div class="form-group m-form__group row">
+
+                                <label class="col-xl-12 col-lg-12">
+
+                                    <mat-form-field class="mat-form-field-fluid">
+
+                                        <mat-label>
+                                            <span translate="ACTION_API.CALL_TO_ACTION.URL"></span>
+                                        </mat-label>
+
+                                        <input matInput formControlName="Url">
+
+                                        <mat-error *ngIf="viewForm.get('Url').invalid && viewForm.get('Url').touched">
+                                            <m-error-parser [ngControl]="viewForm.get('Url')">
+                                            </m-error-parser>
+                                        </mat-error>
+
+                                    </mat-form-field>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </ng-container>
+
+    </ng-container>
+
+    <ng-container mPortletFooter>
+
+        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+
+            <div class="m-form__actions m-form__actions--solid">
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <div class="button-group text-right">
+
+                            <button class="btn btn-success m-btn m-btn--icon text-uppercase" type="button"
+                                (click)="onSubmit()">
+                                <span>
+                                    <i class="fa fa-check-circle"></i>
+                                    <span translate="COMMON.CONFIRM">CONFIRM</span>
+                                </span>
+                            </button>
+
+                            <button class="btn btn-default m-btn m-btn--icon text-uppercase" type="button"
+                                cdkFocusInitial (click)="onCancelClick()">
+                                <span>
+                                    <i class="fa fa-times"></i>
+                                    <span translate="COMMON.CLOSE">CLOSE</span>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

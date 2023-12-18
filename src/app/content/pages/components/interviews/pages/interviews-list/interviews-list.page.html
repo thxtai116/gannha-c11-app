@@ -1,0 +1,164 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button *ngIf="viewData.brand$.getValue().Id && viewData.brand$.getValue().Id.length > 0" type="button"
+                class="btn btn-primary m-btn m-btn--icon text-uppercase" (click)="refresh()">
+                <span>
+                    <i class="fa fa-sync-alt"></i>
+                    <span translate="COMMON.REFRESH"></span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="m-form">
+
+            <div class="m-form__filtration">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <div class="m-form__control">
+
+                            <m-single-select [data]="viewData.units$" [(ngModel)]="viewFilter.filterUnit"
+                                (change)="loadInterviews()">
+                                <span mSingleSelectActionLabel>{{ 'COMMON.SEARCH' | translate }}</span>
+                                <span mSingleSelectActionHint class="text-lowercase">
+                                    {{ 'COMMON.BY_UNIT' | translate }}</span>
+                            </m-single-select>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile" *ngIf="viewFilter.filterUnit.length > 0">
+
+                        <div class="m-form__control">
+
+                            <mat-form-field class="mat-form-field-fluid">
+
+                                <mat-select [(value)]="viewFilter.filterStatus" (selectionChange)="loadInterviews()">
+                                    <mat-option value="true">Pending</mat-option>
+                                    <mat-option value="false">Expired</mat-option>
+                                </mat-select>
+                                <mat-hint align="start">
+                                    <strong>{{ 'COMMON.FILTER' | translate }}</strong>
+                                    <span class="text-lowercase"> {{ 'COMMON.BY_STATUS' | translate }}</span>
+                                </mat-hint>
+
+                            </mat-form-field>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="mat-table__wrapper">
+
+            <mat-table class="mat-elevation-z8" [dataSource]="dataSource">
+
+                <ng-container matColumnDef="Index">
+                    <mat-header-cell *matHeaderCellDef [ngClass]="'mat-cell--index'">#
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let job; let i = index;" [ngClass]="'mat-cell--index'">
+                        {{ i + 1 + paginator.pageIndex * paginator.pageSize }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="FullName">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.FULL_NAME' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let interview">
+                        <a>{{ interview.FullName }}</a>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Phone">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.PHONE' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let interview">
+                        {{ interview.Phone }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Time">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.TIME' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let interview">
+                        {{ interview.Time | date : 'dd MMM, yyyy - HH:mm' }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Type">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.APPOINTMENT_TYPE' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let interview">
+                        {{ interview.IsOnline ? "Online" : "Offline" }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Job">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.JOB' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let interview">
+                        {{ interview.JobTitle }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Location">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.LOCATION' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let interview">
+
+                        <button mat-icon-button color="primary" (click)="openMap(interview)"
+                            *ngIf="!interview.IsOnline">
+                            <mat-icon>map</mat-icon>
+                        </button>
+
+                    </mat-cell>
+
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="viewData.displayedColumns"></mat-header-row>
+
+                <mat-row *matRowDef="let row; columns: viewData.displayedColumns; let i = index;"></mat-row>
+            </mat-table>
+
+            <div class="mat-table__message" *ngIf="!dataSource.hasItems">
+                {{ 'TABLE.NO_RECORDS' | translate }}
+            </div>
+
+        </div>
+
+        <div class="mat-table__bottom">
+
+            <mat-spinner [diameter]="20" *ngIf="viewControl.loading$ | async"></mat-spinner>
+
+            <mat-paginator [pageSize]="paginator.pageSize" [pageSizeOptions]="[10, 20, 50]"
+                [length]="dataSource.paginatorTotal$ | async" [showFirstLastButtons]="true"></mat-paginator>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

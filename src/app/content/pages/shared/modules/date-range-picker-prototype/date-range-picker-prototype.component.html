@@ -1,0 +1,31 @@
+<ng-container *ngIf="ngControl">
+
+    <mat-form-field class="mat-form-field-fluid invalid" [matMenuTriggerFor]="menu">
+
+      
+        <mat-label>
+            <span translate="FORM.FIELDS.DATE_RANGE"></span>
+            <span class="m--font-danger">&nbsp;(*)</span>
+
+        </mat-label>
+
+        <input matInput readonly [ngModel]="displayValue" />
+
+        <button type="button" mat-button matSuffix mat-icon-button color="primary">
+            <i class="far fa-calendar-alt" style="vertical-align: unset;"></i>
+        </button>
+
+        <mat-error>
+            <ng-content select="[DateRangesErrors]"></ng-content>
+        </mat-error>
+
+    </mat-form-field>
+
+    <mat-menu #menu="matMenu" xPosition="before">
+        <ngx-daterangepicker-material [autoApply]="true" [alwaysShowCalendars]="true"
+            [keepCalendarOpeningWithRange]="true" [ranges]="ranges" (datesUpdated)="onDateRangeSelected($event)"
+            (rangeClicked)="onRangeSelected($event)">
+        </ngx-daterangepicker-material>
+    </mat-menu>
+
+</ng-container>

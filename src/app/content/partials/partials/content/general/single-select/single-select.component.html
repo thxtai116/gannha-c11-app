@@ -1,0 +1,41 @@
+<mat-form-field class="mat-form-field-fluid">
+
+    <mat-label>
+
+        <ng-content select="[mSingleSelectLabel]"></ng-content>
+
+    </mat-label>
+
+    <ng-content select="[mSingleSelectLabel]"></ng-content>
+
+    <mat-select [formControl]="selectCtrl" #singleSelect [errorStateMatcher]="matcher">
+
+        <mat-option>
+
+            <ngx-mat-select-search [formControl]="filterCtrl" [placeholderLabel]="''"
+                [noEntriesFoundLabel]="'No data found'" #search></ngx-mat-select-search>
+
+        </mat-option>
+
+        <mat-option *ngIf="hasNullOption" [value]="{'id': '', 'text': ''}"> - </mat-option>
+
+        <mat-option *ngFor="let entity of filteredData | async" [value]="entity">
+
+            {{ entity.text }}
+
+        </mat-option>
+
+    </mat-select>
+
+    <mat-hint align="start">
+        <strong>
+            <ng-content select="[mSingleSelectActionLabel]"></ng-content>
+        </strong>
+        <ng-content select="[mSingleSelectActionHint]"></ng-content>
+    </mat-hint>
+
+    <mat-error *ngIf="ngControl && ngControl.invalid && ngControl.touched">
+        <ng-content select="[mSingleSelectError]"></ng-content>
+    </mat-error>
+
+</mat-form-field>

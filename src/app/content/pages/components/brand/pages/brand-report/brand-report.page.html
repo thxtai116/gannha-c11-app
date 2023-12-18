@@ -1,0 +1,38 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a routerLink="/brand" class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="row" *ngIf="menu.length > 0">
+
+            <div class="col-lg-1">
+
+                <div class="nav flex-column nav-pills" aria-orientation="vertical">
+                    <a routerLinkActive="active" *ngFor="let mn of menu" class="nav-link" data-toggle="pill"
+                        aria-selected="true" [routerLink]="mn.Href"> {{ mn.Name | translate }}</a>
+                </div>
+
+            </div>
+
+            <div class="col-lg-11">
+
+                <router-outlet></router-outlet>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

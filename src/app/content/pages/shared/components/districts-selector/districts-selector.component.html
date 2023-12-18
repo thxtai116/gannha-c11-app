@@ -1,0 +1,13 @@
+<ng-container *ngIf="readonly">
+
+    {{ viewModel.districtName.length === 0 ? 'N/A' : viewModel.districtName }}
+
+</ng-container>
+
+<ng-container *ngIf="!readonly">
+
+    <m-single-select [data]="viewData.districts$" [(ngModel)]="viewForm.districtId" (change)="onDistrictChange()">
+        <span mSingleSelectLabel>{{ 'ADDRESS.DISTRICT' | translate }}</span>
+    </m-single-select>
+
+</ng-container>

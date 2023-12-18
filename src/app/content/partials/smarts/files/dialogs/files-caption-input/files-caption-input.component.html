@@ -1,0 +1,118 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletBody>
+
+        <div class="m-form">
+
+            <div class="form-group m-form__group row">
+
+                <div class="col-xl-12 col-lg-12">
+
+                    <div class="files-list">
+
+                        <div class="file-container file-container__caption" *ngFor="let item of files">
+
+                            <div class="image-holder">
+
+                                <ng-container [ngSwitch]="item.ResourceType">
+
+                                    <ng-container *ngSwitchCase="'Folder'">
+
+                                        <img src="./assets/app/media/img/icons/folder.png" alt="">
+
+                                    </ng-container>
+
+                                    <ng-container *ngSwitchCase="'File'">
+
+                                        <img class="resource-file" src="./assets/app/media/img/icons/pdf.png" alt="">
+
+                                    </ng-container>
+
+                                    <ng-container *ngSwitchCase="'Video'">
+
+                                        <img class="resource-file" src="./assets/app/media/img/icons/mp4.png" alt="">
+
+                                    </ng-container>
+
+                                    <ng-container *ngSwitchDefault>
+
+                                        <img [src]="item.Path" class="resource-image"
+                                            onerror="this.src='./assets/app/media/img/bg/img_not_found.jpg'">
+
+                                    </ng-container>
+
+                                </ng-container>
+
+                            </div>
+
+                            <div class="title-holder">
+
+                                <mat-form-field class="mat-form-field-fluid">
+
+                                    <textarea [(ngModel)]="item.Caption"
+                                        placeholder="{{ 'FORM.FIELDS.FOLDERS.CAPTION_INPUT' | translate }}"
+                                        cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                                        cdkAutosizeMaxRows="3" matInput></textarea>
+
+                                </mat-form-field>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletFooter>
+
+        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+
+            <div class="m-form__actions m-form__actions--solid">
+
+                <div class="row">
+
+                    <div class="col-xl-8 col-lg-8">
+
+                    </div>
+
+                    <div class="col-xl-4 col-lg-4">
+
+                        <div class="button-group text-right">
+
+                            <button class="btn btn-success m-btn m-btn--icon text-uppercase" type="button"
+                                (click)="onSubmit()">
+                                <span>
+                                    <i class="fa fa-check"></i>
+                                    <span translate="BUTTONS.CONFIRM"></span>
+                                </span>
+                            </button>
+
+                            <button class="btn btn-default m-btn m-btn--icon text-uppercase" type="button"
+                                (click)="onCancel()">
+                                <span>
+                                    <i class="fa fa-times"></i>
+                                    <span translate="BUTTONS.CLOSE"></span>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

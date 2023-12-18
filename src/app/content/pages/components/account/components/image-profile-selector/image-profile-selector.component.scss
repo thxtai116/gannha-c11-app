@@ -1,0 +1,43 @@
+.photo-body {
+  .photo-thumb {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: relative;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+    button {
+      position: absolute;
+      bottom: 18px;
+      color: #fff;
+      background: #805c5c5c;
+      right: 50px;
+    }
+  }
+  .upload-photo {
+    margin: 5px;
+    width: 75px;
+    height: 75px;
+    border: 1px dashed #2980b9;
+    position: relative;
+
+    mat-icon {
+      position: absolute;
+      top: 26px;
+      left: 26px;
+      z-index: 2;
+    }
+    mat-spinner {
+      position: absolute;
+      top: 21px;
+      left: 21px;
+      z-index: 1;
+    }
+  }
+}

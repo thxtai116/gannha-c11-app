@@ -1,0 +1,46 @@
+.mat-header-cell:first-child,
+.mat-cell:first-child {
+  flex: 70%;
+  min-width: 104px !important;
+}
+
+//Second column and header
+.mat-header-cell:nth-child(2),
+.mat-cell:nth-child(2) {
+  flex: 30%;
+  min-width: 104px !important;
+}
+
+//Last column and header
+// .mat-header-cell:last-child,.mat-cell:last-child{
+//   flex:10%;
+//   min-width: 104px !important;
+// }
+
+.mat-table__wrapper .mat-table {
+  min-width: auto !important;
+  width: 100% !important;
+}
+
+.mat-header-row {
+  width: 100%;
+}
+
+.mat-row {
+  width: 100%;
+}
+
+.m-portlet__head-text {
+  font-weight: 500 !important;
+  font-size: 1.05rem !important;
+  font-family: Roboto;
+}
+
+.item_title {
+  font-weight: 400 !important;
+  font-size: 1rem !important;
+}
+
+.item_total {
+  font-size: 1.2rem !important;
+}

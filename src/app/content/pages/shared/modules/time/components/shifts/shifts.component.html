@@ -1,0 +1,60 @@
+<ng-container *ngIf="readonly">
+
+    <table class="table table-bordered table-striped">
+
+        <ng-container *ngIf="!officeHours">
+
+            <ng-container *ngFor="let shift of shifts">
+
+                <tr *ngIf="shift.Active">
+
+                    <td>{{ ('DAYOFWEEK.' + shift.Name.toUpperCase()) | translate }}</td>
+
+                    <td>
+
+                        <p *ngIf="shift.AllDay">{{ 'TIME.ALWAYS_OPEN' | translate }}</p>
+
+                        <ng-container *ngIf="!shift.AllDay">
+
+                            <p *ngFor="let spec of shift.Specifics">
+
+                                {{ spec.Open | shortTime }} - {{ spec.Close | shortTime }}
+
+                            </p>
+
+                        </ng-container>
+
+                    </td>
+
+                </tr>
+
+            </ng-container>
+
+        </ng-container>
+
+        <tr *ngIf="noShifts">
+
+            <td colspan="2">No Shift</td>
+
+        </tr>
+
+        <tr *ngIf="officeHours">
+
+            <td colspan="2">{{ timing$.getValue().Open | shortTime }} -
+                {{ timing$.getValue().Close | shortTime }}</td>
+
+        </tr>
+
+    </table>
+
+</ng-container>
+
+<ng-container *ngIf=" !readonly ">
+
+    <ng-container *ngFor="let shift of shifts; let i = index">
+
+        <m-shift [shift]="shift" (shiftChange)="onShiftChange($event,i)"></m-shift>
+
+    </ng-container>
+
+</ng-container>

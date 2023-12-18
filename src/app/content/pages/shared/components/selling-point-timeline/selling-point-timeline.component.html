@@ -1,0 +1,59 @@
+<m-portlet>
+
+    <ng-container mPortletHeadTitle>
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text text-uppercase">
+                <span translate="COMMON.PREVIEW_TIMELINE"></span>
+            </h3>
+        </div>
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div style="overflow: auto; padding: 20px;">
+
+            <ngx-charts-line-chart [scheme]="colorScheme" [view]="view" [results]="multi" [gradient]="gradient"
+                [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
+                [showRefLines]="showRefLines" [showRefLabels]="showRefLabels" [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [legendTitle]="legendTitle"
+                [roundDomains]="roundDomains" [autoScale]="autoScale" [showGridLines]="showGridLines"
+                [legendPosition]="'below'" [timeline]="timeline">
+            </ngx-charts-line-chart>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletFooter>
+
+        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+
+            <div class="m-form__actions m-form__actions--solid">
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <div class="button-group text-right">
+
+                            <button class="btn btn-default m-btn m-btn--icon text-uppercase" type="button"
+                                cdkFocusInitial (click)="onClose()">
+                                <span>
+                                    <i class="fa fa-times"></i>
+                                    <span translate="COMMON.CLOSE">CANCEL</span>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

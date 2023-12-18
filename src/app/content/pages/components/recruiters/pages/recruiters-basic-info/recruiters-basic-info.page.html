@@ -1,0 +1,134 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a [routerLink]="['/recruiters']" class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button type="button" class="btn btn-success m-btn m-btn--icon text-uppercase" (click)="save()">
+                <span>
+                    <i class="fa fa-save"></i>
+                    <span>{{ 'COMMON.SAVE' | translate }}</span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form class="m-form" [formGroup]="form">
+
+            <div class="m-form__section m-form__section--first">
+
+                <div class="form-group m-form__group row">
+
+                    <div class="col-xl-4 col-lg-4">
+
+                        <mat-form-field class="mat-form-field-fluid">
+
+                            <mat-label>
+                                <span translate="FORM.FIELDS.TITLE"></span>
+                            </mat-label>
+
+                            <input matInput formControlName="Title">
+
+                            <mat-hint align="start">
+                                {{ 'FORM.HINTS.THREE_CHARACTER_AT_LEAST' | translate }}
+                            </mat-hint>
+
+                            <mat-error *ngIf="form.get('Title').invalid && form.get('Title').touched">
+                                <m-error-parser [ngControl]="form.get('Title')">
+                                </m-error-parser>
+                            </mat-error>
+
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="col-xl-4 col-lg-4">
+
+                        <mat-form-field class="mat-form-field-fluid">
+
+                            <mat-label>
+                                <span translate="FORM.FIELDS.NAME"></span>
+                            </mat-label>
+
+                            <input matInput formControlName="Name">
+
+                            <mat-hint align="start">
+                                {{ 'FORM.HINTS.THREE_CHARACTER_AT_LEAST' | translate }}
+                            </mat-hint>
+
+                            <mat-error *ngIf="form.get('Name').invalid && form.get('Name').touched">
+                                <m-error-parser [ngControl]="form.get('Name')">
+                                </m-error-parser>
+                            </mat-error>
+
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row">
+
+                    <div class="col-xl-4 col-lg-4">
+
+                        <mat-form-field class="mat-form-field-fluid">
+
+                            <mat-label>
+                                <span translate="FORM.FIELDS.EMAIL"></span>
+                            </mat-label>
+
+                            <input matInput formControlName="Email">
+
+                            <mat-error *ngIf="form.get('Email').invalid && form.get('Email').touched">
+                                <m-error-parser [ngControl]="form.get('Email')">
+                                </m-error-parser>
+                            </mat-error>
+
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="col-xl-4 col-lg-4">
+
+                        <mat-form-field class="mat-form-field-fluid">
+
+                            <mat-label>
+                                <span translate="FORM.FIELDS.PHONE"></span>
+                            </mat-label>
+
+                            <input matInput formControlName="PhoneNumber">
+
+                            <mat-error *ngIf="form.get('PhoneNumber').invalid && form.get('PhoneNumber').touched">
+                                <m-error-parser [ngControl]="form.get('PhoneNumber')">
+                                </m-error-parser>
+                            </mat-error>
+
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+</m-portlet>

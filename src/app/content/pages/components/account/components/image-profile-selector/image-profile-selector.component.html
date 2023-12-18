@@ -1,0 +1,16 @@
+<ng-container *ngIf="viewData.image$ | async as image">
+
+    <div class="photo-body">
+
+        <div class="photo-thumb">
+
+            <img src="{{ image }}" class="m--img-rounded m--marginless" onerror="this.src = './assets/app/media/img/default_user.jpg'" />
+
+            <button *ngIf="!readonly" mat-button (click)="changeImage()"> <span translate="COMMON.EDIT">EDIT</span>
+            </button>
+
+        </div>
+
+    </div>
+
+</ng-container>

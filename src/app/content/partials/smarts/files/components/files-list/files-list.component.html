@@ -1,0 +1,65 @@
+<div class="files-list">
+
+    <div class="file-container file-container__preview" *ngFor="let item of data$ | async; let i = index" droppable
+        (onDrop)="onDrop($event, item)">
+
+        <div class="image-holder" draggable [dragData]="item">
+
+            <ng-container [ngSwitch]="item.Type">
+
+                <ng-container *ngSwitchCase="'5'">
+
+                    <img class="resource-file" src="./assets/app/media/img/icons/pdf.png" alt="" draggable
+                        [dragData]="item">
+
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'2'">
+
+                    <img class="resource-file" src="./assets/app/media/img/icons/upload_to_cloud.gif"
+                        title="{{ 'RESOURCES.UPLOADING_VIDEO' | translate }}">
+
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'4'">
+
+                    <img class="resource-file" src="./assets/app/media/img/icons/file_video.svg">
+
+                    <i class="fa fa-play-circle m--font-info icon-top-left m-animate-shake" (click)="play(item)"></i>
+
+                </ng-container>
+
+                <ng-container *ngSwitchDefault>
+
+                    <img *ngIf="!item.Thumbnail || item.Thumbnail.length === 0" src="{{ item.Url }}"
+                        class="resource-image" onerror="this.src='./assets/app/media/img/bg/img_not_found.jpg'"
+                        title="Url">
+
+                    <img *ngIf="item.Thumbnail && item.Thumbnail.length > 0" src="{{ item.Thumbnail }}"
+                        class="resource-image" (error)="updateUrl($event,item)" title="Thumbnail">
+
+                </ng-container>
+
+            </ng-container>
+
+            <i *ngIf="showRemove" class="fa fa-times m--font-danger icon-remove" (click)="remove(i)"></i>
+
+        </div>
+
+        <div class="title-holder">
+
+            {{ item.Caption | mLanguage }}
+
+        </div>
+
+    </div>
+
+    <div *ngIf="showUpload" class="file-empty" (click)="upload()">
+
+        <i *ngIf="!showLoading" class="fa fa-plus add-icon"></i>
+
+        <mat-spinner *ngIf="showLoading" diameter="20"></mat-spinner>
+
+    </div>
+
+</div>

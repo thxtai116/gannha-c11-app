@@ -1,0 +1,188 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text text-uppercase">
+                <span translate="COMMON.ICON_SELECTOR">ICONS_SELECT</span>
+            </h3>
+        </div>
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="m-form">
+
+            <div class="m-form__filtration">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <mat-form-field class="mat-form-field-fluid">
+
+                            <input matInput #searchInput>
+
+                            <mat-hint align="start">
+                                <strong class="text-capitalize">{{ 'COMMON.FILTER' | translate }}</strong>
+                                <span class="text-lowercase"> {{ 'COMMON.BY_NAME' | translate }}</span>
+                            </mat-hint>
+
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+
+            </div>
+            
+            <div class="row align-items-center collapse m-form__group-actions"
+                [ngClass]="{'show' : viewData.selection.selected.length > 0}">
+                <div class="col-lg-12 col-xl-12">
+                    <div class="m-form__group">
+                        <div>
+                            <label class="m--font-bold m--font-danger-">
+                                {{ 'COMMON.SELECTED_COUNT' | translate }}:
+                                {{ viewData.selection.selected.length }}</label>
+                        </div>
+                        <div class="m-form__control">
+                            <button mat-raised-button (click)="onPreviewSelection()">
+                                {{ 'COMMON.PREVIEW_SELECTION' | translate }}
+                            </button>&nbsp;
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mat-table__wrapper">
+
+            <mat-table class="mat-elevation-z8" [dataSource]="viewData.dataSource" matSort matSortActive="Name"
+                matSortDirection="asc" matSortDisableClear>
+
+                <ng-container matColumnDef="Select">
+
+                    <mat-header-cell *matHeaderCellDef class="mat-column-checkbox">
+                        <mat-checkbox color="primary" *ngIf="!data['isSingle']"
+                            (change)="$event ? masterToggle() : null"
+                            [checked]="viewData.selection.hasValue() && isAllSelected()"
+                            [indeterminate]="viewData.selection.hasValue() && !isAllSelected()">
+                        </mat-checkbox>
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let row" class="mat-column-checkbox">
+
+                        <mat-checkbox color="primary" *ngIf="!data['isSingle']" (click)="$event.stopPropagation()"
+                            (change)="$event ? viewData.selection.toggle(row) : null"
+                            [checked]="viewData.selection.isSelected(row)">
+                        </mat-checkbox>
+
+                        <mat-radio-group *ngIf="data['isSingle']" [(ngModel)]="viewData.icons$">
+                            <mat-radio-button color="primary" [value]="row"></mat-radio-button>
+                        </mat-radio-group>
+
+                    </mat-cell>
+
+                </ng-container>
+
+                <ng-container matColumnDef="Name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TABLE.COLUMNS.NAME' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let icon">{{ icon.Name }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Icon">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TABLE.COLUMNS.ICON' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let icon">
+
+                        <div class="icon-container">
+
+                            <div class="icon">
+
+                                <div class="icon-body">
+
+                                    <div class="icon-thumb">
+
+                                        <div
+                                            style="width:60px; height: 60px; background: url(/assets/app/media/img/misc/transparency.png)">
+                                            <img style="width:100%; height: 100%"
+                                                [src]='storageEndpoint + icon.Name +"?" +lastMod' />
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="viewData.displayedColumns"></mat-header-row>
+
+                <mat-row *matRowDef="let row; columns: viewData.displayedColumns; let i = index;"></mat-row>
+            </mat-table>
+
+            <div class="mat-table__message" *ngIf="!viewData.dataSource.hasItems">{{ 'TABLE.NO_RECORDS' | translate }}
+            </div>
+
+        </div>
+
+        <div class="mat-table__bottom">
+
+            <mat-spinner [diameter]="20" *ngIf="viewControl.loading$ | async"></mat-spinner>
+
+            <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50]"
+                [length]="viewData.dataSource.paginatorTotal$ | async" [showFirstLastButtons]="true"></mat-paginator>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletFooter>
+
+        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+
+            <div class="m-form__actions m-form__actions--solid">
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <div class="button-group text-right">
+
+                            <button *ngIf="viewData.selection.selected.length > 0"
+                                class="btn btn-success m-btn m-btn--icon text-uppercase"
+                                type="button" (click)="onSubmit()">
+                                <span>
+                                        <i class="fa fa-check-circle"></i>
+                                        <span translate="COMMON.CONFIRM">CONFIRM</span>
+                                </span>
+                            </button>
+
+                            <button class="btn btn-default m-btn m-btn--icon text-uppercase"
+                                type="button" cdkFocusInitial (click)="onCancelClick()">
+                                <span>
+                                    <i class="fa fa-times"></i>
+                                    <span translate="COMMON.CLOSE">CLOSE</span>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

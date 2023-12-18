@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-lg-10">
+        <mat-chip-list>
+            <mat-chip color="primary" *ngFor="let cat of selectedCategories">
+                {{ cat.Name.vi }}
+            </mat-chip>
+        </mat-chip-list>
+    </div>
+    <div class="col-lg-2">
+        <button mat-icon-button (click)="openDialog()" color="primary">
+            <mat-icon aria-label="Chỉnh sửa">edit</mat-icon>
+        </button>
+    </div>
+</div>

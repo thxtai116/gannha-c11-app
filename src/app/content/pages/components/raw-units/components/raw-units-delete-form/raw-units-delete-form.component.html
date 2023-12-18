@@ -1,0 +1,242 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text text-uppercase">
+                <span translate="RAW_UNITS.DEACTIVATE_UNIT_TITLE" class="text-uppercase"></span>
+            </h3>
+        </div>
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="row">
+
+            <div class="col-xl-6 col-lg-6">
+
+                <div class="m-form">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="m-form__heading">
+
+                            <h3 class="m-form__heading-title" translate="RAW_UNITS.ITEM">
+                            </h3>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.NAME"></span>
+                            </label>
+
+                            <div class="col-xl-4 col-lg-4 col-form-label">
+
+                                <span class="m--font-brand">{{ viewData.rawUnit.Name }}</span>
+
+                            </div>
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.STATUS"></span>
+                            </label>
+
+                            <div class="col-xl-4 col-lg-4 col-form-label">
+
+                                <m-raw-unit-status-badge [status]="viewData.rawUnit.Status"></m-raw-unit-status-badge>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.ADDRESS"></span>
+                            </label>
+
+                            <div class="col-xl-10 col-lg-10 col-form-label">
+
+                                <span class="m--font-brand">{{ viewData.rawUnit.Address }}</span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.CREATED_AT"></span>
+                            </label>
+
+                            <div class="col-xl-4 col-lg-4 col-form-label">
+
+                                <span
+                                    class="m--font-brand">{{ viewData.rawUnit.CreatedAt | date : 'dd MMM, yyyy HH:mm:ss' }}</span>
+
+                            </div>
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.UPDATED_AT"></span>
+                            </label>
+
+                            <div class="col-xl-4 col-lg-4 col-form-label">
+
+                                <span
+                                    class="m--font-brand">{{ viewData.rawUnit.UpdatedAt | date : 'dd MMM, yyyy HH:mm:ss' }}</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div *ngIf="viewData.unit.Id && viewData.unit.Id.length > 0" class="col-xl-6 col-lg-6">
+
+                <div class="m-form">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="m-form__heading">
+
+                            <h3 class="m-form__heading-title" translate="RAW_UNITS.IDENTIFIED_UNIT">
+                            </h3>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.NAME"></span>
+                            </label>
+
+                            <div class="col-xl-4 col-lg-4 col-form-label">
+
+                                <a routerLink="/brands/{{ viewModel.unit.BrandId }}/units/{{ viewModel.unit.Id }}"
+                                    target="_blank">{{ viewModel.unit.Name }}</a>
+
+                            </div>
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.STATUS"></span>
+                            </label>
+
+                            <div class="col-xl-4 col-lg-4 col-form-label">
+
+                                <m-object-status-badge [status]="viewModel.unit.Status"></m-object-status-badge>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.ADDRESS"></span>
+                            </label>
+
+                            <div class="col-xl-10 col-lg-10 col-form-label">
+
+                                <span class="m--font-brand">{{ viewModel.unit.Address }}</span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.CREATED_AT"></span>
+                            </label>
+
+                            <div class="col-xl-4 col-lg-4 col-form-label">
+
+                                <span
+                                    class="m--font-brand">{{ viewModel.unit.CreatedAt | date : 'dd MMM, yyyy HH:mm:ss' }}</span>
+
+                            </div>
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.UPDATED_AT"></span>
+                            </label>
+
+                            <div class="col-xl-4 col-lg-4 col-form-label">
+
+                                <span
+                                    class="m--font-brand">{{ viewModel.unit.UpdatedAt | date : 'dd MMM, yyyy HH:mm:ss' }}</span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.LOCATION"></span>
+                            </label>
+
+                            <div class="col-xl-10 col-lg-10">
+
+                                <m-location-form [(ngModel)]="viewData.unitLocation">
+                                </m-location-form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletFooter>
+
+        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+
+            <div class="m-form__actions m-form__actions--solid">
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <div class="button-group text-right">
+
+                            <button class="btn btn-default m-btn m-btn--icon text-uppercase"
+                                type="button" cdkFocusInitial (click)="close()">
+                                <span>
+                                    <i class="fa fa-times"></i>
+                                    <span translate="COMMON.CLOSE">CLOSE</span>
+                                </span>
+                            </button>
+
+                            <button class="btn btn-danger m-btn m-btn--icon text-uppercase"
+                                type="button" (click)="delete()">
+                                <span>
+                                    <i class="fa fa-trash"></i>
+                                    <span translate="COMMON.DEACTIVATE"></span>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

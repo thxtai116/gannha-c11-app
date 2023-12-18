@@ -1,0 +1,31 @@
+<m-portlet [loading$]="loading$" [options]="{class: ['m-portlet--bordered-semi']}">
+    <ng-container mPortletHeadTitle>
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+                {{title}}
+            </h3>
+        </div>
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+        <ngx-mat-drp (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker
+            style="visibility: hidden">
+        </ngx-mat-drp>
+        <a class="m-portlet__nav-link btn btn--sm m-btn--pill btn-secondary m-btn m-btn--label-brand"
+            (click)="openDateRange($event)" *ngIf="showHeadTool">
+            {{ range.fromDate | date : 'd/MM/yyyy' }} - {{ range.toDate | date : 'd/M/yyyy' }}
+        </a>
+    </ng-container>
+
+    <ng-container mPortletBody>
+        <div class="row" style="min-height: 320px">
+            <ngx-charts-line-chart [scheme]="colorScheme" [results]="multi" [gradient]="gradient" [xAxis]="showXAxis"
+                [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
+                [showRefLines]="showRefLines" [showRefLabels]="showRefLabels" [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [legendTitle]="legendTitle"
+                [roundDomains]="roundDomains" [autoScale]="autoScale" [showGridLines]="showGridLines"
+                [timeline]="timeline">
+            </ngx-charts-line-chart>
+        </div>
+    </ng-container>
+</m-portlet>

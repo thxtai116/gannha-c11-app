@@ -1,0 +1,24 @@
+<div class="form-group row shift-container">
+
+    <div class="col-xl-3 col-lg-3">
+
+        <mat-checkbox color="primary" [(ngModel)]="shift.Active" (change)="onShiftChange()">
+            <span *ngIf="shift.Name">{{ ('DAYOFWEEK.' + shift.Name.toUpperCase()) | translate }}</span>
+        </mat-checkbox>
+
+        <br />
+
+        <mat-checkbox color="primary" *ngIf="shift.Active" [(ngModel)]="shift.AllDay" (change)="onShiftChange()">
+            {{ 'TIME.ALWAYS_OPEN' | translate }}
+        </mat-checkbox>
+
+    </div>
+
+    <div class="col-xl-9 col-lg-9">
+
+        <m-time-range-pickers [specificTimes]="shift.Specifics" [Active]="shift.Active" [readonly]="shift.AllDay"
+            (specificTimesChange)="onSpecificTimesChange($event)"></m-time-range-pickers>
+
+    </div>
+
+</div>

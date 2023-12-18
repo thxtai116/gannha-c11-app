@@ -1,0 +1,46 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a routerLink="/orders"
+            class="btn btn-secondary m-btn m-btn--icon m-btn--wide text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button type="button"
+                class="btn btn-primary m-btn m-btn--icon m-btn--wide text-uppercase" (click)="createNote()">
+                <span>
+                    <i class="fa fa-plus"></i>
+                    <span translate="COMMON.ADD"></span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <ng-container>
+
+            <form [formGroup]="form">
+
+                <m-order-notes-list [readonly]="false" formControlName="OrderNotes"></m-order-notes-list>
+
+            </form>
+
+        </ng-container>
+
+    </ng-container>
+
+</m-portlet>

@@ -1,0 +1,178 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button type="button" class="btn btn-primary m-btn m-btn--icon text-uppercase" (click)="showMap()">
+                <span>
+                    <i class="fas fa-map"></i>
+                    <span translate="COMMON.SHOW_MAP"></span>
+                </span>
+            </button>
+
+            <button type="button" class="btn btn-primary m-btn m-btn--icon text-uppercase" (click)="refresh()">
+                <span>
+                    <i class="fa fa-sync-alt"></i>
+                    <span translate="COMMON.REFRESH">REFRESH</span>
+                </span>
+            </button>
+
+            <button *ngIf="viewControl.allowCreate" type="button"
+                class="btn btn-primary m-btn m-btn--icon text-uppercase" (click)="quickCreate()">
+                <span>
+                    <i class="fa fa-bolt"></i>
+                    <span translate="UNITS.QUICK_CREATE">NEW</span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="m-form">
+
+            <div>
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <div class="m-form__control">
+
+                            <mat-form-field class="mat-form-field-fluid">
+
+                                <mat-select [(value)]="viewFilter.filterStatus" (selectionChange)="onStatusChange()">
+                                    <mat-option value="">All</mat-option>
+                                    <mat-option value="0">Pending</mat-option>
+                                    <mat-option value="2">Active</mat-option>
+                                    <mat-option value="8">Deactive</mat-option>
+                                </mat-select>
+                                <mat-hint align="start">
+                                    <strong>{{ 'COMMON.FILTER' | translate }}</strong>
+                                    <span class="text-lowercase"> {{ 'COMMON.BY_STATUS' | translate }}</span>
+                                </mat-hint>
+
+                            </mat-form-field>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput #searchInput>
+                            <mat-hint align="start">
+                                <strong class="text-capitalize">{{ 'COMMON.FILTER' | translate }}</strong>
+                                <span class="text-lowercase"> {{ 'COMMON.BY_NAME' | translate }} &
+                                    {{ 'COMMON.BY_ADDRESS' |translate }}</span>
+                            </mat-hint>
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <div class="m-form__control">
+
+                            <m-single-select [hasNullOption]="true" [data]="viewData.provinces$"
+                                [formControl]="viewFilter.filterProvince">
+                                <span mSingleSelectActionLabel>{{ 'COMMON.FILTER' | translate }}</span>
+                                <span mSingleSelectActionHint class="text-lowercase">
+                                    {{ 'COMMON.BY_PROVINCE' | translate }}</span>
+                            </m-single-select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="mat-table__wrapper">
+
+            <mat-table class="mat-elevation-z8" [dataSource]="viewData.dataSource" matSort matSortActive="id"
+                matSortDirection="asc" matSortDisableClear>
+
+                <ng-container matColumnDef="Index">
+                    <mat-header-cell *matHeaderCellDef [ngClass]="'mat-cell--index'">#</mat-header-cell>
+
+                    <mat-cell *matCellDef="let unit; let i = index;" [ngClass]="'mat-cell--index'">
+                        {{ i + 1 + paginator.pageIndex * paginator.pageSize }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TABLE.COLUMNS.NAME' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let unit">
+                        <a routerLink="/units/{{ unit.Id }}/basic-info">{{ unit.Name }}</a>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Address">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TABLE.COLUMNS.ADDRESS' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let unit">{{ unit.Address }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TABLE.COLUMNS.STATUS' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let unit">
+                        <m-object-status-badge [status]="unit.Status"></m-object-status-badge>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Actions">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.ACTIONS' | translate }}</mat-header-cell>
+
+                    <mat-cell *matCellDef="let unit">
+
+                        <button mat-icon-button color="primary" matTooltip="{{ 'UNITS.BASIC_INFO' | translate }}"
+                            routerLink="/units/{{ unit.Id }}/basic-info">
+                            <i class="fa fa-info-circle"></i>
+                        </button>
+
+                        <button mat-icon-button color="primary" matTooltip="{{ 'UNITS.LOCATION' | translate }}"
+                            routerLink="/units/{{ unit.Id }}/location">
+                            <i class="fa fa-map-marker-alt"></i>
+                        </button>
+
+                    </mat-cell>
+
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="viewData.displayedColumns"></mat-header-row>
+
+                <mat-row *matRowDef="let row; columns: viewData.displayedColumns; let i = index;"></mat-row>
+            </mat-table>
+
+            <div class="mat-table__message" *ngIf="!viewData.dataSource.hasItems">
+                {{ 'TABLE.NO_RECORDS' | translate }}
+            </div>
+
+        </div>
+
+        <div class="mat-table__bottom">
+
+            <mat-spinner [diameter]="20" *ngIf="viewControl.loading$ | async"></mat-spinner>
+
+            <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50]"
+                [length]="viewData.dataSource.paginatorTotal$ | async" [showFirstLastButtons]="true">
+            </mat-paginator>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

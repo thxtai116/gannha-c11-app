@@ -1,0 +1,258 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a routerLink="/recruitments" class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button type="button" class="btn btn-primary m-btn m-btn--icon text-uppercase" (click)="refresh()">
+                <span>
+                    <i class="fa fa-sync-alt"></i>
+                    <span translate="COMMON.REFRESH"></span>
+                </span>
+            </button>
+
+        </div>
+
+        <!-- <div class="m-buttons--wrapper">
+
+            <button type="button" class="btn btn-primary m-btn m-btn--icon text-uppercase" (click)="export()">
+                <span>
+                    <i class="fa fa-file-export"></i>
+                    <span translate="COMMON.EXPORT"></span>
+                </span>
+            </button>
+
+        </div> -->
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form class="m-form" [formGroup]="form">
+
+            <div class="m-form__filtration">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <div class="m-form__control">
+
+                            <m-single-select [data]="viewData.units$" formControlName="Unit">
+
+                                <span mSingleSelectActionLabel>{{ 'COMMON.SEARCH' | translate }}</span>
+                                <span mSingleSelectActionHint class="text-lowercase">
+                                    {{ 'COMMON.BY_UNIT' | translate }}</span>
+
+                            </m-single-select>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <div class="m-form__control">
+
+                            <m-single-select [data]="viewData.jobs$" formControlName="Job">
+
+                                <span mSingleSelectActionLabel>{{ 'COMMON.SEARCH' | translate }}</span>
+                                <span mSingleSelectActionHint class="text-lowercase">
+                                    {{ 'COMMON.BY_JOB' | translate }}</span>
+
+                            </m-single-select>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4 m--margin-bottom-10-mobile">
+
+                        <div class="m-form__control">
+
+                            <mat-form-field class="mat-form-field-fluid">
+
+                                <mat-label>
+                                    <span translate="FORM.FIELDS.STATUS"></span>
+                                </mat-label>
+
+                                <mat-select formControlName="Statuses" multiple>
+
+                                    <mat-option *ngFor="let item of submissionStatus" [value]="item.key">
+                                        {{ ('SUBMISSION.STATUSES.' + item.value.toUpperCase()) | translate }}
+                                    </mat-option>
+
+                                </mat-select>
+
+                                <mat-hint align="start">
+                                    <strong>{{ 'COMMON.SEARCH' | translate }}</strong>
+                                    <span class="text-lowercase"> {{ 'COMMON.BY_STATUS' | translate }}</span>
+                                </mat-hint>
+
+
+                            </mat-form-field>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+        <!-- <div class="m-form">
+
+            <div class="m-form__filtration">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <div class="m-form__control">
+
+                            <m-single-select [data]="viewData.filterJobs$" [(ngModel)]="viewFilter.filterJob"
+                                (change)="loadSubmissions()">
+                                <span mSingleSelectActionLabel>{{ 'COMMON.SEARCH' | translate }}</span>
+                                <span mSingleSelectActionHint class="text-lowercase">
+                                    {{ 'COMMON.BY_JOB' | translate }}</span>
+                            </m-single-select>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput #searchInput>
+                            <mat-hint align="start">
+                                <strong class="text-capitalize">{{ 'COMMON.FILTER' | translate }}</strong>
+                                <span class="text-lowercase"> {{ 'COMMON.IN_ALL_FIELDS' | translate }}</span>
+                            </mat-hint>
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div> -->
+
+        <div class="mat-table__wrapper">
+
+            <mat-table class="mat-elevation-z8" [dataSource]="dataSource">
+
+                <ng-container matColumnDef="Index">
+                    <mat-header-cell *matHeaderCellDef [ngClass]="'mat-cell--index'">#</mat-header-cell>
+
+                    <mat-cell *matCellDef="let submission; let i = index;" [ngClass]="'mat-cell--index'">
+                        {{ i + 1 + paginator.pageIndex * paginator.pageSize }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Name">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.FULL_NAME' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let submission">
+                        {{ submission.FullName }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Phone">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.PHONE' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let submission">{{ submission.Phone }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="JobTitle">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.JOB_TITLE' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let submission">{{ submission.JobTitle }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="UnitAddress">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.UNIT_ADDRESS' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let submission">{{ submission.UnitName | mLanguage }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="UpdatedAt">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.UPDATED_AT' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let submission">
+                        {{ submission.UpdatedAt | date : 'dd MMM, yyyy' }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Status">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.STATUS' | translate }}</mat-header-cell>
+
+                    <mat-cell *matCellDef="let submission">
+
+                        <span class="m--font-boldest"
+                            [style.color]="submission.Status.Color">{{ submission.Status.Name | mLanguage }}</span>
+
+                    </mat-cell>
+
+                </ng-container>
+
+                <ng-container matColumnDef="Actions">
+                    <mat-header-cell *matHeaderCellDef [ngClass]="'mat-cell--actions'">
+                        {{ 'TABLE.COLUMNS.ACTIONS' | translate }}</mat-header-cell>
+
+                    <mat-cell *matCellDef="let submission" [ngClass]="'mat-cell--actions'">
+
+                        <button mat-icon-button color="primary" matTooltip="{{ 'SUBMISSION.BASIC_INFO' | translate }}"
+                            (click)="detail(submission)">
+                            <i class="fa fa-info-circle"></i>
+                        </button>
+
+                    </mat-cell>
+
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="viewData.displayedColumns"></mat-header-row>
+
+                <mat-row *matRowDef="let row; columns: viewData.displayedColumns; let i = index;"></mat-row>
+            </mat-table>
+
+            <div class="mat-table__message" *ngIf="!dataSource.hasItems">
+                {{ 'TABLE.NO_RECORDS' | translate }}
+            </div>
+
+        </div>
+
+        <div class="mat-table__bottom">
+
+            <mat-spinner [diameter]="20" *ngIf="viewControl.loading$ | async"></mat-spinner>
+
+            <mat-paginator [pageSize]="paginator.pageSize" [pageSizeOptions]="[10, 20, 50]"
+                [length]="dataSource.paginatorTotal$ | async" [showFirstLastButtons]="true"></mat-paginator>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

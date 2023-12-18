@@ -1,0 +1,130 @@
+<div class="mat-table__wrapper mat-table__wrapper--sub">
+
+    <ng-container *ngIf="readonly">
+
+        <mat-table [dataSource]="phones">
+
+            <ng-container matColumnDef="index">
+                <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+                <mat-cell *matCellDef="let phone,let i = index;"> {{ i + 1}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="phone_number">
+                <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.PHONE' | translate }}</mat-header-cell>
+                <mat-cell *matCellDef="let phone"> {{phone.Value}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+                <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.DESCRIPTION' | translate }}</mat-header-cell>
+                <mat-cell *matCellDef="let phone"> {{ phone.Description }} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="type">
+                <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.TYPE' | translate }}</mat-header-cell>
+                <mat-cell *matCellDef="let phone">
+                    {{ phoneNumberType[phone.Type] ? phoneNumberType[phone.Type] : phoneNumberType[0] }} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+    </ng-container>
+
+    <ng-container *ngIf="!readonly">
+
+        <mat-table [dataSource]="dataSource">
+
+            <ng-container matColumnDef="index">
+
+                <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+                <mat-cell *matCellDef="let row,let i = index;"> {{ i + 1}}</mat-cell>
+
+            </ng-container>
+
+            <ng-container matColumnDef="phone_number">
+                <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.PHONE' | translate }}</mat-header-cell>
+
+                <mat-cell *matCellDef="let row">
+
+                    <mat-form-field class="mat-form-field-fluid" floatLabel="{{ row.editing ? 'float' : 'never'}}">
+
+                        <input matInput OnlyPhoneNumber [formControl]="row.validator.controls['Value']">
+
+                    </mat-form-field>
+
+                </mat-cell>
+
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+                <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.DESCRIPTION' | translate }}</mat-header-cell>
+
+                <mat-cell *matCellDef="let row">
+
+                    <mat-form-field class="mat-form-field-fluid" floatLabel="{{ row.editing ? 'float' : 'never'}}">
+
+                        <input [formControl]="row.validator.controls['Description']" matInput>
+
+                    </mat-form-field>
+
+                </mat-cell>
+
+            </ng-container>
+
+            <ng-container matColumnDef="type">
+                <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.TYPE' | translate }}</mat-header-cell>
+
+                <mat-cell *matCellDef="let row">
+
+                    <mat-form-field class="mat-form-field-fluid">
+
+                        <mat-select [formControl]="row.validator.controls['Type']">
+
+                            <mat-option *ngFor="let type of phoneTypeArray" [value]="type.key">{{ type.value }}
+                            </mat-option>
+
+                        </mat-select>
+
+                    </mat-form-field>
+
+                </mat-cell>
+
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+
+                <mat-header-cell *matHeaderCellDef>
+
+                    <button type="button" mat-icon-button color="primary" (click)="dataSource.createNew()">
+                        <i class="fa fa-plus"></i>
+                    </button>
+
+                </mat-header-cell>
+
+                <mat-cell *matCellDef="let row">
+
+                    <button *ngIf="!row.editing" type="button" mat-icon-button color="primary"
+                        (click)="row.startEdit()">
+                        <i class="fa fa-edit"></i>
+                    </button>
+
+                    <button *ngIf="row.editing" type="button" mat-icon-button (click)="row.confirmEditCreate()">
+                        <i class="fa fa-check text-success"></i>
+                    </button>
+
+                    <button type="button" mat-icon-button color="warn" (click)="row.cancelOrDelete()">
+                        <i class="fa fa-trash"></i>
+                    </button>
+
+                </mat-cell>
+
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumnsEdit"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumnsEdit;"></mat-row>
+        </mat-table>
+
+    </ng-container>
+
+</div>

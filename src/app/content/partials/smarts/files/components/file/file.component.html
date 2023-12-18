@@ -1,0 +1,44 @@
+<ng-container *ngIf="model">
+
+    <div class="file-container">
+
+        <div class="image-holder">
+
+            <ng-container [ngSwitch]="model.Type">
+
+                <ng-container *ngSwitchCase="'5'">
+
+                    <img class="resource-file" src="./assets/app/media/icons/pdf.png" alt="">
+
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'2'">
+
+                    <img class="resource-file" src="./assets/app/media/icons/mp4.png" alt="">
+
+                </ng-container>
+
+                <ng-container *ngSwitchDefault>
+
+                    <img *ngIf="!model.Thumbnail || model.Thumbnail.length === 0" src="{{ model.Url }}"
+                        class="resource-image" onerror="this.src='./assets/app/media/bg/img_not_found.jpg'" title="Url">
+
+                    <img *ngIf="model.Thumbnail && model.Thumbnail.length > 0" src="{{ model.Thumbnail }}"
+                        class="resource-image" (error)="updateUrl($event,model)" title="Thumbnail">
+
+
+                </ng-container>
+
+            </ng-container>
+
+        </div>
+
+        <div class="title-holder">
+
+            {{ model.Caption }}
+
+        </div>
+
+    </div>
+
+</ng-container>

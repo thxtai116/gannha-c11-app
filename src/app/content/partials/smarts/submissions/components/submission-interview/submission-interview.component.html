@@ -1,0 +1,163 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text text-uppercase">
+                <span>{{ title }}</span>
+            </h3>
+        </div>
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form class="m-form" [formGroup]="form">
+
+            <div class="form-group m-form__group row">
+
+                <div class="col-xl-12 col-lg-12">
+
+                    <mat-checkbox color="primary" formControlName="IsOnline">
+                        <span translate="FORM.FIELDS.INTERVIEW_ONLINE"></span>
+                    </mat-checkbox>
+
+                </div>
+
+            </div>
+
+            <div class="form-group m-form__group row">
+
+                <div class="col-xl-3 col-lg-3">
+
+                    <mat-form-field class="mat-form-field-fluid">
+                        <mat-label>
+                            <span translate="FORM.FIELDS.INTERVIEW_TIME"></span>
+                        </mat-label>
+
+                        <input matInput readonly [matDatepicker]="picker" formControlName="Date"
+                            (click)="picker.open()">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+
+                    </mat-form-field>
+
+                </div>
+
+                <div class="col-xl-3 col-lg-3">
+
+                    <mat-form-field class="mat-form-field-fluid">
+
+                        <mat-select formControlName="Time" [ngClass]="'text-center'">
+
+                            <mat-option *ngFor="let time of times" [value]="time.value">
+                                {{ time.text }}
+                            </mat-option>
+
+                        </mat-select>
+
+                    </mat-form-field>
+
+                </div>
+
+            </div>
+
+            <ng-container *ngIf="!form.get('IsOnline').value">
+                <div class="form-group m-form__group row">
+
+                    <div class="col-xl-6 col-lg-6">
+
+                        <mat-form-field class="mat-form-field-fluid">
+
+                            <mat-label>
+                                <span translate="FORM.FIELDS.INTERVIEW_ADDRESS"></span>
+                            </mat-label>
+
+                            <input matInput formControlName="Address">
+
+                        </mat-form-field>
+
+                    </div>
+
+
+                    <div class="col-xl-6 col-lg-6">
+
+                        <mat-form-field class="mat-form-field-fluid">
+
+                            <mat-label>
+                                <span translate="FORM.FIELDS.NOTE"></span>
+                            </mat-label>
+
+                            <input matInput formControlName="Note">
+
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group m-form__group row">
+
+                    <div class="col-xl-12 col-lg-12">
+
+                        <div class="mat-label-alike">
+                            <span translate="FORM.FIELDS.LOCATION"></span>
+                        </div>
+
+                        <m-location-form [address]="form.get('Address').value" [readonly]="false"
+                            formControlName="Location">
+                        </m-location-form>
+
+                    </div>
+
+                </div>
+            </ng-container>
+
+        </form>
+
+    </ng-container>
+
+    <ng-container mPortletFooter>
+
+        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+
+            <div class="m-form__actions m-form__actions--solid">
+
+                <div class="row">
+
+                    <div class="col-xl-6 col-lg-6">
+
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6">
+
+                        <div class="button-group text-right">
+
+                            <button class="btn btn-success m-btn m-btn--icon text-uppercase" type="button"
+                                (click)="onSubmit()">
+                                <span>
+                                    <i class="fa fa-save"></i>
+                                    <span translate="COMMON.SAVE"></span>
+                                </span>
+                            </button>
+
+                            <button class="btn btn-default m-btn m-btn--icon text-uppercase" type="button"
+                                cdkFocusInitial (click)="onCancel()">
+                                <span>
+                                    <i class="fa fa-times"></i>
+                                    <span translate="COMMON.CLOSE">CANCEL</span>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

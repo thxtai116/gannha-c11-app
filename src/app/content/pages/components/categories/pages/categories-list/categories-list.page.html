@@ -1,0 +1,51 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button type="button" class="btn btn-primary m-btn m-btn--icon text-uppercase"
+                (click)="refresh()">
+                <span>
+                    <i class="fa fa-sync-alt"></i>
+                    <span>{{ 'COMMON.REFRESH' | translate }}</span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="m-form">
+
+            <div class="m-form__filtration">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-4 m--margin-bottom-10-mobile">
+
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput #searchInput>
+                            <mat-hint align="start">
+                                <strong>{{ 'COMMON.FILTER' | translate }}</strong>
+                                <span class="text-lowercase"> {{ 'COMMON.BY_NAME' | translate }}</span>
+                            </mat-hint>
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <m-advanced-categories [categories]="viewData.categories$" [searchText]="viewData.searchText"
+            (onEditCategory)="onEditCategory($event)" (onAddCategory)="onAddCategory($event)"></m-advanced-categories>
+
+    </ng-container>
+
+</m-portlet>

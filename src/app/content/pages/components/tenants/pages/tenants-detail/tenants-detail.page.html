@@ -1,0 +1,148 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a *ngIf="!viewControl.editMode" [routerLink]="['/tenants']"
+            class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button type="button" *ngIf="viewControl.editMode"
+                class="btn btn-secondary m-btn m-btn--icon text-uppercase" (click)="cancel()">
+                <span>
+                    <i class="fa fa-times"></i>
+                    <span translate="COMMON.CANCEL"></span>
+                </span>
+            </button>
+
+            <button type="button" *ngIf="viewControl.editMode"
+                class="btn btn-success m-btn m-btn--icon text-uppercase" (click)="save()">
+                <span>
+                    <i class="fa fa-save"></i>
+                    <span translate="COMMON.SAVE"></span>
+                </span>
+            </button>
+
+            <!-- <button type="button" *ngIf="!viewControl.editMode"
+                class="btn btn-primary m-btn m-btn--icon text-uppercase" (click)="edit()">
+                <span>
+                    <i class="fa fa-edit"></i>
+                    <span translate="COMMON.EDIT"></span>
+                </span>
+            </button> -->
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form *ngIf="!viewControl.editMode" class="m-form">
+
+            <div class="row">
+
+                <div class="col-xl-12 col-lg-12">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.FULL_NAME">OWNER_NAME</span>
+                            </label>
+
+                            <label class="col-xl-10 col-lg-10 col-form-label">
+                                <span class="m--font-brand">{{ viewModel.tenant.OwnerName }}</span>
+                            </label>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="TENANTS.NAME">NAME</span>
+                            </label>
+
+                            <label class="col-xl-10 col-lg-10 col-form-label">
+                                <span class="m--font-brand">{{ viewModel.tenant.CompanyName }}</span>
+                            </label>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.PHONE">PHONE</span>
+                            </label>
+
+                            <div class="col-xl-10 col-lg-10 col-form-label">
+
+                                <span class="m--font-brand">{{ viewModel.tenant.Phone }}</span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.ADDRESS">ADDRESS</span>
+                            </label>
+
+                            <div class="col-xl-10 col-lg-10 col-form-label">
+
+                                <span class="m--font-brand">{{ viewModel.tenant.Address }}</span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.TAXCODE">TAXCODE</span>
+                            </label>
+
+                            <div class="col-xl-10 col-lg-10 col-form-label">
+
+                                <span class="m--font-brand">{{ viewModel.tenant.TaxCode }}</span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="COMMON.STATUS">STATUS</span>
+                            </label>
+
+                            <div class="col-xl-10 col-lg-10">
+
+                                <m-object-status-badge [status]="viewModel.tenant.Status"></m-object-status-badge>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+</m-portlet>

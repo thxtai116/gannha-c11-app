@@ -1,0 +1,67 @@
+<ng-container *ngIf="readonly">
+
+    <div class="form-group m-form__group row">
+
+        <div class="col-xl-12 col-lg-12">
+
+            <m-administration-selector [administration]="viewData.address$.getValue().Administration">
+            </m-administration-selector>
+
+        </div>
+
+    </div>
+
+    <div class="form-group m-form__group row">
+
+        <div class="col-xl-12 col-lg-12">
+
+            <div class="mat-label-alike">
+                <span translate="ADDRESS.STREET"></span>
+            </div>
+
+            <div>
+
+                <span class="m--font-brand">{{ viewModel.street }}</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</ng-container>
+
+<ng-container *ngIf="!readonly">
+
+    <div class="form-group m-form__group row">
+
+        <div class="col-xl-12 col-lg-12">
+
+            <m-administration-selector [required]="required" [readonly]="false"
+                [administration]="viewData.address$.getValue().Administration"
+                (onChange)="onAdministrationChange($event)">
+            </m-administration-selector>
+
+        </div>
+
+    </div>
+
+    <div class="form-group m-form__group row">
+
+        <label class="col-xl-12 col-lg-12">
+
+            <mat-form-field class="mat-form-field-fluid">
+
+                <mat-label>
+                    <span translate="ADDRESS.STREET"></span>
+                </mat-label>
+
+                <input matInput type="text" [(ngModel)]="viewData.street" (change)="onStreetChange()">
+
+            </mat-form-field>
+
+        </label>
+
+    </div>
+
+</ng-container>

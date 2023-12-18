@@ -1,0 +1,128 @@
+<div class="form-group m-form__group row">
+
+    <div class="col-xl-6 col-lg-6 col-md-6">
+
+        <div class="icon-list">
+
+            <button type="button" mat-icon-button color="primary" (click)="onBack()"
+                [disabled]="!currentFolder || currentFolder.Id === 0">
+                <i class="fa fa-arrow-left"></i>
+            </button>
+
+            <button *ngIf="viewControl.buttons['image']" type="button" mat-icon-button color="primary"
+                (click)="onUploadImagesClick()"
+                title="{{ 'RESOURCES.IMAGE_UPLOAD' | translate }}. {{ 'RESOURCES.HINTS.LIMITTED_IMAGE_SIZE' | translate }}">
+                <i class="fa fa-file-image"></i>
+            </button>
+
+            <button *ngIf="viewControl.buttons['video']" type="button" mat-icon-button color="primary"
+                (click)="onUploadVideosClick()"
+                title="{{ 'RESOURCES.VIDEO_UPLOAD' | translate }}. {{ 'RESOURCES.HINTS.LIMITTED_VIDEO_SIZE' | translate }}">
+                <i class="fa fa-file-video"></i>
+            </button>
+
+            <button *ngIf="viewControl.buttons['file']" type="button" mat-icon-button color="primary"
+                (click)="onUploadFilesClick()" title="{{ 'RESOURCES.FILE_UPLOAD' | translate }}">
+                <i class="fa fa-file-pdf"></i>
+            </button>
+
+            <button *ngIf="viewControl.buttons['folder']" type="button" mat-icon-button color="primary"
+                [mdePopoverTriggerFor]="folderFormPopover" mdePopoverTriggerOn="click"
+                title="{{ 'RESOURCES.CREATE_FOLDER' | translate }}" (closed)="onFolderFormClose()">
+                <i class="fa fa-folder"></i>
+            </button>
+
+            <button type="button" mat-icon-button (click)="onReload()">
+                <i class="fas fa-redo"></i>
+            </button>
+
+            <button type="button" mat-icon-button (click)="onClear()" title="Bỏ chọn tất cả tập tin">
+                <i class="fas fa-broom"></i>
+            </button>
+
+        </div>
+
+        <input [hidden]="true" multiple="true" type="file" accept="image/jpeg, image/png"
+            (change)="onImagesSelected($event)" #imageInput />
+
+        <input [hidden]="true" multiple="true" type="file" accept=".pdf" (change)="onDocumentFileChange($event)"
+            #documentInput />
+
+        <input [hidden]="true" multiple="false" type="file" accept="video/mp4" (change)="onVideoFileChange($event)"
+            #videoInput />
+    </div>
+
+    <div class="col-xl-6 col-lg-6 col-md-6">
+
+        <h4>
+
+            <span *ngFor="let path of folderPath" class="col-form-label m--font-bold m--font-brand pointer"
+                (click)="onFolderPathClick(path)">
+                {{ path.Name + '/'}}
+            </span>
+
+        </h4>
+
+    </div>
+
+</div>
+
+<div class="form-group m-form__group row">
+
+    <div class="col-xl-12 col-lg-12 col-md-12">
+
+        <rbp-files-grid [files$]="viewData.explorers$" [selectedFiles$]="selectedFiles$" [config]="viewData.gridConfig"
+            (onItemClick)="onItemClick($event)" (onRemoveClick)="onRemoveClick($event)"
+            (onEditClick)="onEditClick($event)"></rbp-files-grid>
+
+    </div>
+
+</div>
+
+<mde-popover #folderFormPopover="mdePopover" [mdePopoverOverlapTrigger]="false" [mdePopoverCloseOnClick]="false">
+
+    <mat-card>
+
+        <mat-card-content>
+
+            <form class="m-form" [formGroup]="form">
+
+                <div class="form-group m-form__group row">
+
+                    <div class="col-xl-12 col-lg-12">
+
+                        <mat-form-field class="mat-form-field-fluid">
+
+                            <mat-label>
+                                <span translate="FORM.FIELDS.FOLDERS.NAME" class="required"></span>
+                            </mat-label>
+
+                            <input matInput formControlName="Name">
+
+                            <mat-error *ngIf="Name.invalid && (Name.dirty || Name.touched)">
+                                <m-error-parser [ngControl]="Name"></m-error-parser>
+                            </mat-error>
+
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </mat-card-content>
+
+        <mat-card-actions>
+
+            <button type="button" class="btn btn-success btn-sm text-uppercase" (click)="onSubmitFolder()">
+                <span>
+                    <i class="fa fa-save"></i>
+                </span>
+            </button>
+
+        </mat-card-actions>
+
+    </mat-card>
+
+</mde-popover>

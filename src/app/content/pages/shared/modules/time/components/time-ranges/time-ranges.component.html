@@ -1,0 +1,204 @@
+<ng-container *ngIf="readonly">
+
+    <p *ngFor="let range of displayTimeRanges$ | async">
+
+        {{ range.times | timeRangeToText }}
+
+    </p>
+
+</ng-container>
+
+<div [hidden]="readonly || !prototypeMode">
+
+    <div>
+
+        <mat-checkbox color="primary" [(ngModel)]="viewData.is24h" (change)="onIs24hChecked_Prototype($event.checked)">
+            {{ 'TIME_RANGE.ALL_DAY' | translate }}
+        </mat-checkbox>
+
+    </div>
+
+    <ng-container *ngFor="let timeRange of displayTimeRanges; let i = index">
+
+        <div class="form-group m-form__group row">
+
+            <div class="col-lg-5 col-xl-5">
+
+                <ng-container *ngIf="!timeRange.is24h">
+
+                    <mat-form-field class="mat-form-field-fluid">
+
+                        <mat-select [(ngModel)]="timeRange.times[0]" [ngClass]="'text-center'"
+                            (selectionChange)="onSelectTime()">
+
+                            <mat-option *ngFor="let time of times" [value]="time.value">
+                                {{ time.text }}
+                            </mat-option>
+
+                        </mat-select>
+
+                    </mat-form-field>
+
+                </ng-container>
+
+            </div>
+
+            <div class="col-lg-5 col-xl-5">
+
+                <ng-container *ngIf="!timeRange.is24h">
+
+                    <mat-form-field class="mat-form-field-fluid">
+
+                        <mat-label>
+                            <span>{{ 'TIME_RANGE.END_TIME' | translate }}</span>
+                        </mat-label>
+
+                        <mat-select [(ngModel)]="timeRange.times[1]" [ngClass]="'text-center'"
+                            (selectionChange)="onSelectTime()">
+
+                            <mat-option *ngFor="let time of times" [value]="time.value">
+                                {{ time.text }}
+                            </mat-option>
+
+                        </mat-select>
+
+                    </mat-form-field>
+
+                </ng-container>
+
+            </div>
+
+            <div class="col-lg-2 col-xl-2" *ngIf='i > 0'>
+
+                <!-- <button type="button" class="btn btn-danger m-btn m-btn--icon text-uppercase"
+                    (click)="onRemoveTimeRange(i)">
+                    <span>
+                        <i class="fa fa-times"></i>
+                        <span translate="COMMON.REMOVE"></span>
+                    </span>
+                </button> -->
+
+                <button mat-icon-button color="warn" matTooltip="{{ 'COMMON.REMOVE' | translate }}"
+                    (click)="onRemoveTimeRange(i)">
+                    <i class="fa fa-trash"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+    <button type="button" *ngIf="displayTimeRanges[0] && !displayTimeRanges[0].is24h" class="btn btn-primary m-btn m-btn--icon text-uppercase"
+        (click)="onCreateTimeRange()">
+        <span>
+            <i class="fa fa-plus"></i>
+            <span translate="COMMON.ADD_TIME_RANGE"></span>
+        </span>
+    </button>
+
+</div>
+
+<div [hidden]="readonly || prototypeMode">
+
+    <div class="mat-table__wrapper mat-table__wrapper--sub">
+
+        <mat-table [dataSource]="displayTimeRanges">
+
+            <ng-container matColumnDef="Start">
+                <mat-header-cell *matHeaderCellDef>{{ 'TIME_RANGE.START_TIME' | translate }}</mat-header-cell>
+                <mat-cell *matCellDef="let timeRange,let i = index;">
+
+                    <ng-container *ngIf="timeRange.is24h">0:0</ng-container>
+
+                    <ng-container *ngIf="!timeRange.is24h">
+
+                        <mat-form-field class="mat-form-field-fluid">
+
+                            <mat-select [(ngModel)]="timeRange.times[0]" [ngClass]="'text-center'"
+                                (selectionChange)="onSelectTime()">
+
+                                <mat-option *ngFor="let time of times" [value]="time.value">
+                                    {{ time.text }}
+                                </mat-option>
+
+                            </mat-select>
+
+                        </mat-form-field>
+
+                    </ng-container>
+
+                </mat-cell>
+
+            </ng-container>
+
+            <ng-container matColumnDef="End">
+                <mat-header-cell *matHeaderCellDef>{{ 'TIME_RANGE.END_TIME' | translate }}</mat-header-cell>
+                <mat-cell *matCellDef="let timeRange,let i = index;">
+
+                    <ng-container *ngIf="timeRange.is24h">24:0</ng-container>
+
+
+                    <ng-container *ngIf="!timeRange.is24h">
+
+                        <mat-form-field class="mat-form-field-fluid">
+
+                            <mat-select [(ngModel)]="timeRange.times[1]" [ngClass]="'text-center'"
+                                (selectionChange)="onSelectTime()">
+
+                                <mat-option *ngFor="let time of times" [value]="time.value">
+                                    {{ time.text }}
+                                </mat-option>
+
+                            </mat-select>
+
+                        </mat-form-field>
+
+                    </ng-container>
+
+                </mat-cell>
+
+            </ng-container>
+
+            <ng-container matColumnDef="AllDay">
+                <mat-header-cell *matHeaderCellDef>{{ 'TIME_RANGE.ALL_DAY' | translate }}</mat-header-cell>
+                <mat-cell *matCellDef="let timeRange,let i = index;">
+
+                    <mat-checkbox color="primary" [(ngModel)]="timeRange.is24h"
+                        (change)="onIs24hChecked($event.checked,i)">
+                    </mat-checkbox>
+
+                </mat-cell>
+
+            </ng-container>
+
+            <ng-container matColumnDef="Actions">
+                <mat-header-cell *matHeaderCellDef [ngClass]="'mat-cell--actions'">
+
+                    <div class="icon-wrapper">
+
+                        <i class="fa fa-plus text-primary pointer" (click)="onCreateTimeRange()"></i>
+
+                    </div>
+
+                </mat-header-cell>
+
+                <mat-cell *matCellDef="let timeRange,let i = index;" [ngClass]="'mat-cell--actions'">
+
+                    <div class="icon-wrapper">
+
+                        <i class="fa fa-times text-danger pointer" (click)="onRemoveTimeRange(i)"></i>
+
+                    </div>
+
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumnsEdit"></mat-header-row>
+            <mat-row *matRowDef="let timeRange; columns: displayedColumnsEdit;"></mat-row>
+
+        </mat-table>
+
+    </div>
+
+</div>

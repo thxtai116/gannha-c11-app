@@ -1,0 +1,77 @@
+<ng-container>
+
+    <div class="row">
+        <div class="col-xl-6 col-lg-6">
+            <m-board [data]="viewData.sellingPointBoard" [loading$]="viewData.loadingSPBoard$"
+                [reset]="viewData.resetChart" (onDateRangeChange)="onBoardChange($event)"></m-board>
+        </div>
+        <div class="col-xl-6 col-lg-6">
+            <m-board [data]="viewData.sellingPointActionBoard" [loading$]="viewData.loadingSPActionBoard$"
+                [reset]="viewData.resetChart" (onDateRangeChange)="onActionBoardChange($event)"></m-board>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-3 col-lg-3">
+            <m-top-chart [title]="_translate.instant('REPORT.TOP_5_SP_BY_VIEWS')" [data]="viewData.sellingPointViewsTop"
+                [reset]="viewData.resetChart" [loading$]="viewData.loadingSPViewsTop$"
+                (onDateRangeChange)="onSPTopViewDateRangeChange($event)">
+            </m-top-chart>
+        </div>
+        <div class="col-xl-3 col-lg-3">
+            <m-top-chart [title]="_translate.instant('REPORT.TOP_5_SP_BY_ACTION')"
+                [data]="viewData.sellingPointActionTop" [reset]="viewData.resetChart"
+                [loading$]="viewData.loadingSPActionTop$" (onDateRangeChange)="onSPTopActionDateRangeChange($event)">
+            </m-top-chart>
+        </div>
+        <div class="col-xl-6 col-lg-6">
+            <m-line-chart [data]="viewData.actionChart" [title]="_translate.instant('REPORT.SP_ACTION_CLICKS_CHART')"
+                [loading$]="viewData.loadingActionChart$" [colors]="['#f1c40f']"
+                (onDateRangeChange)="onActionChartDateRangeChange($event)">
+            </m-line-chart>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6 col-lg-6">
+            <m-line-chart [data]="viewData.appointmentChart"
+                [title]="_translate.instant('REPORT.SP_APPOINTMENT_CLICKS_CHART')"
+                [loading$]="viewData.loadingAppointmentChart$" [colors]="['#2980b9']"
+                (onDateRangeChange)="onAppointmentChartDateRangeChange($event)">
+            </m-line-chart>
+        </div>
+        <div class="col-xl-6 col-lg-6">
+            <m-line-chart [data]="viewData.appointmentShareChart"
+                [title]="_translate.instant('REPORT.SP_APPOINTMENT_SHARE_CHART')"
+                [loading$]="viewData.loadingAppointmentShareChart$" [colors]="['#e74c3c']"
+                (onDateRangeChange)="onAppointmentShareChartDateRangeChange($event)">
+            </m-line-chart>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6 col-lg-6">
+            <m-line-chart [data]="viewData.newAppointmentChart"
+                [title]="_translate.instant('REPORT.SP_NEW_APPOINTMENTS_CHART')"
+                [loading$]="viewData.loadingNewAppointmentShareChart$" [colors]="['#1abc9c']"
+                (onDateRangeChange)="onNewAppointmentChartDateRangeChange($event)">
+            </m-line-chart>
+        </div>
+        <div class="col-xl-6 col-lg-6">
+            <m-line-chart [data]="viewData.posterViewChart" [title]="_translate.instant('REPORT.SP_POSTER_VIEWS_CHART')"
+                [loading$]="viewData.loadingPosterViewChart$" [colors]="['#8c7ae6']"
+                (onDateRangeChange)="onPosterViewChartDateRangeChange($event)">
+            </m-line-chart>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6 col-lg-6">
+            <m-line-chart [data]="viewData.viewChart" [title]="_translate.instant('REPORT.SP_VIEWS_CHART')"
+                [loading$]="viewData.loadingViewChart$" [colors]="['#f39c12']"
+                (onDateRangeChange)="onViewChartDateRangeChange($event)">
+            </m-line-chart>
+        </div>
+    </div>
+
+</ng-container>

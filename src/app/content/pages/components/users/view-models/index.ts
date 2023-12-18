@@ -1,0 +1,1 @@
+export * from "./user-basic-info.view-model";

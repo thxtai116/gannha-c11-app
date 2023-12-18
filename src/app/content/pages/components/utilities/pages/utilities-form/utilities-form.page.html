@@ -1,0 +1,154 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a [routerLink]="['/utilities']"
+            class="btn btn-secondary m-btn m-btn--icon m--margin-right-10 text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span>{{ 'COMMON.BACK' | translate }}</span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+            <button type="button" class="btn btn-success m-btn m-btn--icon text-uppercase"
+                (click)="save()">
+                <span>
+                    <i class="fa fa-save"></i>
+                    <span>{{ 'COMMON.SAVE' | translate }}</span>
+                </span>
+            </button>
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form class="m_form" [formGroup]="viewForm.formGroup">
+
+            <div class="row">
+
+                <div class="col-xl-6">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span>{{ 'FORM.FIELDS.VINAME' | translate }}</span>
+                                <span class="m--font-danger">&nbsp;(*)</span>
+                            </label>
+
+                            <div class="col-xl-10 col-lg-10">
+
+                                <mat-form-field class="mat-form-field-fluid">
+
+                                    <input matInput formControlName="ViName">
+
+                                    <mat-error
+                                        *ngIf="viewForm.formGroup.get('ViName').invalid && viewForm.formGroup.get('ViName').touched">
+                                        <m-error-parser [ngControl]="viewForm.formGroup.get('ViName')">
+                                        </m-error-parser>
+                                    </mat-error>
+
+                                </mat-form-field>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span>{{ 'FORM.FIELDS.ENNAME' | translate }}</span>
+                                <span class="m--font-danger">&nbsp;(*)</span>
+                            </label>
+
+                            <div class="col-xl-10 col-lg-10">
+
+                                <mat-form-field class="mat-form-field-fluid">
+
+                                    <input matInput formControlName="EnName">
+
+                                    <mat-error
+                                        *ngIf="viewForm.formGroup.get('EnName').invalid && viewForm.formGroup.get('EnName').touched">
+                                        <m-error-parser [ngControl]="viewForm.formGroup.get('EnName')">
+                                        </m-error-parser>
+                                    </mat-error>
+
+                                </mat-form-field>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span>{{ 'FORM.FIELDS.DESCRIPTION' | translate }}</span>
+                                <span class="m--font-danger">&nbsp;(*)</span>
+                            </label>
+
+                            <div class="col-xl-10 col-lg-10">
+
+                                <mat-form-field class="mat-form-field-fluid">
+
+                                    <input matInput formControlName="Description">
+
+                                    <mat-error
+                                        *ngIf="viewForm.formGroup.get('Description').invalid && viewForm.formGroup.get('Description').touched">
+                                        <m-error-parser [ngControl]="viewForm.formGroup.get('Description')">
+                                        </m-error-parser>
+                                    </mat-error>
+
+                                </mat-form-field>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span>{{ 'FORM.FIELDS.ICON' | translate }}</span>
+                                <span class="m--font-danger">&nbsp;(*)</span>
+                            </label>
+
+                            <div class="col-xl-2 col-lg-2">
+
+                                <m-icons-carousel [readonly]="false" formControlName="Icons">
+
+                                </m-icons-carousel>
+
+                                <button mat-icon-button color="primary" (click)="uploadIcon()">
+                                    <mat-icon>cloud_upload</mat-icon>
+                                </button>
+
+                                <mat-error class="mat-error-alike"
+                                    *ngIf="viewForm.formGroup.get('Icons').invalid && viewForm.formGroup.get('Icons').touched">
+                                    <m-error-parser [ngControl]="viewForm.formGroup.get('Icons')">
+                                    </m-error-parser>
+                                </mat-error>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+    <input type="file" [hidden]="true" style="display: none;" (change)="fileChange($event)" accept="image/png" multiple
+        #fileInputMulti>
+
+</m-portlet>

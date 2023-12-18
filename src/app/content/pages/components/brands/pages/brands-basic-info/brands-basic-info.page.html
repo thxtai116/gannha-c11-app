@@ -1,0 +1,411 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a [routerLink]="['/brands']" class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+            <button *ngIf="viewData.brand.Status === 8" type="button"
+                class="btn btn-success m-btn m-btn--icon text-uppercase" (click)="activate()">
+                <span>
+                    <i class="fa fa-lightbulb"></i>
+                    <span>{{ 'COMMON.ACTIVATE' | translate }}</span>
+                </span>
+            </button>
+
+            <button *ngIf="viewData.brand.Status === 2 || viewData.brand.Status === 0" type="button"
+                class="btn btn-danger m-btn m-btn--icon text-uppercase" (click)="deactivate()">
+                <span>
+                    <i class="fa fa-ban"></i>
+                    <span>{{ 'COMMON.DEACTIVATE' | translate }}</span>
+                </span>
+            </button>
+
+            <button type="button" class="btn btn-success m-btn m-btn--icon text-uppercase" (click)="save()">
+                <span>
+                    <i class="fa fa-save"></i>
+                    <span>{{ 'COMMON.SAVE' | translate }}</span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="row">
+
+            <form class="m-form col-lg-7 col-xl-7" [formGroup]="form">
+
+                <div class="m-form__section m-form__section--first">
+
+                    <div class="form-group m-form__group row">
+
+                        <div class="col-xl-6 col-lg-6">
+
+                            <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                                <ng-container mPortletHeadTitle>
+
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            <span>
+                                                {{ 'BRANDS.BASIC_INFO' | translate }}
+                                            </span>
+                                        </h3>
+                                    </div>
+
+                                </ng-container>
+
+                                <ng-container mPortletBody>
+
+                                    <div class="form-group m-form__group row">
+
+                                        <div class="col-xl-6 col-lg-12">
+
+                                            <mat-form-field class="mat-form-field-fluid">
+
+                                                <mat-label>
+                                                    <span translate="FORM.FIELDS.NAME">BRAND NAME</span>
+                                                    <span class="text-danger">&nbsp;(*)</span>
+                                                </mat-label>
+
+                                                <input matInput formControlName="BrandName">
+
+                                                <mat-error
+                                                    *ngIf="form.get('BrandName').invalid && form.get('BrandName').touched">
+                                                    <m-error-parser [ngControl]="form.get('BrandName')">
+                                                    </m-error-parser>
+                                                </mat-error>
+
+                                            </mat-form-field>
+
+                                        </div>
+
+                                        <div class="col-xl-6 col-lg-6">
+
+                                            <div class="mat-label-alike">
+                                                <span translate="FORM.FIELDS.STATUS"></span>
+                                            </div>
+
+                                            <div>
+                                                <m-object-status-badge [status]="viewModel.brand.Status">
+                                                </m-object-status-badge>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-xl-6 col-lg-12 col-form-label">
+
+                                            <mat-checkbox color="primary" formControlName="NearMeBrand">
+                                                <span translate="FORM.FIELDS.NEAR_ME_BRAND"></span>
+                                            </mat-checkbox>
+
+                                        </div>
+
+                                        <div class="col-xl-12 col-lg-12">
+
+                                            <mat-form-field class="mat-form-field-fluid">
+
+                                                <mat-label>
+                                                    <span translate="FORM.FIELDS.SLOGAN"></span>
+                                                </mat-label>
+
+                                                <input matInput formControlName="BrandDescription">
+
+                                            </mat-form-field>
+
+                                        </div>
+
+                                    </div>
+
+                                </ng-container>
+
+                            </m-portlet>
+
+                        </div>
+
+                        <div class="col-xl-6 col-lg-6">
+
+                            <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                                <ng-container mPortletHeadTitle>
+
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            <span>
+                                                {{ 'BRANDS.MEDIA' | translate }}
+                                            </span>
+                                        </h3>
+                                    </div>
+
+                                </ng-container>
+
+                                <ng-container mPortletBody>
+
+                                    <div class="form-group m-form__group row">
+
+                                        <div class="col-xl-12 col-lg-12">
+
+                                            <div class="mat-label-alike">
+                                                <span translate="FORM.FIELDS.UTILITIES"></span>
+                                            </div>
+
+                                            <m-utilities-carousel [readonly]="false" formControlName="Utilities">
+                                            </m-utilities-carousel>
+
+                                        </div>
+
+                                        <div class="col-xl-6 col-lg-12">
+
+                                            <rbp-files-control formControlName="BrandLogo" [limitted]="1"
+                                                [quickUpload]="1">
+
+                                                <ng-container ImagesSelectLabel>
+                                                    <span translate="FORM.FIELDS.LOGO"></span>
+                                                </ng-container>
+
+                                            </rbp-files-control>
+
+                                        </div>
+
+                                        <div class="col-xl-6 col-lg-12">
+
+                                            <rbp-files-control formControlName="BrandMarker" [limitted]="1"
+                                                [quickUpload]="1">
+
+                                                <ng-container ImagesSelectLabel>
+                                                    <span translate="FORM.FIELDS.MARKER"></span>
+                                                </ng-container>
+
+                                            </rbp-files-control>
+
+                                        </div>
+
+                                    </div>
+
+                                </ng-container>
+
+                            </m-portlet>
+
+                        </div>
+
+                        <div class="col-xl-12 col-lg-12">
+
+                            <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                                <ng-container mPortletHeadTitle>
+
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            <span>
+                                                {{ 'BRANDS.CLASSIFY_INFO' | translate }}
+                                            </span>
+                                        </h3>
+                                    </div>
+
+                                </ng-container>
+
+                                <ng-container mPortletBody>
+
+                                    <div class="form-group m-form__group row">
+
+                                        <div class="col-xl-12 col-lg-12">
+
+                                            <m-multi-select [data]="viewData.filterCategories$"
+                                                formControlName="BrandCategories"
+                                                [touched]="form.get('BrandCategories').touched" [required]="true">
+
+                                                <ng-container mMultipleSelectLabel>
+                                                    <span translate="FORM.FIELDS.CATEGORIES"></span>
+                                                    <span class="text-danger">&nbsp;(*)</span>
+                                                </ng-container>
+
+                                                <ng-container mMultipleSelectError
+                                                    *ngIf="form.get('BrandCategories').invalid && form.get('BrandCategories').touched">
+                                                    <m-error-parser [ngControl]="form.get('BrandCategories')">
+                                                    </m-error-parser>
+                                                </ng-container>
+
+                                            </m-multi-select>
+
+                                        </div>
+
+                                        <div class="col-xl-12 col-lg-12">
+
+                                            <m-tags formControlName="BrandTags">
+
+                                                <ng-container mTagsLabel>
+                                                    <span translate="FORM.FIELDS.TAGS"></span>
+                                                </ng-container>
+
+                                            </m-tags>
+
+                                        </div>
+
+                                    </div>
+
+                                </ng-container>
+
+                            </m-portlet>
+
+                        </div>
+
+                        <div class="col-xl-12 col-lg-12">
+
+                            <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                                <ng-container mPortletHeadTitle>
+
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            <span>
+                                                {{ 'BRANDS.CONTACT_INFO' | translate }}
+                                            </span>
+                                        </h3>
+                                    </div>
+
+                                </ng-container>
+
+                                <ng-container mPortletBody>
+
+                                    <div class="form-group m-form__group row">
+
+                                        <div class="col-xl-12 col-lg-12">
+
+                                            <div class="mat-label-alike">
+                                                <span translate="FORM.FIELDS.PHONE"></span>
+                                            </div>
+
+                                            <m-phones [readonly]="false" formControlName="BrandPhones"></m-phones>
+
+                                        </div>
+
+                                    </div>
+
+                                </ng-container>
+
+                            </m-portlet>
+
+                        </div>
+
+                        <div class="col-xl-12 col-lg-12">
+
+                            <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                                <ng-container mPortletHeadTitle>
+
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            <span>
+                                                {{ 'BRANDS.OPEN_CLOSE_TIME' | translate }}
+                                            </span>
+                                        </h3>
+                                    </div>
+
+                                </ng-container>
+
+                                <ng-container mPortletBody>
+
+                                    <div class="col-xl-12 col-lg-12">
+
+                                        <div class="mat-label-alike">
+                                            <span translate="FORM.FIELDS.OPEN_HOURS"></span>
+                                        </div>
+
+                                        <m-time-range-grid formControlName="BrandOpeningHours">
+                                        </m-time-range-grid>
+
+                                    </div>
+
+                                </ng-container>
+
+                            </m-portlet>
+
+                        </div>
+                        <div class="col-xl-12 col-lg-12">
+
+                            <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                                <ng-container mPortletHeadTitle>
+
+                                    <div class="m-portlet__head-title">
+                                        <h3 class="m-portlet__head-text">
+                                            <span>
+                                                {{ 'BRANDS.INFORMATION_MORE' | translate }}
+                                            </span>
+                                        </h3>
+                                    </div>
+
+                                </ng-container>
+
+                                <ng-container mPortletBody>
+
+                                    <div class="form-group m-form__group row">
+
+                                        <div class="col-xl-12 col-lg-12">
+
+                                            <mat-form-field class="mat-form-field-fluid">
+
+                                                <mat-label>
+                                                    <span translate="FORM.FIELDS.COMPANY_NAME"></span>
+                                                </mat-label>
+
+                                                <input matInput formControlName="BrandCompany">
+
+                                            </mat-form-field>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group m-form__group row">
+
+
+                                        <div class="col-xl-12 col-lg-12">
+
+                                            <mat-form-field class="mat-form-field-fluid">
+
+                                                <mat-label>
+                                                    <span translate="FORM.FIELDS.TAXCODE"></span>
+                                                </mat-label>
+
+                                                <input matInput formControlName="BrandTaxCode">
+
+                                            </mat-form-field>
+
+                                        </div>
+
+                                    </div>
+
+                                </ng-container>
+
+                            </m-portlet>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+            <div class="col-lg-5 col-xl-5">
+                <m-brand-embryo [formControl]="brandEmbryo"></m-brand-embryo>
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

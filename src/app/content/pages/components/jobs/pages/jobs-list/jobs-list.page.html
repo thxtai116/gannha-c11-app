@@ -1,0 +1,150 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button *ngIf="viewData.brand$.getValue().Id && viewData.brand$.getValue().Id.length > 0" type="button"
+                class="btn btn-primary m-btn m-btn--icon text-uppercase" (click)="refresh()">
+                <span>
+                    <i class="fa fa-sync-alt"></i>
+                    <span translate="COMMON.REFRESH"></span>
+                </span>
+            </button>
+
+            <button *ngIf="viewData.brand$.getValue().Id && viewData.brand$.getValue().Id.length > 0" type="button"
+                class="btn btn-primary m-btn m-btn--icon text-uppercase" (click)="create()">
+                <span>
+                    <i class="fa fa-plus"></i>
+                    <span translate="JOBS.NEW_JOB"></span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="m-form">
+
+            <div class="m-form__filtration">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <div class="m-form__control">
+
+                            <m-single-select [data]="viewData.recruitments$" [(ngModel)]="viewFilter.filterRecruitment"
+                                (change)="loadJobs()">
+                                <span mSingleSelectActionLabel>{{ 'COMMON.SEARCH' | translate }}</span>
+                                <span mSingleSelectActionHint class="text-lowercase">
+                                    {{ 'COMMON.BY_RECRUITMENT' | translate }}</span>
+                            </m-single-select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="mat-table__wrapper">
+
+            <mat-table class="mat-elevation-z8" [dataSource]="dataSource">
+
+                <ng-container matColumnDef="Index">
+                    <mat-header-cell *matHeaderCellDef [ngClass]="'mat-cell--index'">#
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let job; let i = index;" [ngClass]="'mat-cell--index'">
+                        {{ i + 1 + paginator.pageIndex * paginator.pageSize }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Title">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.TITLE' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let job">
+                        <a [routerLink]="['/jobs', job.Id]">{{ job.Title }}</a>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="StartDate">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.START_DATE' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let job">
+                        {{ job.StartDate | date : 'dd MMM, yyyy' }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="EndDate">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.END_DATE' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let job">
+                        {{ job.EndDate | date : 'dd MMM, yyyy' }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Status">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.STATUS' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let job">
+                        <m-object-status-badge [status]="job.Status"></m-object-status-badge>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Actions">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.ACTIONS' | translate }}</mat-header-cell>
+
+                    <mat-cell *matCellDef="let job">
+
+                        <button mat-icon-button color="primary" matTooltip="{{ 'JOBS.BASIC_INFO' | translate }}"
+                            [routerLink]="['/jobs', job.Id]">
+                            <i class="fa fa-info-circle"></i>
+                        </button>
+
+                        <button mat-icon-button color="primary" matTooltip="{{ 'JOBS.SUBMISSIONS' | translate }}"
+                            routerLink="/jobs/{{ job.Id }}/submissions">
+                            <mat-icon>local_offer</mat-icon>
+                        </button>
+
+                        <button mat-icon-button color="primary" matTooltip="{{ 'FORM.FIELDS.UNITS' | translate }}"
+                            routerLink="/jobs/{{ job.Id }}/units">
+                            <mat-icon>store</mat-icon>
+                        </button>
+
+                    </mat-cell>
+
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="viewData.displayedColumns"></mat-header-row>
+
+                <mat-row *matRowDef="let row; columns: viewData.displayedColumns; let i = index;"></mat-row>
+            </mat-table>
+
+            <div class="mat-table__message" *ngIf="!dataSource.hasItems">
+                {{ 'TABLE.NO_RECORDS' | translate }}
+            </div>
+
+        </div>
+
+        <div class="mat-table__bottom">
+
+            <mat-spinner [diameter]="20" *ngIf="viewControl.loading$ | async"></mat-spinner>
+
+            <mat-paginator [pageSize]="paginator.pageSize" [pageSizeOptions]="[10, 20, 50]"
+                [length]="dataSource.paginatorTotal$ | async" [showFirstLastButtons]="true"></mat-paginator>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

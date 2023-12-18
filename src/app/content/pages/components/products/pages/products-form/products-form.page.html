@@ -1,0 +1,356 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a [routerLink]="['/products']" class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button type="button" class="btn btn-success m-btn m-btn--icon text-uppercase" (click)="save()">
+                <span>
+                    <i class="fa fa-save"></i>
+                    <span>{{ 'COMMON.SAVE' | translate }}</span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form class="m-form" [formGroup]="form">
+
+            <div class="m-form__section m-form__section--first">
+
+                <div class="row">
+
+                    <div class="col-xl-6 col-lg-6">
+
+                        <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                            <ng-container mPortletHeadTitle>
+
+                                <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text">
+                                        <span>
+                                            {{ 'COMMERCE_PRODUCTS.DEFINING_DETAIL' | translate }}
+                                        </span>
+                                    </h3>
+                                </div>
+
+                            </ng-container>
+
+                            <ng-container mPortletBody>
+
+                                <div class="form-group m-form__group row">
+
+                                    <div class="col-xl-6 col-lg-6">
+
+                                        <m-multi-select [data]="viewData.filterCats$" formControlName="Categories"
+                                            [touched]="form.get('Categories').touched" [required]="true">
+
+                                            <ng-container mMultipleSelectLabel>
+                                                <span translate="FORM.FIELDS.CATEGORIES"></span>
+                                            </ng-container>
+
+                                            <ng-container mMultipleSelectError
+                                                *ngIf="form.get('Categories').invalid && form.get('Categories').touched">
+                                                <m-error-parser [ngControl]="form.get('Categories')"></m-error-parser>
+                                            </ng-container>
+
+                                        </m-multi-select>
+
+                                    </div>
+
+                                    <div class="col-xl-6 col-lg-6">
+
+                                        <mat-form-field class="mat-form-field-fluid">
+
+                                            <mat-label>
+                                                <span translate="FORM.FIELDS.PRODUCT_PICTURE"></span>&nbsp;(<span
+                                                    translate="FORM.FIELDS.OPTIONAL"></span>)
+                                            </mat-label>
+
+                                            <input matInput formControlName="Picture">
+
+                                            <mat-hint align="start">
+                                                {{ 'FORM.HINTS.URL_INPUT_FOR_PICTURE' | translate }}
+                                            </mat-hint>
+
+                                        </mat-form-field>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group m-form__group row">
+
+                                    <div class="col-xl-6 col-lg-6">
+
+                                        <mat-form-field class="mat-form-field-fluid">
+
+                                            <mat-label>
+                                                <span translate="FORM.FIELDS.ORDER"></span>
+                                            </mat-label>
+                                            <mat-hint align="left">
+                                                <span translate="FORM.HINTS.MIN_VALUE_IS_ONE"></span>
+                                            </mat-hint>
+                                            <input matInput formControlName="DisplayOrder" type="number">
+
+                                            <mat-error
+                                                *ngIf="form.get('DisplayOrder').invalid && form.get('DisplayOrder').touched">
+                                                <m-error-parser [ngControl]="form.get('DisplayOrder')">
+                                                </m-error-parser>
+                                            </mat-error>
+
+
+                                        </mat-form-field>
+
+                                    </div>
+
+                                    <div class="col-xl-6 col-lg-6">
+
+                                        <mat-form-field class="mat-form-field-fluid">
+
+                                            <mat-label>
+                                                <span translate="FORM.FIELDS.TYPE"></span>
+                                            </mat-label>
+
+                                            <mat-select formControlName="ProductType">
+
+                                                <mat-option value="5">
+                                                    {{ 'COMMERCE_PRODUCTS.PRODUCT_TYPES.SINGLE' | translate }}
+                                                </mat-option>
+
+                                                <mat-option value="10">
+                                                    {{ 'COMMERCE_PRODUCTS.PRODUCT_TYPES.GROUP' | translate }}
+                                                </mat-option>
+
+                                            </mat-select>
+
+                                            <mat-error
+                                                *ngIf="form.get('ProductType').invalid && form.get('ProductType').touched">
+                                                <m-error-parser [ngControl]="form.get('ProductType')"></m-error-parser>
+                                            </mat-error>
+
+                                        </mat-form-field>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group m-form__group row">
+
+                                    <div class="col-xl-6 col-lg-6 col-form-label">
+
+                                        <mat-checkbox color="primary" formControlName="Published">
+                                            <span translate="FORM.FIELDS.PUBLISHED"></span>
+                                        </mat-checkbox>
+
+                                    </div>
+
+                                    <div class="col-xl-6 col-lg-6 col-form-label">
+
+                                        <mat-checkbox color="primary" formControlName="MarkAsNew">
+                                            <span translate="FORM.FIELDS.MARK_AS_NEW"></span>
+                                        </mat-checkbox>
+
+                                    </div>
+
+                                </div>
+
+                            </ng-container>
+
+                        </m-portlet>
+
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6">
+
+                        <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                            <ng-container mPortletHeadTitle>
+
+                                <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text">
+                                        <span>
+                                            {{ 'COMMERCE_PRODUCTS.BASIC_INFO' | translate }}
+                                        </span>
+                                    </h3>
+                                </div>
+
+                            </ng-container>
+
+                            <ng-container mPortletBody>
+
+                                <div class="form-group m-form__group row">
+
+                                    <div class="col-xl-6 col-lg-6">
+
+                                        <mat-form-field class="mat-form-field-fluid">
+
+                                            <mat-label>
+                                                <span translate="FORM.FIELDS.NAME"></span>
+                                            </mat-label>
+
+                                            <input matInput formControlName="Name">
+
+                                            <mat-hint align="start">
+                                                {{ 'FORM.HINTS.THREE_CHARACTER_AT_LEAST' | translate }}
+                                            </mat-hint>
+
+                                            <mat-error *ngIf="form.get('Name').invalid && form.get('Name').touched">
+                                                <m-error-parser [ngControl]="form.get('Name')">
+                                                </m-error-parser>
+                                            </mat-error>
+
+                                        </mat-form-field>
+
+                                    </div>
+
+                                    <div class="col-xl-6 col-lg-6">
+
+                                        <mat-form-field class="mat-form-field-fluid">
+
+                                            <mat-label>
+                                                <span translate="FORM.FIELDS.SKU"></span>
+                                            </mat-label>
+
+                                            <input matInput formControlName="Sku">
+
+                                            <mat-hint align="start">
+                                                <span translate="FORM.HINTS.THREE_CHARACTER_AT_LEAST"></span>
+                                            </mat-hint>
+                                            <mat-hint align="end">
+                                                <span translate="FORM.HINTS.SKU_EXAMPLE"></span>
+                                            </mat-hint>
+
+                                            <mat-error *ngIf="form.get('Sku').invalid && form.get('Sku').touched">
+                                                <m-error-parser [ngControl]="form.get('Sku')">
+                                                </m-error-parser>
+                                            </mat-error>
+
+
+                                        </mat-form-field>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group m-form__group row">
+
+                                    <div class="col-xl-6 col-lg-6">
+
+                                        <mat-form-field class="mat-form-field-fluid">
+
+                                            <mat-label>
+                                                <span translate="FORM.FIELDS.SHORT_DESCRIPTION"></span>&nbsp;(<span
+                                                    translate="FORM.FIELDS.OPTIONAL"></span>)
+                                            </mat-label>
+
+                                            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
+                                                formControlName="ShortDescription"></textarea>
+
+                                            <mat-error
+                                                *ngIf="form.get('ShortDescription').invalid && form.get('ShortDescription').touched">
+                                                <m-error-parser [ngControl]="form.get('ShortDescription')">
+                                                </m-error-parser>
+                                            </mat-error>
+
+                                        </mat-form-field>
+
+                                    </div>
+
+                                    <div class="col-xl-6 col-lg-6">
+
+                                        <mat-form-field class="mat-form-field-fluid">
+
+                                            <mat-label>
+                                                <span translate="FORM.FIELDS.FULL_DESCRIPTION"></span>&nbsp;(<span
+                                                    translate="FORM.FIELDS.OPTIONAL"></span>)
+                                            </mat-label>
+
+                                            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
+                                                formControlName="FullDescription"></textarea>
+
+                                            <mat-error
+                                                *ngIf="form.get('FullDescription').invalid && form.get('FullDescription').touched">
+                                                <m-error-parser [ngControl]="form.get('FullDescription')">
+                                                </m-error-parser>
+                                            </mat-error>
+
+                                        </mat-form-field>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group m-form__group row">
+
+                                    <div class="col-xl-6 col-lg-6">
+
+                                        <mat-form-field class="mat-form-field-fluid">
+
+                                            <mat-label>
+                                                <span translate="FORM.FIELDS.PRICE"></span>
+                                            </mat-label>
+
+                                            <mat-hint align="left">
+                                                <span translate="FORM.HINTS.MIN_VALUE_IS_ONE"></span>
+                                            </mat-hint>
+
+                                            <span matSuffix>VND</span>
+                                            <input matInput formControlName="Price" type="number">
+
+                                            <mat-error *ngIf="form.get('Price').invalid && form.get('Price').touched">
+                                                <m-error-parser [ngControl]="form.get('Price')">
+                                                </m-error-parser>
+                                            </mat-error>
+
+                                        </mat-form-field>
+
+                                    </div>
+
+                                    <div class="col-xl-6 col-lg-6">
+
+                                        <mat-form-field class="mat-form-field-fluid">
+
+                                            <mat-label>
+                                                <span translate="FORM.FIELDS.OLD_PRICE"></span>
+                                            </mat-label>
+
+                                            <span matSuffix>VND</span>
+                                            <input matInput formControlName="OldPrice" type="number">
+
+                                        </mat-form-field>
+
+                                    </div>
+
+                                </div>
+
+                            </ng-container>
+
+                        </m-portlet>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+</m-portlet>

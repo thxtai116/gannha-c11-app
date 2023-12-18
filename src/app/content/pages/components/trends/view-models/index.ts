@@ -1,0 +1,1 @@
+export * from "./trend-basic-info.view-model";

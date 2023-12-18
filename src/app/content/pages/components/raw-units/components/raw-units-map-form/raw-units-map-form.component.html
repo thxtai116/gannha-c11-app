@@ -1,0 +1,359 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text text-uppercase">
+                <span translate="RAW_UNITS.IDENTIFICATION" class="text-uppercase"></span>
+            </h3>
+        </div>
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="row">
+
+            <div class="col-xl-6 col-lg-6">
+
+                <div class="m-form">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="m-form__heading">
+
+                            <h3 class="m-form__heading-title" translate="RAW_UNITS.ITEM">
+                            </h3>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.NAME"></span>
+                            </label>
+
+                            <div class="col-xl-4 col-lg-4 col-form-label">
+
+                                <span class="m--font-brand">{{ viewData.rawUnit.Name }}</span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.STATUS"></span>
+                            </label>
+
+                            <div class="col-xl-4 col-lg-4 col-form-label">
+
+                                <m-raw-unit-status-badge [status]="viewData.rawUnit.Status"></m-raw-unit-status-badge>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.ADDRESS"></span>
+                            </label>
+
+                            <div class="col-xl-10 col-lg-10 col-form-label">
+
+                                <span class="m--font-brand">{{ viewData.rawUnit.Address }}</span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.CREATED_AT"></span>
+                            </label>
+
+                            <div class="col-xl-4 col-lg-4 col-form-label">
+
+                                <span
+                                    class="m--font-brand">{{ viewData.rawUnit.CreatedAt | date : 'dd MMM, yyyy HH:mm:ss' }}</span>
+
+                            </div>
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.UPDATED_AT"></span>
+                            </label>
+
+                            <div class="col-xl-4 col-lg-4 col-form-label">
+
+                                <span
+                                    class="m--font-brand">{{ viewData.rawUnit.UpdatedAt | date : 'dd MMM, yyyy HH:mm:ss' }}</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-xl-6 col-lg-6">
+
+                <div class="m-form">
+
+                    <div>
+
+                        <mat-tab-group (selectedTabChange)="onMappingModeChanged($event)">
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <span> {{ 'RAW_UNITS.BIND_UNIT' | translate }}</span>
+                                    &nbsp;
+                                </ng-template>
+
+                                <div class="m-form__section m-form__section--first">
+                                    <div class="form-group m-form__group row">
+                                        <div class="m-form__control col-lg-8 col-xl-8">
+                                            <m-single-select [data]="viewData.units$"
+                                                [(ngModel)]="viewFilter.filterUnit" (change)="onUnitSelect()">
+                                                <span mSingleSelectActionLabel>{{ 'COMMON.SEARCH' | translate }}</span>
+                                                <span mSingleSelectActionHint class="text-lowercase">
+                                                    {{ 'COMMON.BY_UNIT' | translate }}</span>
+                                            </m-single-select>
+                                        </div>
+                                    </div>
+
+                                    <ng-container *ngIf="viewModel.unit.Id.length > 0">
+
+                                        <div class="m-form__heading">
+
+                                            <h3 class="m-form__heading-title" translate="RAW_UNITS.IDENTIFIED_UNIT">
+                                            </h3>
+
+                                        </div>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                                <span translate="FORM.FIELDS.STATUS"></span>
+                                            </label>
+
+                                            <div class="col-xl-4 col-lg-4 col-form-label">
+
+                                                <m-object-status-badge [status]="viewModel.unit.Status">
+                                                </m-object-status-badge>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                                <span translate="FORM.FIELDS.ADDRESS"></span>
+                                            </label>
+
+                                            <div class="col-xl-10 col-lg-10 col-form-label">
+
+                                                <span class="m--font-brand">{{ viewModel.unit.Address }}</span>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                                <span translate="FORM.FIELDS.CREATED_AT"></span>
+                                            </label>
+
+                                            <div class="col-xl-4 col-lg-4 col-form-label">
+
+                                                <span
+                                                    class="m--font-brand">{{ viewModel.unit.CreatedAt | date : 'dd MMM, yyyy HH:mm:ss' }}</span>
+
+                                            </div>
+
+                                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                                <span translate="FORM.FIELDS.UPDATED_AT"></span>
+                                            </label>
+
+                                            <div class="col-xl-4 col-lg-4 col-form-label">
+
+                                                <span
+                                                    class="m--font-brand">{{ viewModel.unit.UpdatedAt | date : 'dd MMM, yyyy HH:mm:ss' }}</span>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                                <span translate="FORM.FIELDS.LOCATION"></span>
+                                            </label>
+
+                                            <div class="col-xl-10 col-lg-10">
+
+                                                <m-location-form [(ngModel)]="viewModel.unit.Location">
+                                                </m-location-form>
+
+                                            </div>
+
+                                        </div>
+
+                                    </ng-container>
+
+                                </div>
+                            </mat-tab>
+
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <span> {{ 'RAW_UNITS.NEW_UNIT' | translate }}</span>
+                                    &nbsp;
+                                </ng-template>
+
+                                <div class="m-form__section m-form__section--first">
+                                </div>
+
+                                <ng-container *ngIf="viewControl.newUnit">
+
+                                    <form class="m-form" [formGroup]="form">
+
+                                        <div class="m-form__section m-form__section--first">
+
+                                            <div class="m-form__heading">
+
+                                                <h3 class="m-form__heading-title" translate="RAW_UNITS.NEW_UNIT">
+                                                </h3>
+
+                                            </div>
+
+                                            <div class="form-group m-form__group row">
+
+                                                <div class="col-xl-12 col-lg-12">
+
+                                                    <mat-form-field class="mat-form-field-fluid">
+
+                                                        <mat-label>
+                                                            <span translate="FORM.FIELDS.NAME"></span>
+                                                        </mat-label>
+
+                                                        <input matInput formControlName="UnitName">
+
+                                                        <mat-error
+                                                            *ngIf="form.get('UnitName').invalid && form.get('UnitName').touched">
+                                                            <m-error-parser [ngControl]="form.get('UnitName')">
+                                                            </m-error-parser>
+                                                        </mat-error>
+
+                                                    </mat-form-field>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group m-form__group row">
+
+                                                <div class="col-xl-12 col-lg-12">
+
+                                                    <m-address-contact [required]="true" [readonly]="false"
+                                                        formControlName="AddressContact">
+                                                    </m-address-contact>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group m-form__group row">
+
+                                                <div class="col-xl-12 col-lg-12">
+
+                                                    <div class="mat-label-alike">
+                                                        <span translate="UNITS.LOCATION"></span>
+                                                    </div>
+
+                                                    <m-location-form
+                                                        [address]="form.get('AddressContact').value.Address.vi || ''"
+                                                        [readonly]="false" formControlName="Location">
+                                                    </m-location-form>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group m-form__group row">
+
+                                                <div class="col-xl-12 col-lg-12">
+
+                                                    <div class="mat-label-alike">
+                                                        <span translate="FORM.FIELDS.PHONE"></span>
+                                                    </div>
+
+                                                    <m-phones [readonly]="false" formControlName="Phones"></m-phones>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </form>
+
+                                </ng-container>
+                            </mat-tab>
+                        </mat-tab-group>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletFooter>
+
+        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+
+            <div class="m-form__actions m-form__actions--solid">
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <div class="button-group text-right">
+
+                            <button class="btn btn-success m-btn m-btn--icon text-uppercase" type="button"
+                                (click)="onSubmit()">
+                                <span>
+                                    <i class="fa fa-save"></i>
+                                    <span translate="COMMON.SAVE">SAVE</span>
+                                </span>
+                            </button>
+
+                            <button class="btn btn-default m-btn m-btn--icon text-uppercase" type="button"
+                                cdkFocusInitial (click)="close()">
+                                <span>
+                                    <i class="fa fa-times"></i>
+                                    <span translate="COMMON.CLOSE">CLOSE</span>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

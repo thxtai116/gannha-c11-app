@@ -1,0 +1,79 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle *ngIf="!readonly">
+
+        <mat-form-field class="mat-form-field-fluid">
+
+            <mat-label>
+                <span translate="COLLECTIONS.TYPE"></span>
+            </mat-label>
+
+            <mat-select [(ngModel)]="viewData.collectionType" (selectionChange)="onCollectionTypeChange()">
+
+                <mat-option [value]="'0'">
+                    <span translate="COLLECTIONS.TYPES.BRAND"></span>
+                </mat-option>
+
+                <mat-option [value]="'1'">
+                    <span translate="COLLECTIONS.TYPES.SELLING_POINT"></span>
+                </mat-option>
+
+            </mat-select>
+
+        </mat-form-field>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="icon-wrapper">
+
+            <ng-container *ngIf="models$ | async as models">
+                <i *ngIf="viewData.collectionType == COLLECTION_SELLING_POINT_TYPE && models.length > 0"
+                    class="fa fa-calendar-alt text-primary pointer" (click)="showTimeline()"></i>
+            </ng-container>
+
+            <i *ngIf="!readonly && viewData.collectionType !== ''" class="fa fa-plus text-primary pointer"
+                (click)="add()"></i>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form *ngIf="readonly" class="m-form">
+
+            <div class="form-group m-form__group row">
+
+                <div class="col-xl-12 col-lg-12">
+
+                    <m-collections-slider [collections$]="models$"
+                    class='collection'></m-collections-slider>
+
+                </div>
+
+            </div>
+
+        </form>
+
+        <form *ngIf="!readonly" class="m-form">
+
+            <div class="form-group m-form__group row">
+
+                <div class="col-xl-12 col-lg-12">
+
+                    <m-collections-slider class='collection' [readonly]="false" [collections$]="models$"
+                        (onChange)="onSliderChange($event)">
+                    </m-collections-slider>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+</m-portlet>

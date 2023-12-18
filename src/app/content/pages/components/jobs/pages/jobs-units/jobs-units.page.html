@@ -1,0 +1,141 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a *ngIf="!viewControl.editMode" routerLink="/jobs" class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button type="button" *ngIf="viewControl.editMode"
+                class="btn btn-secondary m-btn m-btn--icon text-uppercase" (click)="cancel()">
+                <span>
+                    <i class="fa fa-times"></i>
+                    <span translate="COMMON.CANCEL"></span>
+                </span>
+            </button>
+
+            <button type="button" *ngIf="viewControl.editMode" class="btn btn-success m-btn m-btn--icon text-uppercase"
+                (click)="save()">
+                <span>
+                    <i class="fa fa-save"></i>
+                    <span translate="COMMON.SAVE"></span>
+                </span>
+            </button>
+
+            <button type="button" *ngIf="!viewControl.editMode" class="btn btn-primary m-btn m-btn--icon text-uppercase"
+                (click)="edit()">
+                <span>
+                    <i class="fa fa-edit"></i>
+                    <span translate="COMMON.EDIT"></span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form *ngIf="!viewControl.editMode" class="m-form" id="m_form">
+
+            <div class="row">
+
+                <div class="col-xl-12">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.APPLY_FOR"></span>
+                            </label>
+
+                            <div *ngIf="viewModel.config.AllUnits" class="col-xl-4 col-lg-4 col-form-label">
+                                <span class="m--font-brand" translate="FORM.FIELDS.ALL_UNITS"></span>
+                            </div>
+
+                        </div>
+
+                        <div *ngIf="!viewModel.config.AllUnits" class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.UNITS"></span>
+                            </label>
+
+                            <div class="col-xl-10 col-lg-10">
+
+                                <m-units-list [brandId]="viewModel.config.BrandId" [unitIds]="viewModel.config.Units">
+                                </m-units-list>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+        <form *ngIf="viewControl.editMode" class="m-form" id="m_form" [formGroup]="form">
+
+            <div class="row">
+
+                <div class="col-xl-12">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.APPLY_FOR"></span>
+                            </label>
+
+                            <div class="col-xl-4 col-lg-4 col-form-label">
+
+                                <mat-checkbox color="primary" formControlName="AllUnits">
+                                    {{ 'FORM.FIELDS.ALL_UNITS' | translate }}</mat-checkbox>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row" *ngIf="!form.get('AllUnits').value">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.UNITS"></span>
+                            </label>
+
+                            <div class="col-xl-10 col-lg-10">
+
+                                <m-units-list [readonly]="false" [brandId]="viewModel.config.BrandId"
+                                    [unitIds]="viewModel.config.Units" formControlName="Units">
+                                </m-units-list>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+</m-portlet>

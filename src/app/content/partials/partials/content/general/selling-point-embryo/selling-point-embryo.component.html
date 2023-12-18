@@ -1,0 +1,78 @@
+<div class="form-group">
+
+    <mat-card class="embryo-card">
+
+        <mat-card-header class="embryo-title">
+
+            <img #spLogo mat-card-avatar src="{{ displayLogo }}" />
+
+            <mat-card-title class="embryo-type">
+                {{ displayType }}
+            </mat-card-title>
+
+            <mat-card-subtitle class="embryo-time">
+                <span translate="SELLING_POINT_PREVIEW.TIME"></span>
+            </mat-card-subtitle>
+
+        </mat-card-header>
+
+        <mat-card-content class="embryo-card-content">
+
+            <div class="embryo-sp-title">
+
+                <p *ngIf="spPreview.SellingPointTitle && spPreview.SellingPointTitle.length > 0"
+                    class="embryo-selling-point-title">
+                    {{ spPreview.SellingPointTitle }}</p>
+                <p *ngIf="!spPreview.SellingPointTitle || spPreview.SellingPointTitle.length === 0"
+                    class="embryo-selling-point-title" translate="SELLING_POINT_PREVIEW.SELLING_POINT.TITLE">
+                </p>
+
+            </div>
+
+            <img mat-card-image src="{{ displayBackground }}">
+
+            <div class="embryo-sp-description">
+
+                <p class="pre-line"
+                *ngIf="spPreview.SellingPointDescription && spPreview.SellingPointDescription.length > 0">
+                {{ spPreview.SellingPointDescription }}</p>
+            <p *ngIf="!spPreview.SellingPointDescription || spPreview.SellingPointDescription.length === 0"
+                translate="SELLING_POINT_PREVIEW.SELLING_POINT.DESCRIPTION">
+            </p>
+
+        </div>
+
+        </mat-card-content>
+
+        <mat-card-actions>
+
+            <div class="buttons--wrapper">
+
+                <button type="button" class="btn btn-secondary m-btn m-btn--icon">
+                    <span>
+                        <i class="fa fa-share-alt"></i>
+                        <span translate="SELLING_POINT_PREVIEW.ACTIONS.SHARE"></span>
+                    </span>
+                </button>
+
+                <button type="button" class="btn btn-secondary m-btn m-btn--icon">
+                    <span>
+                        <i class="fa fa-user-friends"></i>
+                        <span translate="SELLING_POINT_PREVIEW.ACTIONS.BE_HERE"></span>
+                    </span>
+                </button>
+
+                <button type="button" class="btn btn-action-api m-btn m-btn--icon pull-right">
+                    <span>
+                        <span *ngIf="!spPreview.ActionButton || spPreview.ActionButton.length == 0" translate="SELLING_POINT_PREVIEW.ACTIONS.ACTION_API"></span>
+                        <span>{{ spPreview.ActionButton }}</span>
+                    </span>
+                </button>
+
+            </div>
+
+        </mat-card-actions>
+
+    </mat-card>
+
+</div>

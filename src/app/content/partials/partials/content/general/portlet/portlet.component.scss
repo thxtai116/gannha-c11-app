@@ -1,0 +1,24 @@
+.m-portlet.m-portlet--theme-default {
+	.m-portlet__head {
+		background-color: aqua;
+	}
+}
+
+.m-portlet.m-portlet--theme-gray-header {
+	border-radius: 5px;
+	margin-bottom: 0;
+	height: 100%;
+	// height: auto;
+
+	.m-portlet__head {
+		background-color: #f0f0f0;
+		border-bottom: none;
+		height: 3rem;
+	}
+}
+
+.m-portlet.m-portlet--no-header {
+	.m-portlet__head {
+		display: none;
+	}
+}

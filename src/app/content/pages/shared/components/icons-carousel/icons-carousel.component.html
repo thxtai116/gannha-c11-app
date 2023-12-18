@@ -1,0 +1,44 @@
+<div class="icon-container">
+
+    <div class="icon" *ngFor="let res of viewData.icons$ | async">
+
+        <div class="icon-body">
+
+            <div class="icon-thumb">
+
+                <span class="remover">
+
+                    <mat-icon *ngIf="!readonly" color="warn" (click)="onRemove(res)">close
+                    </mat-icon>
+
+                </span>
+
+                <img class="img-fluid img-loading" [src]="storageEndpoint + res + '.png'"
+                    default="{{ storageEndpoint + res + '.jpg'}}" />
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <ng-container *ngIf="!readonly">
+
+        <ng-container *ngIf="viewData.icons$ | async as resources">
+
+            <div *ngIf="resources.length === 0" class="upload-icon">
+
+                <span class="uploader">
+
+                    <mat-icon color="primary" (click)="onAdd()">add</mat-icon>
+
+                </span>
+
+            </div>
+
+        </ng-container>
+
+
+    </ng-container>
+
+</div>

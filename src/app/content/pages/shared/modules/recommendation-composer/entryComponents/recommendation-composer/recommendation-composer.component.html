@@ -1,0 +1,58 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTools>
+
+        <div class="icon-wrapper">
+
+            <i *ngIf="!readonly" class="fa fa-plus text-primary pointer" (click)="add()"></i>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form *ngIf="readonly" class="m-form">
+
+            <div class="m-form__section m-form__section--first">
+
+                <div class="form-group m-form__group row">
+
+                    <label class="col-xl-12 col-lg-12 col-form-label">
+
+                        <m-collections-slider class='recommendation'
+                         [collections$]="models$"></m-collections-slider>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+        </form>
+
+        <form *ngIf="!readonly" class="m-form">
+
+            <div class="m-form__section m-form__section--first">
+
+                <div class="form-group m-form__group row">
+
+                    <label class="col-xl-12 col-lg-12 col-form-label">
+
+                        <m-collections-slider class='recommendation'
+                         [readonly]="false" [collections$]="models$"
+                            (onChange)="onSliderChange($event)">
+                        </m-collections-slider>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+</m-portlet>

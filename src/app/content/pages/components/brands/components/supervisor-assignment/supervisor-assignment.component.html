@@ -1,0 +1,81 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text text-uppercase">
+                <span translate="COMMON.SUPERVISORS_SELECTOR" class="text-uppercase"></span>
+            </h3>
+        </div>
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form class="m-form" [formGroup]="form">
+
+            <div class="form-group m-form__group row">
+
+                <label class="col-xl-12 col-lg-12">
+
+                    <m-single-select [data]="viewData.users$" formControlName="UserId">
+
+                        <span mSingleSelectLabel translate="FORM.FIELDS.FULL_NAME">
+                        </span>
+
+                        <ng-container mSingleSelectError *ngIf="ctrlUserId.invalid && ctrlUserId.touched">
+                            <m-error-parser [ngControl]="ctrlUserId">
+                            </m-error-parser>
+                        </ng-container>
+
+                    </m-single-select>
+
+                </label>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+    <ng-container mPortletFooter>
+
+        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+
+            <div class="m-form__actions m-form__actions--solid">
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <div class="button-group text-right">
+
+                            <button *ngIf="ctrlUserId.value.length > 0"
+                                class="btn btn-success m-btn m-btn--icon text-uppercase" type="button"
+                                (click)="onSubmit()">
+                                <span>
+                                    <i class="fa fa-check-circle"></i>
+                                    <span translate="COMMON.CONFIRM">CONFIRM</span>
+                                </span>
+                            </button>
+
+                            <button class="btn btn-default m-btn m-btn--icon text-uppercase" type="button"
+                                cdkFocusInitial (click)="onCancelClick()">
+                                <span>
+                                    <i class="fa fa-times"></i>
+                                    <span translate="COMMON.CLOSE">CANCEL</span>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

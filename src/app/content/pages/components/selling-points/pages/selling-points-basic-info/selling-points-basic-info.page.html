@@ -1,0 +1,537 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a routerLink="/selling-points" class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button *ngIf="viewModel.sellingPoint.Status === 8" type="button"
+                class="btn btn-success m-btn m-btn--icon text-uppercase" (click)="activate()">
+                <span>
+                    <i class="fa fa-lightbulb"></i>
+                    <span>{{ 'COMMON.ACTIVATE' | translate }}</span>
+                </span>
+            </button>
+
+            <button *ngIf="viewModel.sellingPoint.Status === 2 || viewModel.sellingPoint.Status === 0" type="button"
+                class="btn btn-danger m-btn m-btn--icon text-uppercase" (click)="deactivate()">
+                <span>
+                    <i class="fa fa-ban"></i>
+                    <span>{{ 'COMMON.DEACTIVATE' | translate }}</span>
+                </span>
+            </button>
+
+            <button type="button" class="btn btn-success m-btn m-btn--icon text-uppercase" (click)="save()">
+                <span>
+                    <i class="fa fa-save"></i>
+                    <span translate="COMMON.SAVE"></span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form class="m-form" id="m_form" [formGroup]="form">
+
+            <div class="row">
+
+                <div class="col-xl-8 col-lg-8">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-lg-6 col-xl-6">
+
+                                <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                                    <ng-container mPortletHeadTitle>
+
+                                        <div class="m-portlet__head-title">
+                                            <h3 class="m-portlet__head-text">
+                                                <span>
+                                                    {{ 'SELLING_POINTS.DEFINING_DETAIL' | translate }}
+                                                </span>
+                                            </h3>
+                                        </div>
+
+                                    </ng-container>
+
+                                    <ng-container mPortletBody>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-xl-6 col-lg-6">
+
+                                                <mat-form-field class="mat-form-field-fluid">
+
+                                                    <mat-label>
+                                                        <span translate="FORM.FIELDS.SELLING_POINTS_TYPE"></span>
+                                                    </mat-label>
+
+                                                    <mat-select formControlName="Icon">
+
+                                                        <mat-option *ngFor="let icon of viewData.icons"
+                                                            [value]="icon.id">
+
+                                                            <img class="mat-option-text__img" src="{{ icon.url }}"
+                                                                onError="this.src='/assets/app/media/img/default_user.jpg'" />
+                                                            <span>{{ icon.text }}</span>
+
+                                                        </mat-option>
+
+                                                    </mat-select>
+
+                                                    <mat-error
+                                                        *ngIf="form.get('Icon').invalid && form.get('Icon').touched">
+                                                        <m-error-parser [ngControl]="form.get('Icon')">
+                                                        </m-error-parser>
+                                                    </mat-error>
+
+                                                </mat-form-field>
+
+                                            </div>
+
+                                            <div class="col-xl-6 col-lg-6">
+
+                                                <mat-form-field class="mat-form-field-fluid">
+
+                                                    <mat-label>
+                                                        <span translate="FORM.FIELDS.ORDER"></span>
+                                                    </mat-label>
+
+                                                    <input matInput type="number" formControlName="Order">
+
+                                                </mat-form-field>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-lg-12 col-xl-12">
+
+                                                <m-tags formControlName="Tags">
+
+                                                    <ng-container mTagsLabel>
+                                                        <span translate="FORM.FIELDS.TAGS"></span>
+                                                    </ng-container>
+
+                                                    <ng-container mTagsHint>
+                                                        {{ 'FORM.FIELDS.TAGS_HINT' | translate }}
+                                                    </ng-container>
+
+                                                    <ng-container mTagsError
+                                                        *ngIf="form.get('Tags').invalid && form.get('Tags').touched">
+                                                        <m-error-parser [ngControl]="form.get('Tags')">
+                                                        </m-error-parser>
+                                                    </ng-container>
+
+                                                </m-tags>
+
+                                            </div>
+
+                                        </div>
+
+                                    </ng-container>
+
+                                </m-portlet>
+
+                            </div>
+
+                            <div class="col-lg-6 col-xl-6">
+
+                                <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                                    <ng-container mPortletHeadTitle>
+
+                                        <div class="m-portlet__head-title">
+                                            <h3 class="m-portlet__head-text">
+                                                <span>
+                                                    {{ 'SELLING_POINTS.TIMING' | translate }}
+                                                </span>
+                                            </h3>
+                                        </div>
+
+                                    </ng-container>
+
+                                    <ng-container mPortletBody>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-xl-12 col-lg-12">
+
+                                                <m-date-range-picker-prototype
+                                                    placeholder="{{ 'FORM.FIELDS.DATE_FROM_TO' | translate }}"
+                                                    [allowPreset]="false" formControlName="DateRanges">
+                                                </m-date-range-picker-prototype>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-xl-12 col-lg-12">
+
+                                                <m-schedule-repeat [prototypeMode]="true" formControlName="Repeat">
+                                                </m-schedule-repeat>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-xl-12 col-lg-12">
+
+                                                <m-time-ranges [readonly]="false" [prototypeMode]="true"
+                                                    formControlName="TimeRanges">
+                                                </m-time-ranges>
+
+                                                <mat-error class="mat-error-alike"
+                                                    *ngIf="form.get('TimeRanges').invalid && form.get('TimeRanges').touched">
+                                                    <m-error-parser [ngControl]="form.get('TimeRanges')">
+                                                    </m-error-parser>
+                                                </mat-error>
+
+                                            </div>
+
+                                        </div>
+
+                                    </ng-container>
+
+                                </m-portlet>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-xl-12 col-lg-12">
+
+                                <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                                    <ng-container mPortletHeadTitle>
+
+                                        <div class="m-portlet__head-title">
+                                            <h3 class="m-portlet__head-text">
+                                                <span>
+                                                    {{ 'SELLING_POINTS.BASIC_INFO' | translate }}
+                                                </span>
+                                            </h3>
+                                        </div>
+
+                                    </ng-container>
+
+                                    <ng-container mPortletBody>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-lg-6 col-xl-6">
+
+                                                <mat-form-field class="mat-form-field-fluid" hintLabel="Tối đa 15 từ">
+
+                                                    <mat-label>
+                                                        <span translate="FORM.FIELDS.TITLE"></span>
+                                                    </mat-label>
+
+                                                    <input matInput formControlName="SellingPointTitle"
+                                                        #SellingPointTitle>
+
+                                                    <mat-hint align="end">
+                                                        {{ SellingPointTitle.value | wordsCounter }}/{{ sellingPointMaxWords.MaxTitle }}
+                                                    </mat-hint>
+
+                                                    <mat-error
+                                                        *ngIf="form.get('SellingPointTitle').invalid && form.get('SellingPointTitle').touched">
+                                                        <m-error-parser [ngControl]="form.get('SellingPointTitle')">
+                                                        </m-error-parser>
+                                                    </mat-error>
+
+                                                </mat-form-field>
+
+                                            </div>
+
+                                            <div class="col-lg-6 col-xl-6">
+
+                                                <mat-form-field class="mat-form-field-fluid" hintLabel="Tối đa 15 từ">
+
+                                                    <mat-label>
+                                                        <span translate="FORM.FIELDS.TITLE_EN"></span>
+                                                        &nbsp;(<span translate="FORM.FIELDS.OPTIONAL"></span>)
+                                                    </mat-label>
+
+                                                    <input matInput formControlName="SellingPointTitleEn"
+                                                        #SellingPointTitleEn>
+
+                                                    <mat-hint align="end">
+                                                        {{ SellingPointTitleEn.value | wordsCounter }}/{{ sellingPointMaxWords.MaxTitle }}
+                                                    </mat-hint>
+
+                                                </mat-form-field>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-lg-6 col-xl-6">
+
+                                                <mat-form-field class="mat-form-field-fluid" hintLabel="Tối đa 300 từ">
+
+                                                    <mat-label>
+                                                        <span translate="FORM.FIELDS.DESCRIPTION"></span>
+                                                    </mat-label>
+
+                                                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
+                                                        formControlName="SellingPointDescription"
+                                                        #SellingPointDescription></textarea>
+
+                                                    <mat-hint align="end">
+                                                        {{ SellingPointDescription.value | wordsCounter }}/{{ sellingPointMaxWords.MaxDescription }}
+                                                    </mat-hint>
+
+                                                    <mat-error
+                                                        *ngIf="form.get('SellingPointDescription').invalid && form.get('SellingPointDescription').touched">
+                                                        <m-error-parser
+                                                            [ngControl]="form.get('SellingPointDescription')">
+                                                        </m-error-parser>
+                                                    </mat-error>
+
+                                                </mat-form-field>
+
+                                            </div>
+
+                                            <div class="col-lg-6 col-xl-6">
+
+                                                <mat-form-field class="mat-form-field-fluid" hintLabel="Tối đa 300 từ">
+
+                                                    <mat-label>
+                                                        <span translate="FORM.FIELDS.DESCRIPTION_EN"></span>
+                                                        &nbsp;(<span translate="FORM.FIELDS.OPTIONAL"></span>)
+                                                    </mat-label>
+
+                                                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
+                                                        formControlName="SellingPointDescriptionEn"
+                                                        #SellingPointDescriptionEn></textarea>
+
+                                                    <mat-hint align="end">
+                                                        {{ SellingPointDescriptionEn.value | wordsCounter }}/{{ sellingPointMaxWords.MaxDescription }}
+                                                    </mat-hint>
+
+                                                </mat-form-field>
+
+                                            </div>
+
+                                        </div>
+
+                                    </ng-container>
+
+                                </m-portlet>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-lg-6 col-xl-6">
+
+                                <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                                    <ng-container mPortletHeadTitle>
+
+                                        <div class="m-portlet__head-title">
+                                            <h3 class="m-portlet__head-text">
+                                                <span>
+                                                    {{ 'SELLING_POINTS.ACTION_API_LONG' | translate }}
+                                                </span>
+                                            </h3>
+                                        </div>
+
+                                    </ng-container>
+
+                                    <ng-container mPortletBody>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-xl-12 col-lg-12">
+
+                                                <m-selling-point-service [readonly]="false" formControlName="Actions">
+                                                </m-selling-point-service>
+
+                                                <mat-error class="mat-error-alike"
+                                                    *ngIf="form.get('Actions').invalid && form.get('Actions').touched">
+                                                    <m-error-parser [ngControl]="form.get('Actions')">
+                                                    </m-error-parser>
+                                                </mat-error>
+
+                                            </div>
+
+                                        </div>
+
+                                    </ng-container>
+
+                                </m-portlet>
+
+                            </div>
+
+                            <div class="col-lg-6 col-xl-6">
+
+                                <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                                    <ng-container mPortletHeadTitle>
+
+                                        <div class="m-portlet__head-title">
+                                            <h3 class="m-portlet__head-text">
+                                                <span>
+                                                    {{ 'SELLING_POINTS.MEDIA' | translate }}
+                                                </span>
+                                            </h3>
+                                        </div>
+
+                                    </ng-container>
+
+                                    <ng-container mPortletBody>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-lg-12 col-xl-12">
+
+                                                <rbp-files-control formControlName="Posters" [limitted]="6"
+                                                    [quickUpload]="1">
+
+                                                    <ng-container ImagesSelectLabel>
+                                                        <span translate="FORM.FIELDS.IMAGE"></span>
+                                                    </ng-container>
+
+                                                    <ng-container ImagesSelectErrors
+                                                        *ngIf="form.get('Posters').invalid && (form.get('Posters').touched || form.get('Posters').dirty)">
+
+                                                        <m-error-parser [ngControl]="form.get('Posters')">
+                                                        </m-error-parser>
+
+                                                    </ng-container>
+
+                                                </rbp-files-control>
+
+                                            </div>
+
+                                            <div class="col-lg-12 col-xl-12">
+
+                                                <rbp-files-control formControlName="Video"
+                                                    [acceptedType]="['Video','Folder']" [limitted]="1"
+                                                    [templates]="['global']" [buttons]="['video','folder']">
+
+                                                    <ng-container ImagesSelectLabel>
+                                                        <span translate="FORM.FIELDS.VIDEO"></span>
+                                                        &nbsp;(<span translate="FORM.FIELDS.OPTIONAL"></span>)
+                                                    </ng-container>
+
+                                                </rbp-files-control>
+
+                                            </div>
+
+                                        </div>
+
+                                    </ng-container>
+
+                                </m-portlet>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-lg-12 col-xl-12">
+
+                                <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                                    <ng-container mPortletHeadTitle>
+
+                                        <div class="m-portlet__head-title">
+                                            <h3 class="m-portlet__head-text">
+                                                <span>
+                                                    {{ 'SELLING_POINTS.APPLIED_UNITS' | translate }}
+                                                </span>
+                                            </h3>
+                                        </div>
+
+                                    </ng-container>
+
+                                    <ng-container mPortletBody>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-xl-12 col-lg-12 col-form-label">
+
+                                                <mat-checkbox color="primary" formControlName="ApplyForSomeUnits">
+                                                    {{ 'FORM.FIELDS.ALL_UNITS' | translate }}</mat-checkbox>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group m-form__group row"
+                                            *ngIf="!form.get('ApplyForSomeUnits').value">
+
+                                            <div class="col-xl-12 col-lg-12">
+
+                                                <ng-container *ngIf="!form.get('ApplyForSomeUnits').value">
+
+                                                    <m-units-list-prototype [readonly]="false"
+                                                        [brandId]="viewData.brand.Id" formControlName="Units">
+                                                    </m-units-list-prototype>
+
+                                                </ng-container>
+
+                                            </div>
+
+                                        </div>
+
+                                    </ng-container>
+
+                                </m-portlet>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-4 col-xl-4">
+
+                    <m-selling-point-embryo [formControl]="sellingPointPreview">
+
+                    </m-selling-point-embryo>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+</m-portlet>

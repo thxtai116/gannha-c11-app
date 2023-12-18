@@ -1,0 +1,58 @@
+<m-portlet>
+
+    <ng-container mPortletHeadTitle>
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text text-uppercase">
+                <span translate="COMMON.PREVIEW_SELECTION"></span>
+            </h3>
+        </div>
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="m-list-timeline m-list-timeline--skin-light m--padding-30">
+            <div class="m-list-timeline__items">
+                <div class="m-list-timeline__item" *ngFor="let item of _data">
+                    <span
+                        class="m-list-timeline__badge m-list-timeline__badge--success"></span>
+                    <span class="m-list-timeline__text">{{ item }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletFooter>
+
+        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+
+            <div class="m-form__actions m-form__actions--solid">
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <div class="button-group text-right">
+
+                            <button class="btn btn-default m-btn m-btn--icon text-uppercase" type="button"
+                                cdkFocusInitial (click)="onClose()">
+                                <span>
+                                    <i class="fa fa-times"></i>
+                                    <span translate="COMMON.CLOSE">CANCEL</span>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

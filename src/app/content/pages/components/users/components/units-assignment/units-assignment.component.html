@@ -1,0 +1,238 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a [routerLink]="['/users']" class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button type="button" class="btn btn-primary m-btn m-btn--icon text-uppercase" (click)="assign()">
+                <span>
+                    <i class="fa fa-edit"></i>
+                    <span translate="COMMON.EDIT"></span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="m-form">
+
+            <div class="m-form__filtration">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <div class="m-form__control">
+
+                            <mat-form-field class="mat-form-field-fluid">
+
+                                <mat-select [(value)]="viewFilter.filterBrand" (selectionChange)="loadUnits()">
+                                    <mat-option value="">All</mat-option>
+                                    <mat-option *ngFor="let brand of viewData.brands" value="{{ brand.Id }}">
+                                        {{ brand.Name }}
+                                    </mat-option>
+                                </mat-select>
+
+                                <mat-hint align="start">
+                                    <strong>{{ 'COMMON.FILTER' | translate }}</strong>
+                                    <span class="text-lowercase"> {{ 'COMMON.BY_BRAND' | translate }}</span>
+                                </mat-hint>
+
+                            </mat-form-field>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <div class="m-form__control">
+
+                            <mat-form-field class="mat-form-field-fluid">
+
+                                <mat-select [(value)]="viewFilter.filterStatus" (selectionChange)="loadUnits()">
+                                    <mat-option value="">All</mat-option>
+                                    <mat-option value="0">Pending</mat-option>
+                                    <mat-option value="2">Active</mat-option>
+                                    <mat-option value="8">Deactive</mat-option>
+                                </mat-select>
+
+                                <mat-hint align="start">
+                                    <strong>{{ 'COMMON.FILTER' | translate }}</strong>
+                                    <span class="text-lowercase"> {{ 'COMMON.BY_STATUS' | translate }}</span>
+                                </mat-hint>
+
+                            </mat-form-field>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput #searchInput>
+
+                            <mat-hint align="start">
+                                <strong class="text-capitalize">{{ 'COMMON.FILTER' | translate }}</strong>
+                                <span class="text-lowercase"> {{ 'COMMON.BY_NAME' | translate }}</span>
+                            </mat-hint>
+
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row align-items-center collapse m-form__group-actions m--margin-top-20 m--margin-bottom-20"
+                [ngClass]="{'show' : viewData.selection.selected.length > 0}">
+
+                <div class="col-xl-12">
+
+                    <div class="m-form__group m-form__group--inline">
+
+                        <div class="m-form__control m-form__group--inline">
+
+                            <button (click)="unassignAll()" class="text-uppercase" mat-raised-button color="warn"
+                                matTooltip="{{ 'USERS.UNASSIGN_SELECTED_UNIT' | translate }}">
+                                <mat-icon>delete</mat-icon> {{ 'USERS.UNASSIGN' | translate }}
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row align-items-center collapse m-form__group-actions"
+                [ngClass]="{'show' : viewData.selection.selected.length > 0}">
+                <div class="col-lg-12 col-xl-12">
+                    <div class="m-form__group">
+                        <div>
+                            <label class="m--font-bold m--font-danger-">
+                                {{ 'COMMON.SELECTED_COUNT' | translate }}:
+                                {{ viewData.selection.selected.length }}</label>
+                        </div>
+                        <div class="m-form__control">
+                            <button mat-raised-button (click)="onPreviewSelection()">
+                                {{ 'COMMON.PREVIEW_SELECTION' | translate }}
+                            </button>&nbsp;
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mat-table__wrapper">
+
+            <mat-table class="mat-elevation-z8" [dataSource]="viewData.dataSource" matSort matSortActive="id"
+                matSortDirection="asc" matSortDisableClear>
+
+                <ng-container matColumnDef="Select">
+
+                    <mat-header-cell *matHeaderCellDef class="mat-column-checkbox">
+                        <mat-checkbox color="primary" (change)="$event ? masterToggle() : null"
+                            [checked]="viewData.selection.hasValue() && isAllSelected()"
+                            [indeterminate]="viewData.selection.hasValue() && !isAllSelected()">
+                        </mat-checkbox>
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let row" class="mat-column-checkbox">
+
+                        <mat-checkbox color="primary" (click)="$event.stopPropagation()"
+                            (change)="$event ? viewData.selection.toggle(row) : null"
+                            [checked]="viewData.selection.isSelected(row)">
+                        </mat-checkbox>
+
+                    </mat-cell>
+
+                </ng-container>
+
+                <ng-container matColumnDef="Index">
+                    <mat-header-cell *matHeaderCellDef [ngClass]="'mat-cell--index'">#
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let unit; let i = index;" [ngClass]="'mat-cell--index'">
+                        {{ i + 1 + paginator.pageIndex * paginator.pageSize }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TABLE.COLUMNS.UNIT_NAME' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let unit">{{ unit.Name }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="BrandName">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TABLE.COLUMNS.BRAND_NAME' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let unit">{{ unit.BrandName }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TABLE.COLUMNS.NAME' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let unit">
+                        <m-object-status-badge [status]="unit.Status"></m-object-status-badge>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Actions">
+                    <mat-header-cell *matHeaderCellDef [ngClass]="'mat-cell--actions'">
+                        {{ 'TABLE.COLUMNS.NAME' | translate }}</mat-header-cell>
+
+                    <mat-cell *matCellDef="let unit" [ngClass]="'mat-cell--actions'">
+
+                        <button mat-icon-button color="warn" matTooltip="{{ 'USERS.UNASSIGN' | translate }}"
+                            (click)="unassign(unit.Id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+
+                    </mat-cell>
+
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="viewData.displayedColumns"></mat-header-row>
+
+                <mat-row *matRowDef="let row; columns: viewData.displayedColumns; let i = index;"></mat-row>
+            </mat-table>
+
+            <div class="mat-table__message" *ngIf="!viewData.dataSource.hasItems">{{ 'TABLE.NO_RECORDS' | translate }}
+            </div>
+
+        </div>
+
+        <div class="mat-table__bottom">
+
+            <mat-spinner [diameter]="20" *ngIf="viewControl.loading$ | async"></mat-spinner>
+
+            <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50]"
+                [length]="viewData.dataSource.paginatorTotal$ | async" [showFirstLastButtons]="true"></mat-paginator>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

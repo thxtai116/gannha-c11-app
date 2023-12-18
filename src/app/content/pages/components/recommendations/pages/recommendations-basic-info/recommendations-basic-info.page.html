@@ -1,0 +1,427 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a *ngIf="!viewControl.editMode" routerLink="/recommendation-configs"
+            class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button type="button" *ngIf="viewControl.editMode"
+                class="btn btn-secondary m-btn m-btn--icon text-uppercase" (click)="cancel()">
+                <span>
+                    <i class="fa fa-times"></i>
+                    <span translate="COMMON.CANCEL"></span>
+                </span>
+            </button>
+
+            <button type="button" *ngIf="viewControl.editMode" class="btn btn-success m-btn m-btn--icon text-uppercase"
+                (click)="save()">
+                <span>
+                    <i class="fa fa-save"></i>
+                    <span translate="COMMON.SAVE"></span>
+                </span>
+            </button>
+
+            <button type="button" *ngIf="!viewControl.editMode" class="btn btn-primary m-btn m-btn--icon text-uppercase"
+                (click)="edit()">
+                <span>
+                    <i class="fa fa-edit"></i>
+                    <span translate="COMMON.EDIT"></span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form *ngIf="!viewControl.editMode" class="m-form" [formGroup]="form">
+
+            <div class="row">
+
+                <div class="col-xl-12 col-lg-12">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+
+                                <span translate="FORM.FIELDS.NAME"></span>
+
+                            </label>
+
+                            <label class="col-xl-4 col-lg-4 col-form-label">
+
+                                <span class="m--font-brand">{{ viewModel.recommendation.Name }}</span>
+
+                            </label>
+
+                            <label class="col-xl-1 col-lg-1 col-form-label">
+
+                                <span translate="FORM.FIELDS.ORDER"></span>
+
+                            </label>
+
+                            <label class="col-xl-1 col-lg-1 col-form-label">
+
+                                <span class="m--font-brand">{{ viewModel.recommendation.Order }}</span>
+
+                            </label>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+
+                                <span translate="FORM.FIELDS.TITLE"></span>
+
+                            </label>
+
+                            <label class="col-xl-4 col-lg-4 col-form-label">
+
+                                <span class="m--font-brand">{{ viewModel.recommendation.Title }}</span>
+
+                            </label>
+
+                            <label class="col-xl-1 col-lg-1 col-form-label">
+
+                                <span translate="FORM.FIELDS.ICON"></span>
+
+                            </label>
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+
+                                <span class="m--font-brand">{{ viewModel.recommendation.Icon }}</span>
+
+                            </label>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-xl-6 col-lg-6">
+
+                                <mat-accordion>
+
+                                    <mat-expansion-panel [ngClass]="'mat-expansion-panel--border-less'">
+
+                                        <mat-expansion-panel-header>
+
+                                            <mat-panel-title>
+
+                                                <i class="fa fa-plus-circle text-primary"
+                                                    title="{{ 'FORM.FIELDS.OPTIONAL' | translate }}"></i>
+
+                                            </mat-panel-title>
+
+                                        </mat-expansion-panel-header>
+
+
+                                        <div class="form-group m-form__group row">
+
+                                            <label class="col-xl-4 col-lg-4 col-form-label">
+
+                                                <span translate="FORM.FIELDS.TITLE_EN"></span>
+
+                                            </label>
+
+                                            <label class="col-xl-8 col-lg-8 col-form-label">
+
+                                                <span
+                                                    class="m--font-brand">{{ viewModel.recommendation.TitleEn }}</span>
+
+                                            </label>
+
+                                        </div>
+
+                                    </mat-expansion-panel>
+
+                                </mat-accordion>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+
+                                <span translate="FORM.FIELDS.STATUS"></span>
+
+                            </label>
+
+                            <label class="col-xl-4 col-lg-4">
+
+                                <m-object-status-badge [status]="viewModel.recommendation.Status">
+                                </m-object-status-badge>
+
+                                <button
+                                    *ngIf="viewModel.recommendation.Status == 2 || viewModel.recommendation.Status == 0"
+                                    mat-icon-button color="primary" (click)="deactivate()">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+
+                                <button *ngIf="viewModel.recommendation.Status == 8" mat-icon-button color="primary"
+                                    (click)="activate()">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+
+                            </label>
+
+                            <label class="col-xl-1 col-lg-1 col-form-label">
+
+                                <span translate="FORM.FIELDS.CREATED_AT"></span>
+
+                            </label>
+
+                            <label class="col-xl-4 col-lg-4 col-form-label">
+
+                                <span class="m--font-brand">
+                                    {{ viewModel.recommendation.CreatedAt | date : 'dd MMM, yyyy HH:mm:ss' }}
+                                </span>
+
+                            </label>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+
+                                <span translate="FORM.FIELDS.DATE_RANGE"></span>
+
+                            </label>
+
+                            <label class="col-xl-4 col-lg-4 col-form-label">
+
+                                <span class="m--font-brand">
+
+                                    {{ viewModel.recommendation.StartDate | date : 'dd MMM, yyyy' }} -
+                                    {{ viewModel.recommendation.EndDate | date : 'dd MMM, yyyy' }}
+
+                                </span>
+
+                            </label>
+
+                            <label class="col-xl-6 col-lg-6 col-form-label">
+
+                                <span class="m--font-brand">{{ viewModel.recommendation.Repeat }}</span>
+
+                            </label>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.TIME_RANGE"></span>
+                            </label>
+
+                            <div class="col-xl-4 col-lg-4 col-form-label">
+                                <m-time-ranges formControlName="TimeRanges">
+                                </m-time-ranges>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+        <form *ngIf="viewControl.editMode" class="m-form" id="m_form" [formGroup]="form">
+
+            <div class="row">
+
+                <div class="col-xl-12">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-xl-4 col-lg-4">
+
+                                <mat-form-field class="mat-form-field-fluid"
+                                    hintLabel="{{ 'RECOMMENDATIONS.FORM_FIELDS.NAME_HINT' | translate }}">
+                                    <mat-label>
+                                        <span translate="FORM.FIELDS.NAME"></span>
+                                        <span class="m--font-danger">&nbsp;(*)</span>
+                                    </mat-label>
+                                    <input matInput formControlName="Name">
+
+                                    <mat-error *ngIf="form.get('Name').invalid && form.get('Name').touched">
+                                        <m-error-parser [ngControl]="form.get('Name')">
+                                        </m-error-parser>
+                                    </mat-error>
+
+                                </mat-form-field>
+
+                            </div>
+
+
+                            <div class="col-xl-1 col-lg-1">
+
+                                <mat-form-field class="mat-form-field-fluid">
+                                    <mat-label>
+                                        <span translate="FORM.FIELDS.ORDER"></span>
+                                        <span class="m--font-danger">&nbsp;(*)</span>
+                                    </mat-label>
+                                    <input matInput formControlName="Order" type="number" step="1" min="1" max="100">
+
+                                </mat-form-field>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+
+                            <div class="col-xl-4 col-lg-4">
+
+                                <mat-form-field class="mat-form-field-fluid"
+                                    hintLabel="{{ 'RECOMMENDATIONS.FORM_FIELDS.TITLE_HINT' | translate }}">
+                                    <mat-label>
+                                        <span translate="FORM.FIELDS.TITLE"></span>
+                                        <span class="m--font-danger">&nbsp;(*)</span>
+                                    </mat-label>
+                                    <input matInput formControlName="Title">
+
+                                    <mat-error *ngIf="form.get('Title').invalid && form.get('Title').touched">
+                                        <m-error-parser [ngControl]="form.get('Title')">
+                                        </m-error-parser>
+                                    </mat-error>
+
+                                </mat-form-field>
+
+                            </div>
+
+
+                            <div class="col-xl-2 col-lg-2">
+
+                                <mat-form-field class="mat-form-field-fluid">
+                                    <mat-label>
+                                        <span translate="FORM.FIELDS.ICON"></span>
+                                        <span class="m--font-danger">&nbsp;(*)</span>
+                                    </mat-label>
+                                    <input matInput formControlName="Icon">
+
+                                </mat-form-field>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-xl-6 col-lg-6">
+
+                                <mat-accordion>
+
+                                    <mat-expansion-panel [ngClass]="'mat-expansion-panel--border-less'">
+
+                                        <mat-expansion-panel-header>
+
+                                            <mat-panel-title>
+
+                                                <i class="fa fa-plus-circle text-primary"
+                                                    title="{{ 'FORM.FIELDS.OPTIONAL' | translate }}"></i>
+
+                                            </mat-panel-title>
+
+                                        </mat-expansion-panel-header>
+
+                                        <div class="form-group m-form__group row">
+
+
+
+                                            <div class="col-xl-8 col-lg-8">
+                                                <mat-form-field class="mat-form-field-fluid">
+
+                                                    <mat-label>
+                                                        <span translate="FORM.FIELDS.TITLE_EN"></span>
+                                                    </mat-label>
+
+                                                    <input matInput formControlName="TitleEn">
+
+                                                </mat-form-field>
+
+                                            </div>
+
+                                        </div>
+
+                                    </mat-expansion-panel>
+
+                                </mat-accordion>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-xl-4 col-lg-4">
+
+                                <m-date-range-picker-prototype formControlName="DateRanges">
+                                </m-date-range-picker-prototype>
+                            </div>
+
+                            <div class="col-xl-6 col-lg-6">
+
+                                <m-schedule-repeat formControlName="Repeat">
+                                </m-schedule-repeat>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+
+                            <div class="col-xl-4 col-lg-4">
+                                <div class="mat-label-alike">
+                                    <span translate="FORM.FIELDS.TIME_RANGE"></span>
+                                    <span class="m--font-danger">&nbsp;(*)</span>
+                                </div>
+
+                                <m-time-ranges [readonly]="false" formControlName="TimeRanges">
+                                </m-time-ranges>
+
+                                <mat-error class="mat-error-alike"
+                                    *ngIf="form.get('TimeRanges').invalid && form.get('TimeRanges').touched">
+                                    <m-error-parser [ngControl]="form.get('TimeRanges')">
+                                    </m-error-parser>
+                                </mat-error>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+</m-portlet>

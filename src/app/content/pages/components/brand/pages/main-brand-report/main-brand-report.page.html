@@ -1,0 +1,39 @@
+<ng-container>
+
+    <div class="row">
+        <div class="col-xl-6 col-lg-6">
+            <m-board [data]="viewData.MainBoard" [loading$]="viewData.loadingBoard$" [reset]="viewData.resetChart"
+                (onDateRangeChange)="onBoardChange($event)"></m-board>
+        </div>
+        <div class="col-xl-6 col-lg-6">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6">
+                    <m-top-chart [title]="_translate.instant('REPORT.TOP_5_UNIT_BY_VIEWS')"
+                        [data]="viewData.UnitViewsTop" [reset]="viewData.resetChart"
+                        [loading$]="viewData.loadingUnitViewsTop$"
+                        (onDateRangeChange)="onUnitViewTopDateRangeChange($event)">
+                    </m-top-chart>
+                </div>
+
+                <div class="col-xl-6 col-lg-6">
+                    <m-top-chart [title]="_translate.instant('REPORT.TOP_5_SP_BY_VIEWS')"
+                        [data]="viewData.SellingPointViewsTop" [reset]="viewData.resetChart"
+                        [loading$]="viewData.loadingSPViewsTop$"
+                        (onDateRangeChange)="onSPTopViewDateRangeChange($event)">
+                    </m-top-chart>
+                </div>
+
+                <div class="col-xl-6 col-lg-6">
+                    <m-top-chart [title]="_translate.instant('REPORT.TOP_5_SP_BY_ACTION')"
+                        [data]="viewData.SellingPointActionTop" [reset]="viewData.resetChart"
+                        [loading$]="viewData.loadingSPActionTop$"
+                        (onDateRangeChange)="onSPTopActionDateRangeChange($event)">
+                    </m-top-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</ng-container>

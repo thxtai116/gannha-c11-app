@@ -1,0 +1,265 @@
+<div class="form-group m-form__group row">
+
+    <div class="col-xl-12 col-lg-12">
+
+        <m-portlet [loading$]="viewControl.loading$"
+            [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+            <ng-container mPortletHeadTools>
+
+                <div class="m-buttons--wrapper">
+
+                    <button type="button" class="btn btn-primary m-btn m-btn--icon m-btn--wide text-uppercase"
+                        (click)="refresh()">
+                        <span>
+                            <i class="fa fa-sync-alt"></i>
+                            <span translate="COMMON.REFRESH">REFRESH</span>
+                        </span>
+                    </button>
+
+                </div>
+
+            </ng-container>
+
+            <ng-container mPortletBody>
+
+                <form class="m-form" [formGroup]="form">
+
+                    <div class="m-form__filtration">
+
+                        <div class="row align-items-center">
+
+                            <div class="col-md-3 m--margin-bottom-10-mobile">
+
+                                <div class="m-form__control">
+
+                                    <mat-form-field class="mat-form-field-fluid">
+
+                                        <mat-label>
+                                            {{ 'FORM.FIELDS.DATE_RANGE' | translate }}
+                                        </mat-label>
+
+                                        <input type="text" matInput readonly ngxDaterangepickerMd
+                                            formControlName="DateRanges" [showDropdowns]="true" [autoApply]="true" />
+
+                                    </mat-form-field>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                                <div class="m-form__control">
+
+                                    <m-single-select [data]="viewData.units$" formControlName="Unit">
+
+                                        <span mSingleSelectActionLabel>{{ 'COMMON.SEARCH' | translate }}</span>
+                                        <span mSingleSelectActionHint class="text-lowercase">
+                                            {{ 'COMMON.BY_UNIT' | translate }}</span>
+
+                                    </m-single-select>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                                <div class="m-form__control">
+
+                                    <mat-form-field class="mat-form-field-fluid">
+
+                                        <mat-select formControlName="Status">
+                                            <mat-option value="">{{ 'COMMON.ALL' | translate }}</mat-option>
+                                            <mat-option value="10">{{ 'ORDERS.STATUSES.PENDING' | translate }}
+                                            </mat-option>
+                                            <mat-option value="20">{{ 'ORDERS.STATUSES.PROCESSING' | translate }}
+                                            </mat-option>
+                                            <mat-option value="30">{{ 'ORDERS.STATUSES.COMPLETE' | translate }}
+                                            </mat-option>
+                                            <mat-option value="40">{{ 'ORDERS.STATUSES.CANCELLED' | translate }}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-hint align="start">
+                                            <strong>{{ 'COMMON.FILTER' | translate }}</strong>
+                                            <span class="text-lowercase"> {{ 'COMMON.BY_STATUS' | translate }}</span>
+                                        </mat-hint>
+
+                                    </mat-form-field>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                                <mat-form-field class="mat-form-field-fluid">
+
+                                    <input matInput formControlName="Text">
+
+                                    <mat-hint align="start">
+                                        <strong class="text-capitalize">{{ 'COMMON.FILTER' | translate }}</strong>
+                                        <span class="text-lowercase"> {{ 'COMMON.BY_ID' | translate }}</span>
+                                    </mat-hint>
+
+                                </mat-form-field>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+                <div class="mat-table__wrapper">
+
+                    <mat-table class="mat-elevation-z8" [dataSource]="viewData.dataSource">
+
+                        <ng-container matColumnDef="Id">
+                            <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.ID' | translate }}
+                            </mat-header-cell>
+
+                            <mat-cell *matCellDef="let order">
+                                <a routerLink="/orders/{{ order.Id }}">{{ order.Id }}</a>
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="OrderStatus">
+                            <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.STATUS' | translate }}
+                            </mat-header-cell>
+
+                            <mat-cell *matCellDef="let order">
+                                <m-order-status-badge [status]="order.OrderStatus">
+                                </m-order-status-badge>
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="OrderTotal">
+                            <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.ORDER_TOTAL' | translate }}
+                            </mat-header-cell>
+
+                            <mat-cell *matCellDef="let order">
+                                {{ order.OrderTotal | currency: 'VND': 'symbol': '1.0': 'fr' }}
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="CreatedAt">
+                            <mat-header-cell *matHeaderCellDef>
+                                {{ 'TABLE.COLUMNS.CREATED_AT' | translate }}
+                            </mat-header-cell>
+
+                            <mat-cell *matCellDef="let order">
+                                {{ order.CreatedAt | date : 'dd MMM, yyyy hh:mm:ss' }}
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Customer">
+                            <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.CUSTOMER' | translate }}
+                            </mat-header-cell>
+
+                            <mat-cell *matCellDef="let order">
+                                {{ order.Customer.FullName }}
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Index">
+                            <mat-header-cell *matHeaderCellDef>
+                                {{ 'TABLE.COLUMNS.DELIVERY_TYPE' | translate }}
+                            </mat-header-cell>
+
+                            <mat-cell *matCellDef="let order;">
+
+                                <i *ngIf="!order.PickupInStore" class="fa fa-truck text-primary" title="Giao hàng"></i>
+
+                                <i *ngIf="order.PickupInStore" class="fa fa-handshake text-success"
+                                    title="Nhận hàng tại điểm bán"></i>
+
+                                <!-- <div class="pointer" (click)="detail(order.Id)">
+
+                                    <i *ngIf="!order.PickupInStore" class="fa fa-truck text-primary"
+                                        title="Giao hàng"></i>
+
+                                    <i *ngIf="order.PickupInStore" class="fa fa-handshake text-success"
+                                        title="Nhận hàng tại điểm bán"></i>
+
+                                </div> -->
+
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="viewData.displayedColumns"></mat-header-row>
+
+                        <mat-row *matRowDef="let row; columns: viewData.displayedColumns; let i = index;"></mat-row>
+                    </mat-table>
+
+                    <div class="mat-table__message" *ngIf="!viewData.dataSource.hasItems">
+                        {{ 'TABLE.NO_RECORDS' | translate }}
+                    </div>
+
+                </div>
+
+                <div class="mat-table__bottom">
+
+                    <mat-spinner [diameter]="20" *ngIf="viewData.dataSource.loadingSubject | async"></mat-spinner>
+
+                    <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50]"
+                        [length]="viewData.dataSource.paginatorTotal$ | async" [showFirstLastButtons]="true">
+                    </mat-paginator>
+
+                </div>
+
+            </ng-container>
+
+        </m-portlet>
+
+    </div>
+    <!-- 
+    <div class="col-xl-4 col-lg-4">
+
+        <m-portlet [loading$]="viewControl.loading$"
+            [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+            <ng-container mPortletHeadTitle>
+
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text text-uppercase">
+                        <span translate="ORDERS.PRODUCTS" class="text-uppercase"></span>
+                    </h3>
+                </div>
+
+            </ng-container>
+
+            <ng-container mPortletHeadTools>
+
+                <div class="m-buttons--wrapper">
+
+                    <button type="button" class="btn btn-primary m-btn m-btn--icon m-btn--wide text-uppercase"
+                        (click)="refresh()">
+                        <span>
+                            <i class="fa fa-sync-alt"></i>
+                            <span translate="COMMON.REFRESH">REFRESH</span>
+                        </span>
+                    </button>
+
+                </div>
+
+            </ng-container>
+
+            <ng-container mPortletBody>
+
+                <ng-container *ngIf="viewData.orderDetail">
+
+                    <m-order-items-list [order]="viewData.orderDetail"></m-order-items-list>
+
+                </ng-container>
+
+            </ng-container>
+
+        </m-portlet>
+
+    </div> 
+-->
+
+</div>

@@ -1,0 +1,135 @@
+<div class="m-buttons--wrapper">
+
+    <button *ngIf="viewData.servicesStored.length < max" type="button"
+        class="btn btn-primary m-btn m-btn--icon text-uppercase" [matMenuTriggerFor]="menu">
+        <span>
+            <i class="fa fa-plus pointer"></i>
+            <span translate="COMMON.ADD_ACTION"></span>
+        </span>
+    </button>
+
+</div>
+
+<mat-menu #menu="matMenu">
+
+    <button mat-menu-item *ngFor="let os of viewData.openServices" (click)="add(os)">
+        <span>{{ os.Title | mLanguage }}</span>
+    </button>
+
+</mat-menu>
+
+<div class="mat-table__wrapper mat-table__wrapper--sub" [hidden]="viewData.servicesStored.length == 0">
+
+    <ng-container *ngIf="readonly">
+
+        <mat-table [dataSource]="viewData.dataSource">
+
+            <ng-container matColumnDef="Type">
+                <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.TYPE' | translate }}</mat-header-cell>
+                <mat-cell *matCellDef="let service">
+                    {{ service.Title | mLanguage }}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="Integration">
+                <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.INTEGRATION' | translate }}</mat-header-cell>
+
+                <mat-cell *matCellDef="let service, let i = index">
+                    <m-service-connection-content [service$]="getColContent(i)">
+                    </m-service-connection-content>
+                </mat-cell>
+
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="viewData.displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: viewData.displayedColumns;"></mat-row>
+
+        </mat-table>
+
+    </ng-container>
+
+    <ng-container *ngIf="!readonly">
+
+        <mat-table [dataSource]="viewData.dataSource">
+
+            <ng-container matColumnDef="Type">
+                <mat-header-cell *matHeaderCellDef [ngClass]="'mat-cell__left mat-cell--small_title'">
+                    {{ 'TABLE.COLUMNS.ACTION_TYPE' | translate }}</mat-header-cell>
+                <mat-cell *matCellDef="let service" [ngClass]="'mat-cell__left mat-cell--small_title'">
+                    {{ service.Title | mLanguage }}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="Integration">
+                <mat-header-cell *matHeaderCellDef [ngClass]="'mat-cell__left'">
+                    {{ 'TABLE.COLUMNS.INTEGRATION_DETAIL' | translate }}
+                </mat-header-cell>
+
+                <mat-cell *matCellDef="let service, let i = index" [ngClass]="'mat-cell__left'">
+                    <m-service-connection-content [service$]="getColContent(i)">
+                    </m-service-connection-content>
+                </mat-cell>
+
+            </ng-container>
+
+            <ng-container matColumnDef="Action">
+                <mat-header-cell *matHeaderCellDef [ngClass]="'mat-cell--small_actions'">
+
+                    <!-- <button *ngIf="viewData.servicesStored.length < max" mat-icon-button color="primary"
+                        [matMenuTriggerFor]="menu">
+
+                        <div class="icon-wrapper">
+
+                            <i class="fa fa-plus text-primary pointer"></i>
+
+                        </div>
+
+                    </button>
+
+                    <mat-menu #menu="matMenu">
+
+                        <button mat-menu-item *ngFor="let os of viewData.openServices" (click)="add(os)">
+                            <span>{{ os.Title | mLanguage }}</span>
+                        </button>
+
+                    </mat-menu> -->
+
+                </mat-header-cell>
+
+                <mat-cell *matCellDef="let service,let i = index;"
+                    [ngClass]="'mat-cell--small_actions'">
+
+                    <button mat-icon-button color="primary" [matMenuTriggerFor]="menuActions">
+
+                        <div class="icon-wrapper">
+                            <i class="fa fa-edit text-primary pointer"></i>
+                        </div>
+
+                    </button>
+
+                    <mat-menu #menuActions="matMenu">
+
+                        <button mat-menu-item color="primary" (click)="edit(i)">
+                            <mat-icon>edit</mat-icon>
+                            <span>{{ 'COMMON.EDIT' | translate }}</span>
+                        </button>
+
+                        <button mat-menu-item color="warn" (click)="remove(i)">
+                            <mat-icon>delete</mat-icon>
+                            <span>{{ 'COMMON.REMOVE' | translate }}</span>
+                        </button>
+
+                    </mat-menu>
+
+                </mat-cell>
+
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="viewData.displayedColumnsEdit"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: viewData.displayedColumnsEdit;"></mat-row>
+
+        </mat-table>
+
+    </ng-container>
+
+</div>

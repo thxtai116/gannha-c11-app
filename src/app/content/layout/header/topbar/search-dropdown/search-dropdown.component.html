@@ -1,0 +1,123 @@
+<a href="javascript:;" class="m-nav__link m-dropdown__toggle">
+
+	<span class="m-nav__link-title">
+		<ng-container *ngIf="viewControl.loading$ | async; else brandName">
+		</ng-container>
+
+		<ng-template #brandName>
+
+			<ng-container *ngIf="brand$ | async as brand">
+				{{ brand.Name | mLanguage }}
+			</ng-container>
+
+		</ng-template>
+
+	</span>
+
+	<span class="m-nav__link-icon">
+
+		<span class="m-nav__link-icon-wrapper">
+
+			<ng-container *ngIf="viewControl.loading$ | async; else detail">
+				<mat-spinner diameter="20"></mat-spinner>
+			</ng-container>
+
+			<ng-template #detail>
+				<i class="fa fa-store"></i>
+			</ng-template>
+
+		</span>
+
+	</span>
+
+</a>
+
+<div class="m-dropdown__wrapper">
+
+	<span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
+
+	<div class="m-dropdown__inner ">
+
+		<div class="m-dropdown__header">
+
+			<form class="m-list-search__form">
+
+				<div class="m-list-search__form-wrapper">
+
+					<span class="m-list-search__form-input-wrapper">
+
+						<mat-form-field class="mat-form-field-fluid">
+
+							<input matInput id="m_quicksearch_input" autocomplete="off" type="text" name="q"
+								class="m-list-search__form-input"
+								placeholder="{{ 'SEARCH_DROPDOWN_BRAND.BRAND_NAME' | translate }}" #searchInput>
+
+						</mat-form-field>
+
+					</span>
+
+					<span class="m-list-search__form-icon-close" id="m_quicksearch_close">
+						<i class="fa fa-times"></i>
+					</span>
+
+				</div>
+
+			</form>
+
+		</div>
+
+		<div class="m-dropdown__body">
+
+			<div class="m-dropdown__scrollable m-scrollable" data-scrollable="true" data-max-height="300"
+				data-mobile-max-height="200">
+
+				<perfect-scrollbar style="max-height: 35vh;">
+
+					<div class="m-dropdown__content">
+
+						<div class="m-list-search__results">
+
+							<ng-container *ngIf="searchResult$ | async as searchResult">
+
+								<ng-container *ngIf="searchResult.length === 0">
+
+									<span class="m-list-search__result-message"
+										translate="SEARCH_DROPDOWN_BRAND.NO_BRAND_FOUND">
+									</span>
+
+								</ng-container>
+
+								<ng-container *ngIf="searchResult.length > 0">
+
+									<span class="m-list-search__result-category m-list-search__result-category--first"
+										translate="SEARCH_DROPDOWN_BRAND.BRAND">
+									</span>
+
+									<a href="javascript:;" class="m-list-search__result-item"
+										*ngFor="let item of searchResult" (click)="onBrandSelect(item)">
+
+										<span class="m-list-search__result-item-icon">
+											<!-- <img class="img-fluid" src="{{ item.Logo }}"> -->
+										</span>
+
+										<span class="m-list-search__result-item-text">{{ item.Name | mLanguage }}</span>
+
+									</a>
+
+								</ng-container>
+
+							</ng-container>
+
+						</div>
+
+					</div>
+
+				</perfect-scrollbar>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>

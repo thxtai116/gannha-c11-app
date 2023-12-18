@@ -1,0 +1,26 @@
+.category .collections-slider {
+    .mat-card {
+
+        max-width: 185px;
+        max-height: 230px;
+    }
+
+    .mat-card-header {
+        height: 40px;
+    }
+
+    .mat-card-image {
+        background: grey;
+        height: 110px;
+    }
+
+    .mat-card-content {
+        max-height: 20px;
+    }
+
+    mat-card-content,
+    .dateRanges,
+    .entity-status {
+        display: none;
+    }
+}

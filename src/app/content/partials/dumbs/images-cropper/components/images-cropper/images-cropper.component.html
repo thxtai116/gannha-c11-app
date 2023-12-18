@@ -1,0 +1,166 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text text-uppercase">
+                <span translate="COMMON.IMAGE_CROPPER" class="text-uppercase"></span>
+            </h3>
+        </div>
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="m-form">
+
+            <div class="row">
+
+                <div class="col-xl-6 col-lg-6">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-xl-4 col-lg-4">
+
+                                <button type="button" class="btn btn-primary m-btn m-btn--icon text-uppercase"
+                                    (click)="uploadPhoto()">
+                                    <span>
+                                        <i class="fa fa-upload"></i>
+                                        <span translate="IMAGE_CROPPER.UPLOAD_PHOTO"></span>
+                                    </span>
+                                </button>
+
+                            </div>
+
+                            <div class="col-xl-8 col-lg-8">
+                                <mat-form-field class="mat-form-field-fluid">
+
+                                    <input matInput type="text" placeholder="Url..." [(ngModel)]="url"
+                                        (paste)="pastePicture($event)" />
+
+                                    <button mat-button matSuffix mat-icon-button aria-label="Tải về" color="primary"
+                                        (click)="onUrlChange()">
+
+                                        <mat-icon>cloud_download</mat-icon>
+
+                                    </button>
+
+                                </mat-form-field>
+
+
+                                <input [hidden]="true" type="file" accept=".jpg, .jpeg, .png"
+                                    (change)="onFileChange($event)" #imageInput />
+
+                            </div>
+
+                        </div>
+
+                        <div *ngIf="imageFile" class="form-group m-form__group row">
+
+                            <div class="col-xl-4 col-lg-4 col-form-label text-right">
+
+                                <span translate="IMAGE_CROPPER.RATIO"></span>
+
+                            </div>
+
+                            <div class="col-xl-8 col-lg-8 col-form-label">
+
+                                <mat-radio-group class="radio-group__vertical" [(ngModel)]="currentMode" (change)="changeRadio()">
+
+                                    <mat-radio-button color="primary" [value]="FACEBOOK_MODE">
+                                        <span translate="IMAGE_CROPPER.FACEBOOK_MODE"></span>
+                                    </mat-radio-button>
+
+                                    <mat-radio-button color="primary" [value]="SQUARE_MODE">
+                                        <span translate="IMAGE_CROPPER.SQUARE_MODE"></span>
+                                    </mat-radio-button>
+
+                                    <mat-radio-button color="primary" [value]="LANDSCAPE_MODE">
+                                        <span translate="IMAGE_CROPPER.LANDSCAPE_MODE"></span>
+                                    </mat-radio-button>
+
+                                    <mat-radio-button color="primary" [value]="FREE_MODE">
+                                        <span translate="IMAGE_CROPPER.FREE_MODE"></span>
+                                    </mat-radio-button>
+
+                                </mat-radio-group>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-xl-6 col-lg-6">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-xl-12 col-lg-12">
+
+                                <image-cropper [maintainAspectRatio]="isAspectRatio" [imageChangedEvent]="imageFile"
+                                    [aspectRatio]="aspectRatio" format="png, jpeg"
+                                    (imageCroppedBase64)="imageCropped($event)"
+                                    (imageCroppedFile)="imageCroppedFile($event)" (loadImageFailed)="loadImageFailed()"
+                                    (imageLoaded)="imageLoaded()">
+                                </image-cropper>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletFooter>
+
+        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+
+            <div class="m-form__actions m-form__actions--solid">
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <div class="button-group text-right">
+
+                            <button class="btn btn-success m-btn m-btn--icon text-uppercase" type="button"
+                                (click)="save()">
+                                <span>
+                                    <i class="fa fa-save"></i>
+                                    <span translate="COMMON.SAVE">SAVE</span>
+                                </span>
+                            </button>
+
+                            <button class="btn btn-default m-btn m-btn--icon text-uppercase" type="button"
+                                cdkFocusInitial (click)="close()">
+                                <span>
+                                    <i class="fa fa-times"></i>
+                                    <span translate="COMMON.CLOSE">CLOSE</span>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

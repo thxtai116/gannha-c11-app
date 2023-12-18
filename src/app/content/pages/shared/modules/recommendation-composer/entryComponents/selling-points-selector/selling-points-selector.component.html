@@ -1,0 +1,85 @@
+<m-portlet>
+
+    <ng-container mPortletHeadTitle>
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text text-uppercase">
+                <span translate="COMMON.SELLING_POINTS_SELECTOR" class="text-uppercase"></span>
+            </h3>
+        </div>
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <mat-button-toggle-group value="{{ viewControl.mode }}" (change)="onSelectFilterType($event)">
+
+                <mat-button-toggle value="{{ sellingPointFilterType.SINGLE_BRAND }}">
+                    <span
+                        class="text-uppercase">{{ "SELLING_POINT_FILTER_TYPE." + sellingPointFilterType.SINGLE_BRAND.toUpperCase() | translate }}</span>
+                </mat-button-toggle>
+
+                <mat-button-toggle value="{{ sellingPointFilterType.MULTI_BRAND }}">
+                    <span class="text-uppercase">
+                        {{ "SELLING_POINT_FILTER_TYPE." + sellingPointFilterType.MULTI_BRAND.toUpperCase() | translate }}</span>
+                </mat-button-toggle>
+
+                <mat-button-toggle value="{{ sellingPointFilterType.TAG }}">
+                    <span class="text-uppercase">
+                        {{ "SELLING_POINT_FILTER_TYPE." + sellingPointFilterType.TAG.toUpperCase() | translate }}</span>
+                </mat-button-toggle>
+
+            </mat-button-toggle-group>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <ng-template #filter></ng-template>
+
+    </ng-container>
+
+    <ng-container mPortletFooter>
+
+        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+
+            <div class="m-form__actions m-form__actions--solid">
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <div class="button-group text-right">
+
+                            <button *ngIf="viewData.selected.length > 0"
+                                class="btn btn-success m-btn m-btn--icon text-uppercase" type="button"
+                                (click)="onSubmit()">
+                                <span>
+                                    <i class="fa fa-check-circle"></i>
+                                    <span translate="COMMON.CONFIRM">CONFIRM</span>
+                                </span>
+                            </button>
+
+                            <button class="btn btn-default m-btn m-btn--icon text-uppercase" type="button"
+                                cdkFocusInitial (click)="onCancelClick()">
+                                <span>
+                                    <i class="fa fa-times"></i>
+                                    <span translate="COMMON.CLOSE">CLOSE</span>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

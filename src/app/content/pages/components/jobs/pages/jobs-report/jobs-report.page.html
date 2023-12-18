@@ -1,0 +1,53 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a routerLink="/jobs" class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="row">
+            <div class="col-xl-6 col-lg-6">
+                <m-board [data]="viewData.board" [loading$]="viewData.loadingBoard$"
+                    (onDateRangeChange)="onBoardChange($event)"></m-board>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-6 col-lg-6">
+                <m-line-chart [data]="viewData.viewChart" [title]="'Biểu đồ lượt xem công việc'"
+                    [loading$]="viewData.loadingViewChart$" [colors]="['#2980b9']"
+                    (onDateRangeChange)="onViewChartDateRangeChange($event)">
+                </m-line-chart>
+            </div>
+            <div class="col-xl-6 col-lg-6">
+                <m-line-chart [data]="viewData.applyChart" [title]="'Biểu đồ lượt vào trang tạo hồ sợ'"
+                    [loading$]="viewData.loadingApplyChart$" [colors]="['#1abc9c']"
+                    (onDateRangeChange)="onApplyChartDateRangeChange($event)">
+                </m-line-chart>
+            </div>
+            <div class="col-xl-6 col-lg-6">
+                <m-line-chart [data]="viewData.resumeChart" [title]="'Biểu đồ số lượng hồ sơ'"
+                    [loading$]="viewData.loadingResumeChart$" [colors]="['#e74c3c']"
+                    (onDateRangeChange)="onResumeChartDateRangeChange($event)">
+                </m-line-chart>
+            </div>
+            <div class="col-xl-6 col-lg-6">
+                <m-line-chart [data]="viewData.submitChart" [title]="'Biểu đồ lượt nộp hồ sơ'"
+                    [loading$]="viewData.loadingSubmitChart$" [colors]="['#f1c40f']"
+                    (onDateRangeChange)="onSubmitChartDateRangeChange($event)">
+                </m-line-chart>
+            </div>
+        </div>
+
+    </ng-container>
+
+</m-portlet>

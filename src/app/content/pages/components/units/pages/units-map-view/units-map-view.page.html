@@ -1,0 +1,47 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button type="button" class="btn btn-primary m-btn m-btn--icon text-uppercase" (click)="showList()">
+                <span>
+                    <i class="fas fa-list-ul"></i>
+                    <span translate="COMMON.SHOW_LIST"></span>
+                </span>
+            </button>
+
+            <button type="button" class="btn btn-primary m-btn m-btn--icon text-uppercase" (click)="refresh()">
+                <span>
+                    <i class="fa fa-sync-alt"></i>
+                    <span translate="COMMON.REFRESH">REFRESH</span>
+                </span>
+            </button>
+
+            <button type="button" class="btn btn-primary m-btn m-btn--icon text-uppercase" (click)="quickCreate()">
+                <span>
+                    <i class="fa fa-bolt"></i>
+                    <span translate="UNITS.QUICK_CREATE">NEW</span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div>
+
+            <m-units-locations-overview [formControl]="unitsLocations"
+                (onMarkerDetailsSelected)="onMarkerDetailsSelected($event)"
+                (onMarkerLocationSelected)="onMarkerLocationSelected($event)">
+
+            </m-units-locations-overview>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

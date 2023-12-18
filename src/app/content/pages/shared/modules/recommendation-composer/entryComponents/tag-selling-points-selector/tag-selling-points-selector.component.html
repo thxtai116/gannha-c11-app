@@ -1,0 +1,309 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <div class="m-portlet__head-title">
+
+            <div class="m-buttons--wrapper">
+
+                <mat-button-toggle-group #filterMode [formControl]="viewFilter.filterMode">
+
+                    <mat-button-toggle value="search">
+                        <i class="fa fa-search"></i>
+                    </mat-button-toggle>
+
+                    <mat-button-toggle value="filter">
+                        <i class="fa fa-filter"></i>
+                    </mat-button-toggle>
+
+                </mat-button-toggle-group>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button type="button" class="btn btn-primary m-btn m-btn--icon text-uppercase" (click)="search()">
+                <span>
+                    <i class="fas fa-search"></i>
+                    <span translate="COMMON.SEARCH"></span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="m-form">
+
+            <div class="m-form__filtration" *ngIf="viewFilter.filterMode.value == 'search'">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <div class="m-form__control">
+
+                            <mat-form-field class="mat-form-field-fluid">
+
+                                <mat-label>
+                                    <span>{{ 'FORM.FIELDS.TAGS' | translate }}</span>
+                                </mat-label>
+
+                                <input matInput [formControl]="viewFilter.filterTag">
+                            </mat-form-field>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <div class="m-form__control">
+
+                            <m-date-range-picker placeholder="{{ 'FORM.FIELDS.DATE' | translate }}" allowPreset="false"
+                                [formControl]="viewFilter.filterDate"></m-date-range-picker>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <div class="m-form__control row">
+
+                            <div class="col-lg-6 col-xl-6">
+
+                                <mat-form-field class="mat-form-field-fluid">
+
+                                    <mat-label>
+                                        <span>{{ 'FORM.FIELDS.START_TIME' | translate }}</span>
+                                    </mat-label>
+
+                                    <mat-select [formControl]="viewFilter.filterTimeRange[0]">
+                                        <mat-option *ngFor="let hour of viewData.hourOptions" [value]="hour">
+                                            {{hour}} </mat-option>
+                                    </mat-select>
+
+                                </mat-form-field>
+
+                            </div>
+
+                            <div class="col-lg-6 col-xl-6">
+
+                                <mat-form-field class="mat-form-field-fluid">
+
+                                    <mat-label>
+                                        <span>{{ 'FORM.FIELDS.END_TIME' | translate }}</span>
+                                    </mat-label>
+
+                                    <mat-select [formControl]="viewFilter.filterTimeRange[1]">
+                                        <mat-option *ngFor=" let hour of viewData.hourOptions" [value]="hour">
+                                            {{hour}}</mat-option>
+                                    </mat-select>
+
+                                </mat-form-field>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="m-form__filtration" *ngIf="viewFilter.filterMode.value == 'filter'">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <div class="m-form__control">
+
+                            <mat-form-field class="mat-form-field-fluid">
+
+                                <mat-select [formControl]="viewFilter.filterStatus">
+                                    <mat-option value="">All</mat-option>
+                                    <mat-option value="0">Pending</mat-option>
+                                    <mat-option value="2">Active</mat-option>
+                                    <mat-option value="4">Expired</mat-option>
+                                    <mat-option value="8">Deactive</mat-option>
+                                </mat-select>
+                                <mat-hint align="start">
+                                    <strong>{{ 'COMMON.FILTER' | translate }}</strong>
+                                    <span class="text-lowercase"> {{ 'COMMON.BY_STATUS' | translate }}</span>
+                                </mat-hint>
+
+                            </mat-form-field>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput #searchInput [formControl]="viewFilter.filterText">
+                            <mat-hint align="start">
+                                <strong class="text-capitalize">{{ 'COMMON.FILTER' | translate }}</strong>
+                                <span class="text-lowercase"> {{ 'COMMON.BY_TITLE' | translate }}</span>
+                            </mat-hint>
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row align-items-center collapse m-form__group-actions"
+                [ngClass]="{'show' : viewData.globalSelection.length > 0}">
+                <div class="col-lg-12 col-xl-12">
+                    <div class="m-form__group">
+                        <div>
+                            <label class="m--font-bold m--font-danger-">
+                                {{ 'COMMON.SELECTED_COUNT' | translate }}:
+                                {{ viewData.globalSelection.length }}</label>
+                        </div>
+                        <div class="m-form__control">
+                            <button mat-raised-button (click)="onPreviewSelection()">
+                                {{ 'COMMON.PREVIEW_SELECTION' | translate }}
+                            </button>&nbsp;
+                            <button mat-raised-button (click)="onShowTimeline()">
+                                {{ 'COMMON.PREVIEW_TIMELINE' | translate }}
+                            </button>&nbsp;
+                            <button mat-raised-button color="warn" (click)="onClearSelection()">
+                                {{ 'COMMON.CLEAR_SELECTION' | translate }}
+                            </button>&nbsp;
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mat-table__wrapper">
+
+            <mat-table class="mat-elevation-z8" [dataSource]="viewData.dataSource" matSort matSortActive="id"
+                matSortDirection="asc" matSortDisableClear>
+
+                <ng-container matColumnDef="Select">
+
+                    <mat-header-cell *matHeaderCellDef class="mat-column-checkbox">
+                        <mat-checkbox color="primary" (change)="$event ? masterToggle() : null"
+                            [checked]="viewData.currentSelection.hasValue() && isAllSelected()"
+                            [indeterminate]="viewData.currentSelection.hasValue() && !isAllSelected()">
+                        </mat-checkbox>
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let row" class="mat-column-checkbox">
+
+                        <mat-checkbox color="primary" (click)="$event.stopPropagation()"
+                            (change)="$event ? toggleRow(row) : null" [checked]="viewData.currentSelection.isSelected(row)">
+                        </mat-checkbox>
+
+                    </mat-cell>
+
+                </ng-container>
+
+                <ng-container matColumnDef="Index">
+                    <mat-header-cell *matHeaderCellDef [ngClass]="'mat-cell--index'">#
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let sellingPoint; let i = index;"
+                        [ngClass]="'mat-cell--actions'">
+                        {{ i + 1 + paginator.pageIndex * paginator.pageSize }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Title">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TABLE.COLUMNS.TITLE' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let sellingPoint">
+                        {{ sellingPoint.Title }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="BrandName">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TABLE.COLUMNS.BRAND_NAME' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let sellingPoint">
+                        {{ sellingPoint.BrandName }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="StartDate">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                        {{ 'TABLE.COLUMNS.START_DATE' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let sellingPoint">
+                        {{ sellingPoint.StartDate | date : 'dd MMM, yyyy' }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="EndDate">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TABLE.COLUMNS.END_DATE' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let sellingPoint">
+                        {{ sellingPoint.EndDate | date : 'dd MMM, yyyy' }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Picture">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TABLE.COLUMNS.PICTURE' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let sellingPoint">
+
+                        
+
+                    </mat-cell>
+
+                </ng-container>
+
+                <ng-container matColumnDef="Status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TABLE.COLUMNS.STATUS' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let sellingPoint">
+
+                        <m-object-status-badge [status]="sellingPoint.Status"></m-object-status-badge>
+
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="viewData.displayedColumns"></mat-header-row>
+
+                <mat-row *matRowDef="let row; columns: viewData.displayedColumns; let i = index;"></mat-row>
+            </mat-table>
+
+            <div class="mat-table__message" *ngIf="!viewData.dataSource.hasItems">{{ 'TABLE.NO_RECORDS' | translate }}
+            </div>
+
+        </div>
+
+        <div class="mat-table__bottom">
+
+            <mat-spinner [diameter]="20" *ngIf="viewControl.loading$ | async"></mat-spinner>
+
+            <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50]"
+                [length]="viewData.dataSource.paginatorTotal$ | async" [showFirstLastButtons]="true"></mat-paginator>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

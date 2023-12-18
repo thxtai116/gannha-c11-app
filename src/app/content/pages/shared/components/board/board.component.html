@@ -1,0 +1,48 @@
+<m-portlet [loading$]="loading$" [options]="{class: ['m--bg-warning', 'm-portlet--bordered-semi']}" class="portlet-shadow">
+    <ng-container mPortletHeadTitle>
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text m--font-light">
+                {{ title }}
+            </h3>
+        </div>
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+        <ngx-mat-drp (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker
+            style="visibility: hidden">
+        </ngx-mat-drp>
+        <a class="m-portlet__nav-link btn btn--sm m-btn--pill btn-secondary m-btn m-btn--label-brand"
+            (click)="openDateRange($event)">
+            <span> {{ dateString }}
+            </span>
+        </a>
+    </ng-container>
+
+    <ng-container mPortletBody>
+        <label *ngIf="showCompare" style="color: #212529;"> <i> {{ hint }} </i></label>
+
+        <div class="row m-row--no-padding">
+            <div class="col-xl-6 col-lg-6 box" *ngFor="let board of boards">
+                <div class="m-widget29 board">
+                    <div class="m-widget_content">
+                        <h3 class="m-widget_content-title control-title-max-line">{{ board.Title}}</h3>
+                        <div class="m-widget_content-items">
+                            <div class="m-widget_content-item board-item">
+                                <span>{{ 'REPORT.VALUE' | translate }}</span>
+                                <span
+                                    [ngClass]="showCompare ? ((board.Value > board.Compare) ? 'm--font-success' : (board.Value < board.Compare) ? 'm--font-danger' : 'm--font-accent') : 'm--font-accent'">{{ board.Value }}</span>
+                            </div>
+                            <div class="m-widget_content-item board-item" *ngIf="showCompare">
+                                <span>
+                                    {{ 'REPORT.COMPARE' | translate }}
+                                </span>
+
+                                <span class="m--font-accent">{{ board.Compare }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</m-portlet>

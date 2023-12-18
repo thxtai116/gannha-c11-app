@@ -1,0 +1,20 @@
+<!-- <div class="row">
+    <div class="col-lg-12 col-xl-12">
+        {{ viewModel.Title }}&nbsp;<a href="{{ viewModel.Url }}" target="_blank" title="{{ viewModel.Url }}">Link</a>
+    </div>
+</div> -->
+
+<div class="row">
+    <div class="col-lg-12 col-xl-12">
+        <span>{{ 'FORM.FIELDS.TITLE' | translate }}: </span>
+        <strong>{{ viewModel.Title }}</strong>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 col-xl-12">
+        <span>{{ 'FORM.FIELDS.LINK_ALT' | translate }}: </span>
+        <strong>
+            <a href="{{ viewModel.Url }}" target="_blank" title="{{ viewModel.Url }}">[Link]</a>
+        </strong>
+    </div>
+</div>

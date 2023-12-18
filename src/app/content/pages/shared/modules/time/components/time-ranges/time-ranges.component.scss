@@ -1,0 +1,21 @@
+.example-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+  min-width: 300px;
+}
+
+.shift-container {
+  border-bottom: 1px solid #efefef;
+}
+
+mat-checkbox ::ng-deep .mat-checkbox-inner-container {
+  width: 15px;
+  height: 15px;
+}
+
+.mat-cell {
+  input.text-center {
+    text-align: center;
+  }
+}

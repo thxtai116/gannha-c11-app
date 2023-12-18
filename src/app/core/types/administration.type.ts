@@ -1,0 +1,1 @@
+export type AdministrationType = { [key: string]: string; };

@@ -1,0 +1,132 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button type="button" class="btn btn-primary m-btn m-btn--icon text-uppercase"
+                (click)="refresh()">
+                <span>
+                    <i class="fa fa-sync-alt"></i>
+                    <span>{{ 'COMMON.REFRESH' | translate }}</span>
+                </span>
+            </button>
+
+            <button type="button" class="btn btn-primary m-btn m-btn--icon text-uppercase"
+                [routerLink]="['create']">
+                <span>
+                    <i class="fa fa-plus"></i>
+                    <span>{{ 'UTILITIES.NEW_UTIL' | translate }}</span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="m-form">
+
+            <div class="m-form__filtration">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-4 m--margin-bottom-10-mobile">
+
+                        <mat-form-field class="mat-form-field-fluid">
+
+                            <input matInput #searchInput>
+
+                            <mat-hint align="start">
+                                <strong class="text-capitalize">{{ 'COMMON.FILTER' | translate }}</strong>
+                                <span class="text-lowercase"> {{ 'COMMON.BY_NAME' | translate }}</span>
+                            </mat-hint>
+
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="mat-table__wrapper">
+
+            <mat-table class="mat-elevation-z8" [dataSource]="viewData.dataSource" matSort matSortActive="id"
+                matSortDirection="asc" matSortDisableClear>
+
+                <ng-container matColumnDef="Index">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TABLE.COLUMNS.INDEX' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let util; let i = index;">{{ i + 1 + paginator.pageIndex * paginator.pageSize }}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TABLE.COLUMNS.NAME' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let util">
+
+                        <a>{{ util.Name }}</a>
+
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Icon">
+
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TABLE.COLUMNS.ICON' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let util">
+
+                        <div class="col-lg-2">
+                            <div
+                                style="width:60px; height: 60px; background: url(/assets/app/media/img/misc/transparency.png)">
+                                <img style="width:100%; height: 100%" [src]='storageEndpoint + util.Icon + ".png"' />
+                            </div>
+                        </div>
+
+                    </mat-cell>
+
+                </ng-container>
+
+                <ng-container matColumnDef="Actions">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.ACTIONS' | translate }}</mat-header-cell>
+
+                    <mat-cell *matCellDef="let util">
+
+                        <button mat-icon-button color="primary" matTooltip="{{ 'UTILITIES.DETAIL' | translate }}"
+                            [routerLink]='util.Id'>
+                            <i class="fa fa-info-circle"></i>
+                        </button>
+
+                    </mat-cell>
+
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="viewData.displayedColumns"></mat-header-row>
+
+                <mat-row *matRowDef="let row; columns: viewData.displayedColumns; let i = index;"></mat-row>
+            </mat-table>
+
+            <div class="mat-table__message" *ngIf="!viewData.dataSource.hasItems">{{ 'TABLE.NO_RECORDS' | translate }}
+            </div>
+
+        </div>
+
+        <div class="mat-table__bottom">
+
+            <mat-spinner [diameter]="20" *ngIf="viewControl.loading$ | async"></mat-spinner>
+
+            <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50]" [showFirstLastButtons]="true"
+                [length]="viewData.dataSource.paginatorTotal$ | async"></mat-paginator>
+
+        </div>
+
+    </ng-container>
+</m-portlet>

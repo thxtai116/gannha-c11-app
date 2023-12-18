@@ -1,0 +1,209 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text text-uppercase">
+                <span translate="COMPONENT.QUICK_UNIT_CREATE" class="text-uppercase"></span>
+            </h3>
+        </div>
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form class="m-form" id="m_form" [formGroup]="unitForm">
+
+            <div class="row">
+
+                <div class="col-xl-6 col-lg-6 col-md-6">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                            <ng-container mPortletHeadTitle>
+
+                                <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text">
+                                        <span>
+                                            {{ 'UNITS.ADDRESS_AND_ADMINISTRATION' | translate }}
+                                        </span>
+                                    </h3>
+                                </div>
+
+                            </ng-container>
+
+                            <ng-container mPortletBody>
+
+                                <div class="form-group m-form__group row">
+
+                                    <div class="col-xl-12 col-lg-12">
+
+                                        <mat-form-field class="mat-form-field-fluid">
+
+                                            <mat-label>
+                                                <span translate="FORM.FIELDS.NAME"></span>
+                                            </mat-label>
+
+                                            <input matInput formControlName="UnitName">
+
+                                            <mat-error
+                                                *ngIf="unitForm.get('UnitName').invalid && unitForm.get('UnitName').touched">
+                                                <m-error-parser [ngControl]="unitForm.get('UnitName')"></m-error-parser>
+                                            </mat-error>
+
+                                        </mat-form-field>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group m-form__group row">
+
+                                    <div class="col-xl-12 col-lg-12">
+
+                                        <m-address-contact [required]="true" [readonly]="false"
+                                            formControlName="AddressContact">
+                                        </m-address-contact>
+
+                                    </div>
+
+                                </div>
+
+                            </ng-container>
+
+                        </m-portlet>
+
+                    </div>
+
+                    <div class="m-form__section">
+
+                        <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                            <ng-container mPortletHeadTitle>
+
+                                <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text">
+                                        <span>
+                                            {{ 'UNITS.CONTACT_INFO' | translate }}
+                                        </span>
+                                    </h3>
+                                </div>
+
+                            </ng-container>
+
+                            <ng-container mPortletBody>
+
+                                <div class="form-group m-form__group row">
+
+                                    <div class="col-xl-12 col-lg-12">
+
+                                        <m-phones [readonly]="false" formControlName="Phones"></m-phones>
+
+                                    </div>
+
+                                </div>
+
+                            </ng-container>
+
+                        </m-portlet>
+
+                    </div>
+
+                </div>
+
+                <div class="col-xl-6 col-lg-6 col-md-6">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                            <ng-container mPortletHeadTitle>
+
+                                <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text">
+                                        <span>
+                                            {{ 'UNITS.LOCATION' | translate }}
+                                        </span>
+                                    </h3>
+                                </div>
+
+                            </ng-container>
+
+                            <ng-container mPortletBody>
+
+                                <m-location-form [address]="unitForm.get('AddressContact').value.Address.vi || ''"
+                                    [readonly]="false" formControlName="Location">
+                                </m-location-form>
+
+                            </ng-container>
+
+                        </m-portlet>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+    <ng-container mPortletFooter>
+
+        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+
+            <div class="m-form__actions m-form__actions--solid">
+
+                <div class="row">
+
+                    <div class="col-lg-6 col-xl-6">
+
+                        <div class="button-group text-left">
+
+                            <button class="btn btn-primary m-btn m-btn--icon text-uppercase" type="button"
+                                (click)="getAdministraion()">
+                                <span>
+                                    <i class="fa fa-map-marker-alt"></i>
+                                    <span translate="COMMON.PARSE_ADDRESS"></span>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-6 col-xl-6">
+
+                        <div class="button-group text-right">
+
+                            <button class="btn btn-success m-btn m-btn--icon text-uppercase" type="button"
+                                (click)="save()">
+                                <span>
+                                    <i class="fa fa-save"></i>
+                                    <span translate="COMMON.SAVE">SAVE</span>
+                                </span>
+                            </button>
+
+                            <button class="btn btn-default m-btn m-btn--icon text-uppercase" type="button"
+                                cdkFocusInitial (click)="close()">
+                                <span>
+                                    <i class="fa fa-times"></i>
+                                    <span translate="COMMON.CLOSE">CLOSE</span>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

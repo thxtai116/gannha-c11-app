@@ -1,0 +1,22 @@
+<div class="row" *ngIf="menu$ | async as menu">
+
+    <div class="col-lg-12">
+
+        <button routerLinkActive="active" *ngFor="let mn of menu" type="button"
+            class="btn btn-secondary m-btn m-btn--icon text-uppercase" [routerLink]="mn.Href">
+            {{ mn.Name | translate }}
+        </button>
+
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-lg-12">
+
+        <router-outlet></router-outlet>
+
+    </div>
+
+</div>

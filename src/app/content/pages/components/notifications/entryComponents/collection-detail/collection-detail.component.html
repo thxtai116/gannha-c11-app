@@ -1,0 +1,156 @@
+<ng-container *ngIf="viewControl.loading$ | async; else detail">
+    <facebook-content-loader></facebook-content-loader>
+</ng-container>
+
+<ng-template #detail>
+
+    <form class="m-form" [formGroup]="form">
+
+        <div class="row">
+
+            <div class="col-xl-12 col-lg-12">
+
+                <div class="m-form__section m-form__section--first">
+
+                    <div class="form-group m-form__group row">
+
+                        <label class="col-xl-2 col-lg-2 col-form-label">
+                            <span translate="FORM.FIELDS.TITLE"></span>
+                        </label>
+
+                        <label class="col-xl-4 col-lg-4 col-form-label">
+
+                            <span class="m--font-brand">{{ viewModel.collection.Title }}</span>
+
+                        </label>
+
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <label class="col-xl-2 col-lg-2 col-form-label">
+                            <span translate="FORM.FIELDS.DESCRIPTION"></span>
+                        </label>
+
+                        <label class="col-xl-4 col-lg-4 col-form-label">
+
+                            <span class="m--font-brand">{{ viewModel.collection.Description }}</span>
+
+                        </label>
+
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <label class="col-xl-2 col-lg-2 col-form-label">
+
+                            <span translate="FORM.FIELDS.STATUS"></span>
+
+                        </label>
+
+                        <label class="col-xl-4 col-lg-4">
+
+                            <m-object-status-badge [status]="viewModel.collection.Status">
+                            </m-object-status-badge>
+
+                        </label>
+
+                        <label class="col-xl-1 col-lg-1 col-form-label">
+
+                            <span translate="FORM.FIELDS.CREATED_AT"></span>
+
+                        </label>
+
+                        <label class="col-xl-4 col-lg-4 col-form-label">
+
+                            <span class="m--font-brand">
+                                {{ viewModel.collection.CreatedAt | date : 'dd MMM, yyyy HH:mm:ss' }}
+                            </span>
+
+                        </label>
+
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <label class="col-xl-2 col-lg-2 col-form-label">
+                            <span translate="FORM.FIELDS.DATE_RANGE"></span>
+                        </label>
+
+                        <label class="col-xl-4 col-lg-4 col-form-label">
+
+                            <span class="m--font-brand">
+
+                                {{ viewModel.collection.StartDate | date : 'dd MMM, yyyy' }} -
+                                {{ viewModel.collection.EndDate | date : 'dd MMM, yyyy' }}
+
+                            </span>
+
+                        </label>
+
+                        <label class="col-xl-6 col-lg-6 col-form-label">
+
+                            <span class="m--font-brand">{{ viewModel.collection.Repeat }}</span>
+
+                        </label>
+
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <label class="col-xl-2 col-lg-2 col-form-label">
+                            <span translate="FORM.FIELDS.TIME_RANGE"></span>
+                        </label>
+
+                        <div class="col-xl-10 col-lg-10 col-form-label">
+
+                            <m-time-ranges formControlName="TimeRanges">
+                            </m-time-ranges>
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group m-form__group row">
+
+                        <label class="col-xl-2 col-lg-2 col-form-label">
+                            <span translate="FORM.FIELDS.IMAGE"></span>
+                        </label>
+
+                        <div class="col-xl-10 col-lg-10">
+
+                            <!-- <rbp-files-control formControlName="Gallery" [showUpload]="false" [showRemove]="false">
+                            </rbp-files-control> -->
+
+                        </div>
+
+                    </div>
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.RESOURCES"></span>
+                            </label>
+
+                            <div class="col-xl-10 col-lg-10">
+
+                                <m-collections-composer-container [type]="'Collection'" formControlName="Resources">
+                                </m-collections-composer-container>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</ng-template>

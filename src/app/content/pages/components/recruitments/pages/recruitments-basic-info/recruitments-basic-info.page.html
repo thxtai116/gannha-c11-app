@@ -1,0 +1,56 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a routerLink="/recruitments" class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form class="m-form">
+
+            <div class="row">
+
+                <div class="col-xl-12">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.TITLE"></span>
+                            </label>
+
+                            <label class="col-xl-4 col-lg-4 col-form-label">
+                                <span class="m--font-brand">{{ viewData.recruitment.Title }}</span>
+                            </label>
+
+                            <label class="col-xl-2 col-lg-2 col-form-label">
+                                <span translate="FORM.FIELDS.CREATED_AT"></span>
+                            </label>
+
+                            <label class="col-xl-4 col-lg-4 col-form-label">
+                                <span
+                                    class="m--font-brand">{{ viewData.recruitment.CreatedAt | date : 'dd MMM, yyyy HH:mm:ss' }}</span>
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+</m-portlet>

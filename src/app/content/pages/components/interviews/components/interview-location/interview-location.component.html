@@ -1,0 +1,35 @@
+<m-portlet [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+    
+    <ng-container mPortletHeadTitle>
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text text-uppercase">
+                <span translate="INTERVIEWS.LOCATON"></span>
+            </h3>
+        </div>
+    </ng-container> -->
+
+    <ng-container mPortletBody>
+
+        <div class="form-group m-form__group row">
+            <label class="col-xl-2 col-lg-2 col-form-label">
+                <span translate="SUBMISSION.INTERVIEW_LOCATION"></span>
+            </label>
+
+            <label class="col-xl-8 col-lg-8 col-form-label">
+                <span class="m--font-brand">{{ data['address'] }}</span>
+            </label>
+        </div>
+
+        <div class="form-group row">
+
+            <div class="col-xl-12 col-lg-12">
+
+                <m-map-view [lat]="data['lat']" [lng]="data['lng']"></m-map-view>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

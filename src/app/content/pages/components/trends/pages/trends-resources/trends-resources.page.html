@@ -1,0 +1,124 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a *ngIf="!viewControl.editMode" routerLink="/trend-categories"
+            class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button type="button" *ngIf="viewControl.editMode"
+                class="btn btn-secondary m-btn m-btn--icon text-uppercase" (click)="cancel()">
+                <span>
+                    <i class="fa fa-times"></i>
+                    <span translate="COMMON.CANCEL"></span>
+                </span>
+            </button>
+
+            <button type="button" *ngIf="viewControl.editMode" class="btn btn-success m-btn m-btn--icon text-uppercase"
+                (click)="save()">
+                <span>
+                    <i class="fa fa-save"></i>
+                    <span translate="COMMON.SAVE"></span>
+                </span>
+            </button>
+
+            <button type="button" *ngIf="!viewControl.editMode" class="btn btn-primary m-btn m-btn--icon text-uppercase"
+                (click)="edit()">
+                <span>
+                    <i class="fa fa-edit"></i>
+                    <span translate="COMMON.EDIT"></span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form *ngIf="!viewControl.editMode" class="m-form" [formGroup]="form">
+
+            <div class="row">
+
+                <div class="col-xl-12 col-lg-12">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-xl-12 col-lg-12">
+
+                                <label class="col-xl-2 col-lg-2 col-form-label">
+                                    <span translate="FORM.FIELDS.RESOURCES"></span>
+                                </label>
+
+
+                                <m-collections-composer-container
+                                 [type]="'Category'" formControlName="Resources">
+                            
+                                </m-collections-composer-container>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+        <form *ngIf="viewControl.editMode" class="m-form" id="m_form" [formGroup]="form">
+
+            <div class="row">
+
+                <div class="col-xl-12 col-lg-12">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="form-group m-form__group row">
+                            <div class="col-xl-12 col-lg-12">
+                                <label class="col-xl-2 col-lg-2 col-form-label">
+                                    <span translate="FORM.FIELDS.RESOURCES"></span>
+                                    <span class="m--font-danger">&nbsp;(*)</span>
+                                </label>
+
+
+
+                                <mat-error class="mat-error-alike"
+                                    *ngIf="form.get('Resources').invalid && form.get('Resources').touched">
+                                    <m-error-parser [ngControl]="form.get('Resources')">
+                                    </m-error-parser>
+                                </mat-error>
+
+                                <m-collections-composer-container [readonly]="false" [type]="'Category'"
+                                    formControlName="Resources">
+                                </m-collections-composer-container>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+</m-portlet>

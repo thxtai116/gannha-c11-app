@@ -1,0 +1,135 @@
+<ng-container *ngIf="readonly">
+
+    <div class="collections-slider">
+
+        <mat-card *ngFor="let item of models; let i = index;">
+            <mat-card-header>
+
+                <mat-card-subtitle>
+                    <span class="m--font-boldest m--font-brand">{{ item.Name }}</span>
+                </mat-card-subtitle>
+
+            </mat-card-header>
+
+            <img mat-card-image src="{{ item.Image }}"
+                onerror="this.src = './assets/app/media/img/bg/img_not_found.jpg'" alt="">
+
+            <mat-card-content>
+
+                <p class="entity-status">
+                    <m-object-status-badge [status]="item.Status">
+                    </m-object-status-badge>
+                </p>
+
+                <p class="dateRanges">
+                    {{ item.StartDate| date : 'dd MMM, yyyy -' }} {{ item.EndDate| date : 'dd MMM, yyyy' }}
+                </p>
+
+            </mat-card-content>
+
+            <mat-card-actions>
+
+                <div class="row">
+
+                    <div class="col-xl-6 col-lg-6">
+
+                        <mat-chip-list>
+                            <mat-chip>{{ item.Order }}</mat-chip>
+
+                        </mat-chip-list>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6">
+
+                        <div class="m-buttons--wrapper text-right">
+
+                            <!-- <button type="button" mat-icon-button color="primary" (click)="view(i)">
+                                <mat-icon>visibility</mat-icon>
+                            </button> -->
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </mat-card-actions>
+
+        </mat-card>
+
+    </div>
+
+</ng-container>
+
+<ng-container *ngIf="!readonly">
+
+    <div class="drag-drop-list collections-slider">
+        <div *ngFor="let item of models; let i = index" droppable (onDrop)="drop($event, item)">
+            <mat-card draggable [dragData]="item" [dragHandle]="'.drag-bar'">
+
+                <mat-card-header>
+
+                    <mat-card-subtitle>
+
+                        <span class="m--font-boldest m--font-brand">{{ item.Name }}</span>
+
+                    </mat-card-subtitle>
+
+                </mat-card-header>
+
+                <img mat-card-image src="{{ item.Image }}"
+                    onerror="this.src = './assets/app/media/img/bg/img_not_found.jpg'" alt="">
+
+                <mat-card-content>
+
+                    <p>
+                        <m-object-status-badge [status]="item.Status">
+                        </m-object-status-badge>
+                    </p>
+
+                    <p class="dateRanges">
+                        {{ item.StartDate| date : 'dd MMM, yyyy -' }} {{ item.EndDate| date : 'dd MMM, yyyy' }}
+                    </p>
+
+                </mat-card-content>
+
+                <mat-card-actions>
+
+                    <div class="row">
+
+                        <div class="col-xl-4 col-lg-4 ">
+
+                            <mat-chip-list>
+                                <mat-chip>{{ item.Order }}</mat-chip>
+                            </mat-chip-list>
+
+                        </div>
+
+                        <div class="col-xl-8 col-lg-8 text-right">
+
+                            <div class="m-buttons--wrapper">
+
+                                <!-- <button type="button" mat-icon-button class="text-uppercase" color="primary">
+                                    <mat-icon (click)="view(i)">visibility</mat-icon>
+                                </button> -->
+                                <button type="button" mat-icon-button class="text-uppercase" color="warn">
+                                    <mat-icon (click)="remove(i)">delete</mat-icon>
+                                </button>
+
+                                <button type="button" mat-icon-button class="move-card">
+                                    <i #dragHandle class="drag-bar fa fa-bars fa-lg" aria-hidden="true"></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </mat-card-actions>
+
+            </mat-card>
+        </div>
+    </div>
+
+</ng-container>

@@ -1,0 +1,22 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletBody>
+
+        <div class="m-form">
+
+            <div class="form-group m-form__group row">
+
+                <div class="col-xl-12 col-lg-12">
+
+                    <rbp-files-manager #filesManager [config]="config"></rbp-files-manager>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

@@ -1,0 +1,124 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button type="button" class="btn btn-primary m-btn m-btn--icon text-uppercase" (click)="refresh()">
+                <span>
+                    <i class="fa fa-sync-alt"></i>
+                    <span translate="COMMON.REFRESH">REFRESH</span>
+                </span>
+            </button>
+
+            <button type="button" class="btn btn-primary m-btn m-btn--icon text-uppercase"
+                routerLink="/notification/create">
+                <span>
+                    <i class="fa fa-plus"></i>
+                    <span translate="NOTIFICATIONS.NEW_NOTIFICATION">NEW</span>
+                </span>
+            </button>
+
+            <button type="button" class="btn btn-primary m-btn m-btn--icon text-uppercase" routerLink="/notification">
+                <span>
+                    <i class="fa fa-envelope-open"></i>
+                    <span translate="NOTIFICATIONS.SENT"></span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="mat-table__wrapper">
+
+            <mat-table class="mat-elevation-z8" [dataSource]="viewData.dataSource" matSort matSortDirection="asc"
+                matSortDisableClear>
+
+                <ng-container matColumnDef="Index">
+                    <mat-header-cell *matHeaderCellDef [ngClass]="'mat-cell--index'">#
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let campaign; let i = index;" [ngClass]="'mat-cell--index'">
+                        {{ i + 1 + paginator.pageIndex * paginator.pageSize }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Title">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.TITLE' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let campaign">
+                        {{ campaign.Content.Title | mLanguage }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Content">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.CONTENT' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let campaign">
+                        {{ campaign.Content.Content | mLanguage }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="CreatedAt">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.CREATED_AT' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let campaign">
+                        {{ campaign.CreatedAt | date : 'dd MMM, yyyy HH:mm:ss' }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="ExecuteAt">
+                    <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.EXECUTE_AT' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let campaign">
+                        {{ campaign.ExecuteAt | date : 'dd MMM, yyyy HH:mm:ss' }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Actions">
+                    <mat-header-cell *matHeaderCellDef [ngClass]="'mat-cell__center mat-cell--actions'">
+                        {{ 'TABLE.COLUMNS.ACTIONS' | translate }}
+                    </mat-header-cell>
+
+                    <mat-cell *matCellDef="let campaign" [ngClass]="'mat-cell__center mat-cell--actions'">
+
+                        <button mat-icon-button color="warn" (click)="cancel(campaign)">
+                            <i class="fa fa-ban"></i>
+                        </button>
+
+                    </mat-cell>
+
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="viewData.displayedColumns">
+                </mat-header-row>
+
+                <mat-row *matRowDef="let row; columns: viewData.displayedColumns; let i = index;"></mat-row>
+            </mat-table>
+
+            <div class="mat-table__message" *ngIf="!viewData.dataSource.hasItems">
+                {{ 'TABLE.NO_RECORDS' | translate }}
+            </div>
+
+        </div>
+
+        <div class="mat-table__bottom">
+
+            <mat-spinner [diameter]="20" *ngIf="viewControl.loading$ | async"></mat-spinner>
+
+            <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50]"
+                [length]="viewData.dataSource.paginatorTotal$ | async" [showFirstLastButtons]="true"></mat-paginator>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

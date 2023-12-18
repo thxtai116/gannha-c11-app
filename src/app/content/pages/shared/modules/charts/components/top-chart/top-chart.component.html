@@ -1,0 +1,35 @@
+<m-portlet [loading$]="loading$" [options]="{class: ['m-portlet--bordered-semi']}">
+    <ng-container mPortletHeadTitle>
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text">
+                <span> {{title}}</span>
+                &nbsp;&nbsp;
+                <span class="btn btn--sm m-btn--pill btn-secondary m-btn" (click)="openDateRange($event)">
+                    {{ dateString }}
+                </span>
+            </h3>
+        </div>
+        <ngx-mat-drp (selectedDateRangeChanged)="updateRange($event)" [options]="options" #dateRangePicker
+            style="visibility: hidden; width: 0px;">
+        </ngx-mat-drp>
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="m-widget1">
+            <div class="m-widget1__item" *ngFor="let item of data, let i = index">
+                <div class="row m-row--no-padding align-items-center">
+                    <div class="col">
+                        <span class="m-widget1__title item_title">{{ item.Name }} </span>
+                    </div>
+                    <div class="col m--align-right">
+                        <span class="m-widget1__number item_total">{{ item.Total }}</span>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!(data && data.length > 0)" style="text-align: center;">{{ 'TABLE.NO_RECORDS' | translate }}
+            </div>
+        </div>
+
+    </ng-container>
+</m-portlet>

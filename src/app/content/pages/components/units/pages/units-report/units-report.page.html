@@ -1,0 +1,57 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a routerLink="/units" class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="row">
+            <div class="col-xl-4 col-lg-4">
+                <m-board [data]="viewData.board" [loading$]="viewData.loadingBoard$"
+                    (onDateRangeChange)="onBoardChange($event)"></m-board>
+            </div>
+            <div class="col-xl-8 col-lg-8">
+                <m-line-chart [data]="viewData.generalChart" [title]="'Biểu đồ chung'"
+                    [colors]="['#1abc9c','#e74c3c','#f1c40f','#2980b9']"></m-line-chart>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-6 col-lg-6">
+                <m-line-chart [data]="viewData.actionChart" [title]="'Biểu đồ lượt nhấn Action'"
+                    [loading$]="viewData.loadingActionChart$" [colors]="['#1abc9c']"
+                    (onDateRangeChange)="onActionChartDateRangeChange($event)">
+                </m-line-chart>
+            </div>
+            <div class="col-xl-6 col-lg-6">
+                <m-line-chart [data]="viewData.appointmentChart" [title]="'Biểu đồ lượt hẹn'"
+                    [loading$]="viewData.loadingAppointmentChart$" [colors]="['#e74c3c']"
+                    (onDateRangeChange)="onAppointmentChartDateRangeChange($event)">
+                </m-line-chart>
+            </div>
+            <div class="col-xl-6 col-lg-6">
+                <m-line-chart [data]="viewData.callChart" [title]="'Biểu đồ lượt gọi'"
+                    [loading$]="viewData.loadingCallChart$" [colors]="['#f1c40f']"
+                    (onDateRangeChange)="onCallChartDateRangeChange($event)">
+                </m-line-chart>
+            </div>
+            <div class="col-xl-6 col-lg-6">
+                <m-line-chart [data]="viewData.shareChart" [title]="'Biểu đồ lượt chia sẻ'"
+                    [loading$]="viewData.loadingShareChart$" [colors]="['#2980b9']"
+                    (onDateRangeChange)="onShareChartDateRangeChange($event)">
+                </m-line-chart>
+            </div>
+        </div>
+
+    </ng-container>
+
+</m-portlet>

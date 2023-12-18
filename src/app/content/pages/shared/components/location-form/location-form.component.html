@@ -1,0 +1,103 @@
+<ng-container *ngIf="!readonly">
+
+    <div class="form-group row">
+
+        <div class="col-xl-12 col-lg-12">
+
+            <mat-radio-group aria-label="Select an option" [(ngModel)]="editingMode">
+
+                <mat-radio-button color="primary" [value]="locationType.EDIT_ADDRESS">
+                    {{ 'LOCATION.SEARCH_BY_ADDRESS' | translate }}
+                </mat-radio-button>
+
+                <mat-radio-button color="primary" [value]="locationType.EDIT_POSITION">
+                    {{ 'LOCATION.SEARCH_BY_COORDINATES' | translate }}
+                </mat-radio-button>
+
+            </mat-radio-group>
+
+        </div>
+    </div>
+
+    <div class="form-group row">
+
+        <div class="col-xl-12 col-lg-12">
+
+            <ng-container *ngIf='editingMode == locationType.EDIT_POSITION'>
+
+                <div class="row">
+
+                    <div class="col-lg-4">
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput type="text" placeholder="{{ 'FORM.FIELDS.LATITUDE' | translate }}"
+                                [(ngModel)]="inputLat" />
+
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput type="text" placeholder="{{ 'FORM.FIELDS.LONGITUDE' | translate }}"
+                                [(ngModel)]="inputLong" />
+
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <button mat-button matSuffix mat-icon-button color="primary" (click)="find()">
+                            <mat-icon>search</mat-icon>
+                        </button>
+
+                    </div>
+                </div>
+
+            </ng-container>
+
+            <ng-container *ngIf='editingMode == locationType.EDIT_ADDRESS'>
+
+                <mat-form-field class="mat-form-field-fluid">
+
+                    <input matInput type="text" placeholder="{{ 'FORM.FIELDS.ADDRESS' | translate }}"
+                        [(ngModel)]="addressInput" />
+
+                    <button mat-button matSuffix mat-icon-button color="primary" (click)="find()">
+
+                        <mat-icon>search</mat-icon>
+
+                    </button>
+
+                </mat-form-field>
+
+            </ng-container>
+
+        </div>
+
+    </div>
+
+    <div class="form-group row">
+
+        <div class="col-xl-12 col-lg-12">
+
+            <m-map-view [lat]="mapLat" [lng]="mapLong" [markerDraggable]="true" [clickable]="true"
+                (locationChange)="onLocationChange($event)">
+            </m-map-view>
+
+        </div>
+
+    </div>
+
+</ng-container>
+
+<ng-container *ngIf="readonly">
+
+    <div class="form-group row">
+
+        <div class="col-xl-12 col-lg-12">
+
+            <m-map-view [lat]="mapLat" [lng]="mapLong" (locationChange)="onLocationChange($event)"></m-map-view>
+
+        </div>
+
+    </div>
+
+</ng-container>

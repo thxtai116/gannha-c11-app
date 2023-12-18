@@ -1,0 +1,315 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a routerLink="/orders" class="btn btn-secondary m-btn m-btn--icon m-btn--wide text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form class="m-form" [formGroup]="form">
+
+            <div class="row">
+
+                <div class="col-lg-6 col-xl-6">
+
+                    <m-portlet>
+
+                        <ng-container mPortletHeadTitle>
+
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text text-uppercase">
+                                    <span translate="ORDERS.DETAIL" class="text-uppercase"></span>
+                                </h3>
+                            </div>
+
+                        </ng-container>
+
+                        <ng-container mPortletBody>
+
+                            <div class="m-form__section m-form__section--first">
+
+                                <div class="form-group m-form_group row">
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label">
+                                        {{ 'FORM.FIELDS.ID' | translate }}
+                                    </label>
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label text-right">
+                                        <span class="m--font-brand">{{ viewData.order.Id }}</span>
+                                    </label>
+
+                                </div>
+
+                                <div class="form-group m-form__group row">
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label">
+                                        {{ 'FORM.FIELDS.CREATED_AT' | translate }}
+                                    </label>
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label text-right">
+                                        <span
+                                            class="m--font-brand">{{ viewData.order.CreatedAt | date: 'dd MMM, yyy hh:mm:ss' }}</span>
+                                    </label>
+
+                                </div>
+
+                                <div class="form-group m-form__group row">
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label">
+                                        {{ 'FORM.FIELDS.UNIT' | translate }}
+                                    </label>
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label text-right">
+                                        <span class="m--font-brand">{{ viewData.order.UnitName | mLanguage }}</span>
+                                    </label>
+
+                                </div>
+
+                                <div class="form-group m-form__group row">
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label">
+                                        {{ 'FORM.FIELDS.ORDER_SHIPPING' | translate }}
+                                    </label>
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label text-right">
+                                        <span *ngIf="viewData.order.PickupInStore" class="m--font-brand"
+                                            translate="COMMON.PICKUP_IN_STORE">
+                                        </span>
+                                        <span *ngIf="!viewData.order.PickupInStore" class="m--font-brand">
+                                            {{ viewData.order.Shipping.Address }}
+                                        </span>
+                                    </label>
+
+                                </div>
+
+                                <div class="form-group m-form__group row">
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label">
+                                        {{ 'FORM.FIELDS.DELIVERY_RADIUS' | translate }}
+                                    </label>
+
+                                    <div class="col-xl-6 col-lg-6 col-form-label text-right">
+
+                                        <span *ngIf="viewData.order.PickupInStore" class="m--font-brand">
+                                            0
+                                        </span>
+
+                                        <ng-container *ngIf="!viewData.order.PickupInStore">
+
+                                            <mat-chip-list class="pull-right">
+
+                                                <mat-chip color="primary" selected>
+
+                                                    {{ viewData.order.DeliveryRadius | number }}&nbsp;m
+
+                                                </mat-chip>
+
+                                            </mat-chip-list>
+
+                                        </ng-container>
+
+
+                                    </div>
+
+                                </div>
+
+                                <mat-divider></mat-divider>
+
+                                <div class="form-group m-form_group row">
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label">
+                                        {{ 'ORDERS.CUSTOMER' | translate }}
+                                    </label>
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label text-right">
+                                        <span class="m--font-brand">{{ viewData.order.Customer.FullName }}</span>
+                                    </label>
+
+                                </div>
+
+                                <div class="form-group m-form_group row">
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label">
+                                        {{ 'FORM.FIELDS.EMAIL' | translate }}
+                                    </label>
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label text-right">
+                                        <span class="m--font-brand">{{ viewData.order.Customer.Email }}</span>
+                                    </label>
+
+                                </div>
+
+                                <div class="form-group m-form_group row">
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label">
+                                        {{ 'FORM.FIELDS.PHONE' | translate }}
+                                    </label>
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label text-right">
+                                        <span class="m--font-brand">{{ viewData.order.Customer.PhoneNumber }}</span>
+                                    </label>
+
+                                </div>
+
+                                <div class="form-group m-form_group row">
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label">
+                                        {{ 'FORM.FIELDS.ADDRESS' | translate }}
+                                    </label>
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label text-right">
+                                        <span class="m--font-brand">{{ viewData.order.Shipping.Address }}</span>
+                                    </label>
+
+                                </div>
+
+                                <mat-divider></mat-divider>
+
+                                <div class="form-group m-form__group row">
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label">
+                                        {{ 'FORM.FIELDS.STATUS' | translate }}
+                                    </label>
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label text-right">
+
+                                        <m-order-status-badge [status]="viewData.order.OrderStatusId">
+                                        </m-order-status-badge>
+
+                                    </label>
+
+                                </div>
+
+                                <div class="form-group m-form__group row"
+                                    *ngIf="viewData.order.OrderStatusId == '10' || viewData.order.OrderStatusId == '20'">
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label">
+
+                                        <b>{{ 'FORM.FIELDS.EXECUTE_ORDER' | translate }}</b>
+
+                                        &nbsp;
+
+                                        <i class="fas fa-info-circle"></i>
+
+                                    </label>
+
+                                    <div class="col-xl-6 col-lg-6 text-right">
+
+                                        <ng-container *ngIf="viewData.order.OrderStatusId == '10'">
+
+                                            <m-order-status-badge [status]="20" (click)="updateOrderStatus(20)">
+                                            </m-order-status-badge>
+
+                                            <m-order-status-badge [status]="40" (click)="updateOrderStatus(40)">
+                                            </m-order-status-badge>
+
+                                        </ng-container>
+
+                                        <ng-container *ngIf="viewData.order.OrderStatusId == '20'">
+
+                                            <m-order-status-badge [status]="30" (click)="updateOrderStatus(30)">
+                                            </m-order-status-badge>
+
+                                            <m-order-status-badge [status]="40" (click)="updateOrderStatus(40)">
+                                            </m-order-status-badge>
+
+                                        </ng-container>
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </ng-container>
+
+                    </m-portlet>
+
+                </div>
+
+                <div class="col-lg-6 col-xl-6">
+
+                    <m-portlet>
+
+                        <ng-container mPortletHeadTitle>
+
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text text-uppercase">
+                                    <span translate="ORDERS.PRODUCTS" class="text-uppercase"></span>
+                                </h3>
+                            </div>
+
+                        </ng-container>
+
+                        <ng-container mPortletBody>
+
+                            <div class="m-form__section m-form__section--first">
+
+                                <m-order-items-list [order]="viewData.order"></m-order-items-list>
+
+                            </div>
+
+                        </ng-container>
+
+                        <ng-container mPortletFooter>
+
+                            <div class="m-form__section m-form__section--first">
+
+                                <div class="form-group m-form_group row">
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label">
+                                        {{ 'FORM.FIELDS.NOTE' | translate }}
+                                    </label>
+
+                                    <label class="col-xl-6 col-lg-6 col-form-label text-right">
+                                        <span class="m--font-brand">
+                                            {{ viewData.order.OrderNotes.length > 0? viewData.order.OrderNotes[0].Note : 'N/A'}}
+                                        </span>
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+                        </ng-container>
+
+                    </m-portlet>
+
+                    <m-portlet *ngIf="!viewData.order.PickupInStore">
+
+                        <ng-container mPortletHeadTitle>
+
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text text-uppercase">
+                                    <span translate="ORDERS.LOCATION" class="text-uppercase"></span>
+                                </h3>
+                            </div>
+
+                        </ng-container>
+
+                        <ng-container mPortletBody>
+
+                            <m-map-markers [markers]="viewData.markers"></m-map-markers>
+
+                        </ng-container>
+
+                    </m-portlet>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+</m-portlet>

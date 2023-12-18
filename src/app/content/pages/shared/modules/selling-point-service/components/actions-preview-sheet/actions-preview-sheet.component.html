@@ -1,0 +1,19 @@
+<m-portlet>
+
+    <ng-container mPortletHeadTitle>
+
+        <label>
+            {{ 'SELLING_POINTS.ACTION_API' | translate}}
+        </label>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <m-selling-point-service [formControl]="sellingPoints">
+
+        </m-selling-point-service>
+
+    </ng-container>
+
+</m-portlet>

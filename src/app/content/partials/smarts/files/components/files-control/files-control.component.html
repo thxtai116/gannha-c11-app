@@ -1,0 +1,26 @@
+<div class="mat-form-field-custom"
+    [ngClass]="{'invalid': (ngControl.invalid && (ngControl.dirty || ngControl.touched))}">
+
+    <mat-label>
+        <ng-content select="[ImagesSelectLabel]"></ng-content>
+    </mat-label>
+
+    <rbp-files-list [data]="files" [showUpload]="viewControl.showUpload && showUpload" [showRemove]="showRemove"
+        [showLoading]="viewControl.showLoading" (onRemoveClick)="onRemove($event)" (onUploadClick)="onUpload()"
+        (onOrderChange)="onOrder($event)">
+    </rbp-files-list>
+
+    <div class="mat-form-field-custom__underline"></div>
+
+    <div class="mat-form-field-subscript-wrapper-custom">
+
+        <mat-error>
+            <ng-content select="[ImagesSelectErrors]"></ng-content>
+        </mat-error>
+
+    </div>
+
+</div>
+
+<input style="display: none;" multiple="true" type="file" accept="image/jpeg, image/png"
+    (change)="onImagesSelected($event)" #imageInput />

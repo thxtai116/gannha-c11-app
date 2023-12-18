@@ -1,0 +1,23 @@
+<div class="row" *ngFor="let spec of specificTimes;let i = index">
+
+    <div class="col-lg-10">
+
+        <m-time-range-picker [start]="spec.Open" [end]="spec.Close" [readonly]="readonly"
+            (startTimeChange)="onStartTimeChange($event,i)" (endTimeChange)="onEndTimeChange($event,i)">
+        </m-time-range-picker>
+
+    </div>
+
+    <div class="col-lg-2" *ngIf="i === 1 && !readonly">
+
+        <i class="fa fa-times text-danger pointer" (click)="delete(i)"></i>
+
+    </div>
+
+    <div class="col-lg-2" *ngIf="!readonly && specificTimes.length < 2 && Active">
+
+        <i class="fa fa-plus text-primary pointer" (click)="add()"></i>
+
+    </div>
+
+</div>

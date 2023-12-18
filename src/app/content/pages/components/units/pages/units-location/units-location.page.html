@@ -1,0 +1,139 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a *ngIf="!viewControl.editMode" routerLink="/units" class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button type="button" class="btn btn-success m-btn m-btn--icon text-uppercase" (click)="save()">
+                <span>
+                    <i class="fa fa-save"></i>
+                    <span translate="COMMON.SAVE"></span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form class="m-form" [formGroup]="form">
+
+            <div class="row">
+
+                <div class="col-xl-6 col-lg-6 col-md-6">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                            <ng-container mPortletHeadTitle>
+
+                                <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text">
+                                        <span>
+                                            {{ 'UNITS.ADDRESS_AND_ADMINISTRATION' | translate }}
+                                        </span>
+                                    </h3>
+                                </div>
+
+                            </ng-container>
+
+                            <ng-container mPortletBody>
+
+                                <div class="form-group m-form__group row">
+
+                                    <div class="col-xl-12 col-lg-12">
+
+                                        <m-address-contact [readonly]="false" [required]="true"
+                                            formControlName="Administration">
+                                        </m-address-contact>
+
+
+                                        <div class="button-group text-right">
+
+                                            <button class="btn btn-primary m-btn m-btn--icon text-uppercase"
+                                                type="button" (click)="getAdministraion()">
+                                                <span>
+                                                    <i class="fa fa-map-marker-alt"></i>
+                                                    <span translate="COMMON.PARSE_ADDRESS"></span>
+                                                </span>
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </ng-container>
+
+                        </m-portlet>
+
+                    </div>
+
+                </div>
+
+                <div class="col-xl-6 col-lg-6 col-md-6">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                            <ng-container mPortletHeadTitle>
+
+                                <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text">
+                                        <span>
+                                            {{ 'UNITS.LOCATION' | translate }}
+                                        </span>
+                                    </h3>
+                                </div>
+
+                            </ng-container>
+
+                            <ng-container mPortletBody>
+
+                                <div class="form-group m-form__group row">
+
+                                    <div class="col-xl-12 col-lg-12">
+
+                                        <div class="mat-label-alike">
+                                            <span translate="FORM.FIELDS.LOCATION"></span>
+                                        </div>
+
+                                        <m-location-form [address]="form.get('Administration').value.Address.vi"
+                                            [readonly]="false" formControlName="Location">
+                                        </m-location-form>
+
+                                    </div>
+
+                                </div>
+
+                            </ng-container>
+
+                        </m-portlet>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+</m-portlet>

@@ -1,0 +1,1 @@
+export * from "./recommendation-basic-info.view-model";

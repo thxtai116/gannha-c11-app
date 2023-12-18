@@ -1,0 +1,39 @@
+<ng-container *ngIf="viewControl.loading$ | async; else detail">
+    <facebook-content-loader></facebook-content-loader>
+</ng-container>
+
+<ng-template #detail>
+
+    <form class="m-form">
+
+        <div class="row">
+
+            <div class="col-xl-12">
+
+                <div class="m-form__section m-form__section--first">
+
+                    <div class="form-group m-form__group row">
+
+                        <label class="col-xl-2 col-lg-2 col-form-label">
+
+                            <span translate="FORM.FIELDS.NAME"></span>
+
+                        </label>
+
+                        <label class="col-xl-10 col-lg-10 col-form-label">
+
+                            {{ viewModel.category.Name }}
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</ng-template>

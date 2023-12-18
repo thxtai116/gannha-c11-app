@@ -1,0 +1,36 @@
+<mat-form-field class="mat-form-field-fluid">
+
+    <mat-label>
+
+        <ng-content select="[mMultipleSelectLabel]"></ng-content>
+
+    </mat-label>
+
+    <ng-content select="[mMultipleSelectLabel]"></ng-content>
+
+    <mat-select [formControl]="selectCtrl" [disabled]="disabled" multiple #multiSelect [errorStateMatcher]="matcher">
+
+        <mat-option>
+
+            <ngx-mat-select-search [formControl]="filterCtrl" [placeholderLabel]="''"
+                [noEntriesFoundLabel]="'No data found'" #search></ngx-mat-select-search>
+
+        </mat-option>
+
+        <mat-option *ngFor="let entity of filteredData | async" [value]="entity">
+
+            {{ entity.text }}
+
+        </mat-option>
+
+    </mat-select>
+
+    <mat-hint align="start">
+        <ng-content select="[mMultipleSelectHintStart]"></ng-content>
+    </mat-hint>
+
+    <mat-error *ngIf="ngControl && ngControl.invalid && ngControl.touched">
+        <ng-content select="[mMultipleSelectError]"></ng-content>
+    </mat-error>
+
+</mat-form-field>

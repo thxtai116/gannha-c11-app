@@ -1,0 +1,59 @@
+<div [hidden]="prototypeMode">
+
+    <div class="form-group m-form__group row">
+
+        <div class="col-xl-6 col-lg-6">
+
+            <mat-form-field class="mat-form-field-fluid">
+
+                <mat-label>
+                    <span translate="SCHEDULE.REPEAT_BY"></span>
+                </mat-label>
+
+                <mat-select [(value)]="viewData.repeat$.getValue().EveryType"
+                    (selectionChange)="onRepeatEveryTypeChange()">
+
+                    <ng-container *ngFor="let type of repeatEveryType">
+
+                        <mat-option value="{{ type }}">{{ ("SCHEDULE." + type.toUpperCase()) | translate }}
+                        </mat-option>
+
+                    </ng-container>
+
+                </mat-select>
+
+            </mat-form-field>
+
+        </div>
+
+    </div>
+
+    <div class="form-group m-form__group row">
+
+        <div class="col-lg-12 col-xl-12">
+
+            <ng-template #scheduleRepeat></ng-template>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div [hidden]="!prototypeMode">
+
+    <div class="form-group m-form__group row">
+
+        <mat-tab-group class="mat-tab-group__full-width" mat-stretch-tabs [dynamicHeight]="true" [selectedIndex]="viewData.selectedIndex"
+            (selectedTabChange)="onTabSelected($event)">
+            <mat-tab label="{{ 'SCHEDULE.DAILY' | translate }}">
+                <ng-template #scheduleRepeatDaily></ng-template>
+            </mat-tab>
+            <mat-tab label="{{ 'SCHEDULE.WEEKLY' | translate }}">
+                <ng-template #scheduleRepeatWeekly></ng-template>
+            </mat-tab>
+        </mat-tab-group>
+
+    </div>
+
+</div>

@@ -1,0 +1,460 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text text-uppercase">
+                <span translate="RAW_SELLING_POINTS.DETAIL"></span>
+            </h3>
+        </div>
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="row">
+
+            <div class="col-xl-6 col-lg-6">
+
+                <div class="m-form__section m-form__section--first">
+
+                    <div class="form-group m-form__group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">
+                            <span translate="FORM.FIELDS.FACEBOOK"></span>
+                        </label>
+
+                        <label class="col-xl-9 col-lg-9 col-form-label">
+                            <span class="m--font-brand">{{ viewData.post.PageId }}</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">
+                            <span translate="FORM.FIELDS.ID"></span>
+                        </label>
+
+                        <label class="col-xl-9 col-lg-9 col-form-label">
+                            <span class="m--font-brand">{{ viewData.post.Id }}</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">
+                            <span translate="FORM.FIELDS.LINK"></span>
+                        </label>
+
+                        <p class="col-xl-9 col-lg-9 col-form-label">
+                            <a href="{{ 'https://www.facebook.com/' + viewData.post.Id }}" target="_blank">
+                                Link
+                            </a>
+                        </p>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">
+                            <span translate="FORM.FIELDS.STATUS"></span>
+                        </label>
+
+                        <div class="col-xl-9 col-lg-9 col-form-label">
+
+                            <m-raw-unit-status-badge [status]="viewData.post.Status"></m-raw-unit-status-badge>
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">
+                            <span translate="FORM.FIELDS.CREATED_AT"></span>
+                        </label>
+
+                        <label class="col-xl-9 col-lg-9 col-form-label">
+                            <span class="m--font-brand">{{ viewData.post.CreatedDate | date : 'dd MMM, yyyy' }}</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">
+                            <span translate="FORM.FIELDS.UPDATED_AT"></span>
+                        </label>
+
+                        <label class="col-xl-9 col-lg-9 col-form-label">
+                            <span class="m--font-brand">{{ viewData.post.UpdatedDate | date : 'dd MMM, yyyy' }}</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">
+                            <span translate="FORM.FIELDS.DESCRIPTION"></span>
+                        </label>
+
+                        <label class="col-xl-9 col-lg-9 col-form-label">
+                            <span class="m--font-brand">{{ viewData.post.Message }}</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group m-form__group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">
+                            <span translate="FORM.FIELDS.IMAGE"></span>
+                        </label>
+
+                        <div class="col-xl-9 col-lg-9 col-form-label">
+
+                            <img src="{{ viewData.post.Picture }}" class="img-fluid" />
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div *ngIf="viewData.post.ReferenceId && viewData.post.ReferenceId.length > 0" class="col-xl-6 col-lg-6">
+
+                <ng-container *ngIf="viewControl.loading$ | async; else detail">
+                    <facebook-content-loader></facebook-content-loader>
+                </ng-container>
+
+                <ng-template #detail>
+
+                    <form class="m-form" [formGroup]="form">
+
+                        <div class="row">
+
+                            <div class="col-xl-12">
+
+                                <div class="m-form__section m-form__section--first">
+
+                                    <div class="form-group m-form__group row">
+
+                                        <label class="col-xl-2 col-lg-2 col-form-label">
+
+                                            <span translate="FORM.FIELDS.STATUS"></span>
+
+                                        </label>
+
+                                        <label class="col-xl-4 col-lg-4 col-form-label">
+
+                                            <m-object-status-badge [status]="viewModel.sellingPoint.Status">
+                                            </m-object-status-badge>
+
+                                        </label>
+
+                                        <label class="col-xl-2 col-lg-2">
+
+                                            <a mat-icon-button color="primary"
+                                                matTooltip="{{ 'SELLING_POINTS.BASIC_INFO' | translate }}"
+                                                routerLink="/brands/{{ viewData.sellingPoint.BrandId }}/selling-points/{{ viewData.sellingPoint.Id }}/basic-info"
+                                                target="_blank">
+                                                <i class="fa fa-info-circle"></i>
+                                            </a>
+
+                                        </label>
+
+                                    </div>
+
+                                    <div class="form-group m-form__group row">
+
+                                        <label class="col-xl-2 col-lg-2 col-form-label">
+
+                                            <span translate="FORM.FIELDS.TITLE"></span>
+
+                                        </label>
+
+                                        <label class="col-xl-10 col-lg-10 col-form-label">
+
+                                            <span class="m--font-brand">{{ viewModel.sellingPoint.Title }}</span>
+
+                                        </label>
+
+                                    </div>
+
+                                    <div class="form-group m-form__group row">
+
+                                        <label class="col-xl-2 col-lg-2 col-form-label">
+
+                                            <span translate="FORM.FIELDS.TITLE_EN"></span>
+
+                                        </label>
+
+                                        <label class="col-xl-10 col-lg-10 col-form-label">
+
+                                            <span class="m--font-brand">{{ viewModel.sellingPoint.TitleEn }}</span>
+
+                                        </label>
+
+                                    </div>
+
+                                    <div class="form-group m-form__group row">
+
+                                        <label class="col-xl-2 col-lg-2 col-form-label">
+
+                                            <span translate="FORM.FIELDS.DESCRIPTION"></span>
+
+                                        </label>
+
+                                        <label class="col-xl-10 col-lg-10 col-form-label">
+
+                                            <p class="m--font-brand pre-line">{{ viewModel.sellingPoint.Description }}
+                                            </p>
+
+                                        </label>
+
+                                    </div>
+
+                                    <div class="form-group m-form__group row">
+
+                                        <label class="col-xl-2 col-lg-2 col-form-label">
+
+                                            <span translate="FORM.FIELDS.DESCRIPTION_EN"></span>
+
+                                        </label>
+
+                                        <label class="col-xl-10 col-lg-10 col-form-label">
+
+                                            <span
+                                                class="m--font-brand">{{ viewModel.sellingPoint.DescriptionEn }}</span>
+
+                                        </label>
+
+                                    </div>
+
+                                    <div class="form-group m-form__group row">
+
+                                        <label class="col-xl-2 col-lg-2 col-form-label">
+
+                                            <span translate="FORM.FIELDS.VIDEO"></span>
+
+                                        </label>
+
+                                        <div class="col-xl-4 col-lg-4">
+
+                                            <rbp-files-control formControlName="Video" [showUpload]="false"
+                                                [showRemove]="false">
+                                            </rbp-files-control>
+
+                                        </div>
+
+
+                                        <label class="col-xl-2 col-lg-2 col-form-label">
+
+                                            <span translate="FORM.FIELDS.IMAGE"></span>
+
+                                        </label>
+
+                                        <div class="col-xl-4 col-lg-4s">
+
+                                            <rbp-files-control formControlName="Posters" [showUpload]="false"
+                                                [showRemove]="false">
+                                            </rbp-files-control>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="m-separator m-separator--dashed m-separator--sm"></div>
+
+                                <div class="m-form__section m-form__section--first">
+
+                                    <div class="form-group m-form__group row">
+
+                                        <label class="col-xl-2 col-lg-2 col-form-label">
+
+                                            <span translate="FORM.FIELDS.TYPE"></span>
+
+                                        </label>
+
+                                        <label class="col-xl-4 col-lg-4 col-form-label">
+
+                                            <span class="m--font-brand">
+
+                                                <img style="width:24px; height: 24px"
+                                                    [src]='storageEndpoint + viewModel.sellingPoint.Icon + ".png"' />
+
+                                            </span>
+
+                                        </label>
+
+                                        <label class="col-xl-2 col-lg-2 col-form-label">
+
+                                            <span translate="FORM.FIELDS.ORDER"></span>
+
+                                        </label>
+
+                                        <label class="col-xl-1 col-lg-1 col-form-label">
+
+                                            <span class="m--font-brand">{{ viewModel.sellingPoint.Order }}</span>
+
+                                        </label>
+
+                                    </div>
+
+                                    <div class="form-group m-form__group row">
+
+                                        <label class="col-xl-2 col-lg-2 col-form-label"><span
+                                                translate="FORM.FIELDS.TAGS">
+                                            </span>
+                                        </label>
+
+                                        <label class="col-xl-10 col-lg-10 col-form-label">
+
+                                            <mat-chip-list>
+
+                                                <mat-chip color="primary"
+                                                    *ngFor="let cat of viewModel.sellingPoint.Tags">
+                                                    {{ cat }}
+                                                </mat-chip>
+
+                                            </mat-chip-list>
+
+                                        </label>
+
+                                    </div>
+
+                                    <div class="form-group m-form__group row">
+
+                                        <label class="col-xl-2 col-lg-2 col-form-label">
+                                            <span translate="FORM.FIELDS.ACTIONS">ACTIONS</span>
+                                        </label>
+
+                                        <div class="col-xl-10 col-lg-10">
+
+                                            <m-selling-point-service formControlName="Actions">
+                                            </m-selling-point-service>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="m-separator m-separator--dashed m-separator--sm"></div>
+
+                                <div class="m-form__section m-form__section--first">
+
+                                    <div class="form-group m-form__group row">
+
+                                        <label class="col-xl-2 col-lg-2 col-form-label">
+
+                                            <span translate="FORM.FIELDS.DATE_RANGE">DATE</span>
+
+                                        </label>
+
+                                        <label class="col-xl-4 col-lg-4 col-form-label">
+
+                                            <span class="m--font-brand">
+
+                                                {{ viewModel.sellingPoint.StartDate | date : 'dd MMM, yyyy' }} -
+                                                {{ viewModel.sellingPoint.EndDate | date : 'dd MMM, yyyy' }}
+
+                                            </span>
+
+                                        </label>
+
+                                        <label class="col-xl-6 col-lg-6 col-form-label">
+
+                                            <span class="m--font-brand">{{ viewModel.sellingPoint.RepeatString }}</span>
+
+                                        </label>
+
+                                    </div>
+
+                                    <div class="form-group m-form__group row">
+
+                                        <label class="col-xl-2 col-lg-2 col-form-label">
+                                            <span translate="FORM.FIELDS.TIME_RANGE"></span>
+                                        </label>
+
+                                        <div class="col-xl-10 col-lg-10 col-form-label">
+                                            <m-time-ranges formControlName="TimeRanges">
+                                            </m-time-ranges>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="m-separator m-separator--dashed m-separator--sm"></div>
+
+                                <div class="m-form__section">
+
+                                    <div class="form-group m-form__group row"
+                                        *ngIf="!viewModel.sellingPoint.Units || viewModel.sellingPoint.Units.length === 0">
+
+                                        <label class="col-xl-2 col-lg-2 col-form-label">
+                                            <span translate="FORM.FIELDS.APPLY_FOR"></span>
+                                        </label>
+
+                                        <div class="col-xl-10 col-lg-10 col-form-label">
+                                            <span class="m--font-brand" translate="FORM.FIELDS.ALL_UNITS"></span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group m-form__group row"
+                                        *ngIf="viewModel.sellingPoint.Units && viewModel.sellingPoint.Units.length > 0">
+
+                                        <label class="col-xl-2 col-lg-2 col-form-label">
+                                            <span translate="FORM.FIELDS.UNITS"></span>
+                                        </label>
+
+                                        <div class="col-xl-10 col-lg-10">
+
+                                            <m-units-list [brandId]="viewData.brand.Id"
+                                                [unitIds]="viewModel.sellingPoint.Units">
+                                            </m-units-list>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </ng-template>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletFooter>
+
+        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+
+            <div class="m-form__actions m-form__actions--solid">
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <div class="button-group text-right">
+
+                            <button class="btn btn-default m-btn m-btn--icon text-uppercase" type="button"
+                                cdkFocusInitial (click)="onCancelClick()">
+                                <span>
+                                    <i class="fa fa-times"></i>
+                                    <span translate="COMMON.CLOSE">CANCEL</span>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

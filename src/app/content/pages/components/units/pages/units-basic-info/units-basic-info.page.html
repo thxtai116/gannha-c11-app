@@ -1,0 +1,259 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a routerLink="/units" class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <ng-container *ngIf="viewControl.allowToModifyStatus">
+
+                <button *ngIf="viewModel.unit.Status === 8" type="button"
+                    class="btn btn-success m-btn m-btn--icon text-uppercase" (click)="activate()">
+                    <span>
+                        <i class="fa fa-lightbulb"></i>
+                        <span>{{ 'COMMON.ACTIVATE' | translate }}</span>
+                    </span>
+                </button>
+
+                <button *ngIf="viewModel.unit.Status === 2 || viewModel.unit.Status === 0" type="button"
+                    class="btn btn-danger m-btn m-btn--icon text-uppercase" (click)="deactivate()">
+                    <span>
+                        <i class="fa fa-ban"></i>
+                        <span>{{ 'COMMON.DEACTIVATE' | translate }}</span>
+                    </span>
+                </button>
+
+            </ng-container>
+
+            <button type="button" class="btn btn-success m-btn m-btn--icon text-uppercase" (click)="save()">
+                <span>
+                    <i class="fa fa-save"></i>
+                    <span translate="COMMON.SAVE"></span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form class="m-form" [formGroup]="form">
+
+            <div class="row">
+
+                <div class="col-xl-12">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-xl-12 col-lg-12">
+
+                                <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                                    <ng-container mPortletHeadTitle>
+
+                                        <div class="m-portlet__head-title">
+                                            <h3 class="m-portlet__head-text">
+                                                <span>
+                                                    {{ 'UNITS.BASIC_INFO' | translate }}
+                                                </span>
+                                            </h3>
+                                        </div>
+
+                                    </ng-container>
+
+                                    <ng-container mPortletBody>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-xl-6 col-lg-6">
+
+                                                <mat-form-field class="mat-form-field-fluid">
+
+                                                    <mat-label>
+                                                        <span translate="FORM.FIELDS.NAME"></span>
+                                                    </mat-label>
+
+                                                    <input matInput formControlName="Name">
+
+                                                    <mat-error
+                                                        *ngIf="form.get('Name').invalid && form.get('Name').touched">
+                                                        <m-error-parser [ngControl]="form.get('Name')"></m-error-parser>
+                                                    </mat-error>
+
+                                                </mat-form-field>
+
+                                            </div>
+
+                                            <div class="col-xl-6 col-lg-6">
+
+                                                <div class="mat-label-alike">
+                                                    <span translate="FORM.FIELDS.STATUS"></span>
+                                                </div>
+
+                                                <div>
+                                                    <m-object-status-badge [status]="viewModel.unit.Status">
+                                                    </m-object-status-badge>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-lg-6 col-xl-6">
+
+                                                <mat-form-field class="mat-form-field-fluid">
+
+                                                    <mat-label>
+                                                        <span translate="FORM.FIELDS.ADDRESS"></span>
+                                                    </mat-label>
+
+                                                    <input matInput formControlName="Address">
+
+                                                </mat-form-field>
+
+                                            </div>
+
+                                            <div class="col-lg-6 col-xl-6">
+
+                                                <mat-form-field class="mat-form-field-fluid">
+
+                                                    <mat-label>
+                                                        <span translate="FORM.FIELDS.PLACE"></span>
+                                                    </mat-label>
+
+                                                    <mat-select formControlName="Place">
+                                                        <mat-option>--</mat-option>
+                                                        <mat-option *ngFor="let place of viewData.places"
+                                                            [value]="place.Id">
+                                                            {{ place.Name }}
+                                                        </mat-option>
+                                                    </mat-select>
+
+                                                </mat-form-field>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-lg-12 col-xl-12">
+
+                                                <div class="mat-label-alike">
+                                                    <span translate="FORM.FIELDS.UTILITIES"></span>
+                                                </div>
+
+                                                <m-utilities-carousel [readonly]="false" formControlName="Utilities">
+                                                </m-utilities-carousel>
+
+                                            </div>
+
+                                        </div>
+
+                                    </ng-container>
+
+                                </m-portlet>
+
+                            </div>
+
+                            <div class="col-xl-12 col-lg-12">
+
+                                <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                                    <ng-container mPortletHeadTitle>
+
+                                        <div class="m-portlet__head-title">
+                                            <h3 class="m-portlet__head-text">
+                                                <span>
+                                                    {{ 'UNITS.CONTACT_INFO' | translate }}
+                                                </span>
+                                            </h3>
+                                        </div>
+
+                                    </ng-container>
+
+                                    <ng-container mPortletBody>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-xl-12 col-lg-12">
+
+                                                <m-phones [readonly]="false" formControlName="Contact"></m-phones>
+                                            </div>
+
+                                        </div>
+
+                                    </ng-container>
+
+                                </m-portlet>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-xl-12 col-lg-12">
+
+                                <m-portlet [options]="{theme: 'm-portlet--theme-gray-header'}">
+
+                                    <ng-container mPortletHeadTitle>
+
+                                        <div class="m-portlet__head-title">
+                                            <h3 class="m-portlet__head-text">
+                                                <span>
+                                                    {{ 'UNITS.OPEN_CLOSE_TIME' | translate }}
+                                                </span>
+                                            </h3>
+                                        </div>
+
+                                    </ng-container>
+
+                                    <ng-container mPortletBody>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-xl-12 col-lg-12">
+
+                                                <m-time-range-grid formControlName="Timing">
+                                                </m-time-range-grid>
+
+                                            </div>
+
+                                        </div>
+
+                                    </ng-container>
+
+                                </m-portlet>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+</m-portlet>

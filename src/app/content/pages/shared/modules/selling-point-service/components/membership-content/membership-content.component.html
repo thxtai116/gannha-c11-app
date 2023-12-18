@@ -1,0 +1,30 @@
+<div class="row">
+
+    <div class="col-lg-12">
+
+        <div class="mat-label-alike">
+            <span translate="ACTION_API.MEMBERSHIP.TITLE"></span>
+        </div>
+
+        <strong>
+            <p class="m--font-brand">{{ viewModel.Title }}</p>
+        </strong>
+    </div>
+
+</div>
+<div class="row">
+
+    <div class="col-lg-12">
+
+        <div class="mat-label-alike">
+            <span translate="ACTION_API.MEMBERSHIP.INFORMATION_ALT"></span>
+        </div>
+
+        <strong>
+            <p class="m--font-brand" *ngFor="let item of viewModel.Query">
+                {{ ("ACTION_API.MEMBERSHIP." + item.toUpperCase()) | translate }}
+            </p>
+        </strong>
+    </div>
+
+</div>

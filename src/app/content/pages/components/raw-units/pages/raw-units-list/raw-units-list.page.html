@@ -1,0 +1,282 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a routerLink="/merchant-unit" class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+
+        <div class="m-buttons--wrapper">
+
+            <button type="button" class="btn btn-primary m-btn m-btn--icon text-uppercase" (click)="refresh()">
+                <span>
+                    <i class="fa fa-sync-alt"></i>
+                    <span translate="COMMON.REFRESH"></span>
+                </span>
+            </button>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="m-form">
+
+            <!-- <div class="m-form__filtration">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <div class="m-form__control">
+
+                            <mat-form-field class="mat-form-field-fluid">
+
+                                <mat-select [(value)]="viewFilter.filterStatus" (selectionChange)="onStatusChange()">
+                                    <mat-option value="">{{ 'COMMON.ALL' | translate }}</mat-option>
+                                    <mat-option value="0">Mới</mat-option>
+                                    <mat-option value="2">Đã xác thực</mat-option>
+                                    <mat-option value="4">Đã xem</mat-option>
+                                </mat-select>
+                                <mat-hint align="start">
+                                    <strong>{{ 'COMMON.FILTER' | translate }}</strong>
+                                    <span class="text-lowercase"> {{ 'COMMON.BY_STATUS' | translate }}</span>
+                                </mat-hint>
+
+                            </mat-form-field>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput #searchInput>
+                            <mat-hint align="start">
+                                <strong class="text-capitalize">{{ 'COMMON.FILTER' | translate }}</strong>
+                                <span class="text-lowercase"> {{ 'COMMON.BY_NAME' | translate }} &
+                                    {{ 'COMMON.BY_ADDRESS' | translate }}</span>
+                            </mat-hint>
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+
+            </div> -->
+
+            <div>
+                <mat-tab-group (selectedTabChange)="onTabSelected($event)">
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <span [matBadge]="viewData.MapNewInsertCount" matBadgeColor="warn" matBadgeOverlap="false">
+                                {{ 'RAW_UNITS.NEW_UNIT' | translate }}</span>
+                            &nbsp;
+                        </ng-template>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <span [matBadge]="viewData.MapNewUpdateCount" matBadgeColor="warn" matBadgeOverlap="false">
+                                {{ 'RAW_UNITS.MAP_NEW_UPDATE_UNIT' | translate }}</span>
+                            &nbsp;
+                        </ng-template>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <span [matBadge]="viewData.UpdateCount" matBadgeColor="warn" matBadgeOverlap="false">
+                                {{ 'RAW_UNITS.VERIFY_UPDATE_UNIT' | translate }}</span>
+                            &nbsp;
+                        </ng-template>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <span [matBadge]="viewData.DeleteCount" matBadgeColor="warn" matBadgeOverlap="false">
+                                {{ 'RAW_UNITS.VERIFY_DELETE_UNIT' | translate }}</span>
+                            &nbsp;
+                        </ng-template>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <span [matBadge]="viewData.SolvedCount" matBadgeColor="warn" matBadgeOverlap="false">
+                                {{ 'RAW_UNITS.SOLVED_UNIT' | translate }}</span>
+                            &nbsp;
+                        </ng-template>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <span [matBadge]="viewData.Total" matBadgeColor="warn" matBadgeOverlap="false">
+                                {{ 'RAW_UNITS.ALL_UNIT' | translate }}</span>
+                            &nbsp;
+                        </ng-template>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+
+            <div class="m-form__filtration">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <div class="m-form__control">
+
+                            <mat-form-field class="mat-form-field-fluid">
+
+                                <mat-select [(value)]="viewFilter.filterStatus" (selectionChange)="onStatusChange()">
+                                    <mat-option value="">{{ 'COMMON.ALL' | translate }}</mat-option>
+                                    <mat-option value="0">Mới</mat-option>
+                                    <mat-option value="2">Đã xác thực</mat-option>
+                                    <mat-option value="4">Đã xem</mat-option>
+                                </mat-select>
+                                <mat-hint align="start">
+                                    <strong>{{ 'COMMON.FILTER' | translate }}</strong>
+                                    <span class="text-lowercase"> {{ 'COMMON.BY_STATUS' | translate }}</span>
+                                </mat-hint>
+
+                            </mat-form-field>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2 m--margin-bottom-10-mobile">
+
+                        <mat-form-field class="mat-form-field-fluid">
+                            <input matInput #searchInput>
+                            <mat-hint align="start">
+                                <strong class="text-capitalize">{{ 'COMMON.FILTER' | translate }}</strong>
+                                <span class="text-lowercase"> {{ 'COMMON.BY_NAME' | translate }} &
+                                    {{ 'COMMON.BY_ADDRESS' | translate }}</span>
+                            </mat-hint>
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="mat-table__wrapper">
+
+                <mat-table class="mat-elevation-z8" [dataSource]="viewData.dataSource" matSort matSortActive="id"
+                    matSortDirection="asc" matSortDisableClear>
+
+                    <ng-container matColumnDef="Index">
+                        <mat-header-cell *matHeaderCellDef [ngClass]="'mat-cell--index'">#</mat-header-cell>
+
+                        <mat-cell *matCellDef="let unit; let i = index;" [ngClass]="'mat-cell--index'">
+                            {{ i + 1 + paginator.pageIndex * paginator.pageSize }}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Name">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TABLE.COLUMNS.NAME' | translate }}
+                        </mat-header-cell>
+
+                        <mat-cell *matCellDef="let unit">
+                            {{ unit.Name }}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Address">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TABLE.COLUMNS.ADDRESS' | translate }}
+                        </mat-header-cell>
+
+                        <mat-cell *matCellDef="let unit">
+                            {{ unit.Address }}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="UpdatedAt">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TABLE.COLUMNS.UPDATED_AT' | translate }}
+                        </mat-header-cell>
+
+                        <mat-cell *matCellDef="let unit">
+                            {{ unit.CreatedAt | date : 'dd MMM, yyyy' }}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Status">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'TABLE.COLUMNS.STATUS' | translate }}
+                        </mat-header-cell>
+
+                        <mat-cell *matCellDef="let unit">
+                            <m-raw-unit-status-badge [status]="unit.ActionStatus"></m-raw-unit-status-badge>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ActionCode">
+                        <mat-header-cell *matHeaderCellDef>{{ 'TABLE.COLUMNS.ACTION_CODE' | translate }}
+                        </mat-header-cell>
+
+                        <mat-cell *matCellDef="let unit">
+                            {{ unit.ActionCode }}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Actions">
+                        <mat-header-cell *matHeaderCellDef [ngClass]="'mat-cell--action'">
+                            {{ 'TABLE.COLUMNS.ACTIONS' | translate }}</mat-header-cell>
+
+                        <mat-cell *matCellDef="let unit" [ngClass]="'mat-cell--action'">
+
+                            <button *ngIf="unit.ActionCode == 'Solved'" mat-icon-button color="primary"
+                                matTooltip="{{ 'RAW_UNITS.VIEW' | translate }}" (click)="view(unit.Id)">
+                                <i class="fa fa-info-circle"></i>
+                            </button>
+
+                            <button *ngIf="unit.ActionCode == 'VerifyUpdate'" mat-icon-button color="primary"
+                                matTooltip="{{ 'RAW_UNITS.UPDATE' | translate }}" (click)="update(unit.Id)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+
+                            <button *ngIf="unit.ActionCode == 'VerifyDelete'" mat-icon-button color="primary"
+                                matTooltip="{{ 'RAW_UNITS.DELETE' | translate }}" (click)="delete(unit.Id)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+
+                            <button *ngIf="unit.ActionCode == 'MapNewInsert' || unit.ActionCode == 'MapNewUpdate'"
+                                mat-icon-button color="primary" matTooltip="{{ 'RAW_UNITS.IDENTIFY' | translate }}"
+                                (click)="map(unit.Id)">
+                                <mat-icon>check_box</mat-icon>
+                            </button>
+
+                        </mat-cell>
+
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="viewData.displayedColumns"></mat-header-row>
+
+                    <mat-row *matRowDef="let row; columns: viewData.displayedColumns; let i = index;"></mat-row>
+                </mat-table>
+
+                <div class="mat-table__message" *ngIf="!viewData.dataSource.hasItems">
+                    {{ 'TABLE.NO_RECORDS' | translate }}
+                </div>
+
+            </div>
+
+            <div class="mat-table__bottom">
+
+                <mat-spinner [diameter]="20" *ngIf="viewControl.loading$ | async"></mat-spinner>
+
+                <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50]"
+                    [length]="viewData.dataSource.paginatorTotal$ | async" [showFirstLastButtons]="true">
+                </mat-paginator>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

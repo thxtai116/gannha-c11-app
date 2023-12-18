@@ -1,0 +1,269 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <a routerLink="/recommendation-embryos" class="btn btn-secondary m-btn m-btn--icon text-uppercase">
+            <span>
+                <i class="fa fa-arrow-left"></i>
+                <span translate="COMMON.BACK"></span>
+            </span>
+        </a>
+
+    </ng-container>
+
+    <ng-container mPortletHeadTools>
+        <div class="m-buttons--wrapper">
+            <button type="button" class="btn btn-success m-btn m-btn--icon text-uppercase" (click)="save()">
+                <span>
+                    <i class="fa fa-save"></i>
+                    <span translate="COMMON.SAVE"></span>
+                </span>
+            </button>
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form class="m-form" id="m_form" [formGroup]="form">
+
+            <div class="row">
+
+                <div class="col-xl-12">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-xl-4 col-lg-4">
+
+                                <mat-form-field class="mat-form-field-fluid" hintLabel="Tối đa 17 từ">
+                                    <mat-label>
+                                        <span translate="FORM.FIELDS.TITLE"></span>
+                                        <span class="m--font-danger">&nbsp;(*)</span>
+                                    </mat-label>
+                                    <input matInput formControlName="Title" #Title>
+
+                                    <mat-hint align="end">
+                                        {{ Title.value | wordsCounter }}/ 17
+                                    </mat-hint>
+
+                                    <mat-error *ngIf="form.get('Title').invalid && form.get('Title').touched">
+                                        <m-error-parser [ngControl]="form.get('Title')">
+                                        </m-error-parser>
+                                    </mat-error>
+
+                                </mat-form-field>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-4 col-lg-4 col-form-label">
+
+                                <mat-form-field class="mat-form-field-fluid" hintLabel="Tối đa 70 từ">
+                                    <mat-label>
+                                        <span translate="FORM.FIELDS.DESCRIPTION"></span>
+                                        <span class="m--font-danger">&nbsp;(*)</span>
+                                    </mat-label>
+                                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
+                                        formControlName="Description" #Description></textarea>
+
+                                    <mat-hint align="end">
+                                        {{ Description.value | wordsCounter }}/ 70
+                                    </mat-hint>
+
+                                    <mat-error
+                                        *ngIf="form.get('Description').invalid && form.get('Description').touched">
+                                        <m-error-parser [ngControl]="form.get('Description')">
+                                        </m-error-parser>
+                                    </mat-error>
+
+                                </mat-form-field>
+
+                            </label>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-xl-8 col-lg-8">
+
+                                <mat-accordion>
+
+                                    <mat-expansion-panel [ngClass]="'mat-expansion-panel--border-less'">
+
+                                        <mat-expansion-panel-header>
+
+                                            <mat-panel-title>
+
+                                                <i class="fa fa-plus-circle text-primary"
+                                                    title="{{ 'FORM.FIELDS.OPTIONAL' | translate }}"></i>
+
+                                            </mat-panel-title>
+
+                                        </mat-expansion-panel-header>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-xl-8 col-lg-8">
+
+                                                <mat-form-field class="mat-form-field-fluid" hintLabel="Tối đa 17 từ">
+                                                    <mat-label>
+                                                        <span translate="FORM.FIELDS.TITLE_EN"></span>
+                                                    </mat-label>
+                                                    <input matInput formControlName="TitleEn" #TitleEn>
+
+                                                    <mat-hint align="end">
+                                                        {{ TitleEn.value | wordsCounter }}/ 17
+                                                    </mat-hint>
+
+                                                    <mat-error
+                                                        *ngIf="form.get('TitleEn').invalid && form.get('TitleEn').touched">
+                                                        <m-error-parser [ngControl]="form.get('TitleEn')">
+                                                        </m-error-parser>
+                                                    </mat-error>
+
+                                                </mat-form-field>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group m-form__group row">
+
+                                            <div class="col-xl-8 col-lg-8">
+
+                                                <mat-form-field class="mat-form-field-fluid" hintLabel="Tối đa 70 từ">
+                                                    <mat-label>
+                                                        <span translate="FORM.FIELDS.DESCRIPTION_EN"></span>
+                                                    </mat-label>
+                                                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
+                                                        formControlName="DescriptionEn" #DescriptionEn></textarea>
+
+                                                    <mat-hint align="end">
+                                                        {{ DescriptionEn.value | wordsCounter }}/ 70
+                                                    </mat-hint>
+
+                                                    <mat-error
+                                                        *ngIf="form.get('DescriptionEn').invalid && form.get('DescriptionEn').touched">
+                                                        <m-error-parser [ngControl]="form.get('DescriptionEn')">
+                                                        </m-error-parser>
+                                                    </mat-error>
+
+                                                </mat-form-field>
+
+                                            </div>
+
+                                        </div>
+
+                                    </mat-expansion-panel>
+
+                                </mat-accordion>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-xl-4 col-lg-4">
+
+                                <m-date-range-picker-prototype formControlName="DateRanges">
+                                </m-date-range-picker-prototype>
+
+                            </div>
+
+                            <div class="col-xl-4 col-lg-4">
+
+                                <m-schedule-repeat formControlName="Repeat">
+                                </m-schedule-repeat>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-xl-8 col-lg-8">
+
+                                <div class="mat-label-alike">
+                                    <span translate="FORM.FIELDS.TIME_RANGE"></span>
+                                    <span class="m--font-danger">&nbsp;(*)</span>
+
+                                </div>
+                                <m-time-ranges [readonly]="false" formControlName="TimeRanges">
+                                </m-time-ranges>
+
+                                <mat-error class="mat-error-alike"
+                                    *ngIf="form.get('TimeRanges').invalid && form.get('TimeRanges').touched">
+                                    <m-error-parser [ngControl]="form.get('TimeRanges')">
+                                    </m-error-parser>
+                                </mat-error>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-xl-4 col-lg-4">
+
+                                <rbp-files-control formControlName="Gallery" [limitted]="1" [quickUpload]="1">
+
+                                    <ng-container ImagesSelectLabel>
+                                        <span translate="FORM.FIELDS.IMAGE"></span>
+                                        <span class="m--font-danger">&nbsp;(*)</span>
+                                    </ng-container>
+
+                                    <ng-container ImagesSelectErrors
+                                        *ngIf="form.get('Gallery').invalid && (form.get('Gallery').touched || form.get('Gallery').dirty)">
+
+                                        <m-error-parser [ngControl]="form.get('Gallery')">
+                                        </m-error-parser>
+
+                                    </ng-container>
+
+                                </rbp-files-control>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <div class="col-xl-8 col-lg-8">
+
+                                <div class="mat-label-alike">
+                                    <span translate="FORM.FIELDS.RESOURCES"></span>
+                                    <span class="m--font-danger">&nbsp;(*)</span>
+
+                                </div>
+
+                                <mat-error class="mat-error-alike"
+                                    *ngIf="form.get('Resources').invalid && form.get('Resources').touched">
+                                    <m-error-parser [ngControl]="form.get('Resources')">
+                                    </m-error-parser>
+                                </mat-error>
+
+                                <m-collections-composer-container [readonly]="false" [type]="'Collection'"
+                                    formControlName="Resources">
+                                </m-collections-composer-container>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </form>
+
+    </ng-container>
+
+</m-portlet>

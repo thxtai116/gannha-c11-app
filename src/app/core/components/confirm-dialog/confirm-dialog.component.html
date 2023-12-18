@@ -1,0 +1,70 @@
+<div class="m-portlet">
+
+	<div class="m-portlet__head">
+
+		<div class="m-portlet__head-progress">
+		</div>
+
+		<div class="m-portlet__head-caption">
+
+			<div class="m-portlet__head-title">
+
+				<span class="m-portlet__head-icon m--hide">
+
+					<i class="fa fa-question"></i>
+
+				</span>
+
+				<h3 class="m-portlet__head-text text-uppercase">
+					{{ data.title }}
+				</h3>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="m-form">
+
+		<div class="m-portlet__body">
+
+			<div class="form-group m-form__group row">
+
+				<div *ngIf="data.isHTML" class="col-lg-12" [innerHTML]="data.description"></div>
+
+				<div *ngIf="!data.isHTML" class="col-lg-12">
+					{{ data.description }}
+				</div>
+
+			</div>
+
+		</div>
+		<div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit text-right">
+
+			<div class="m-form__actions m-form__actions--sm">
+
+				<button class="btn btn-success m-btn m-btn--icon text-uppercase" type="button" (click)="onYesClick()"
+					cdkFocusInitial>
+					<span>
+						<i class="fa fa-save"></i>
+						<span translate="COMMON.CONFIRM">CONFIRM</span>
+					</span>
+				</button>
+
+				&nbsp;
+
+				<button class="btn btn-default m-btn m-btn--icon text-uppercase" type="button" (click)="onNoClick()">
+					<span>
+						<i class="fa fa-times"></i>
+						<span translate="COMMON.CLOSE">CLOSE</span>
+					</span>
+				</button>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>

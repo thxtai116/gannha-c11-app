@@ -1,0 +1,189 @@
+<div class="form-group">
+
+    <div class="form-group m-form__group row">
+
+        <div class="col-lg-12 col-xl-12">
+
+            <mat-card class="job-embryo">
+
+                <div class="job-embryo__header">
+                    <img #brandLogo id="brandLogo" src="{{ displayLogo }}" />
+                </div>
+
+                <mat-card-content class="job-embryo__content">
+
+                    <div class="job-embryo__title">
+
+                        <ng-container *ngIf="jobPreview.title.length === 0 ">
+                            {{ 'JOB_PREVIEW.TITLE' | translate }}
+                        </ng-container>
+                        <span>{{ jobPreview.title }}</span>
+
+                    </div>
+
+                    <div class="job-embryo__salary">
+
+                        <ng-container *ngIf="jobPreview.salary.length === 0 ">
+                            {{ 'JOB_PREVIEW.SALARY' | translate }}
+                        </ng-container>
+                        <span>{{ jobPreview.salary }}</span>
+
+                    </div>
+
+                    <div class="job-embryo__type">
+
+                        <ng-container *ngIf="jobPreview.types.length === 0 ">
+                            {{ 'JOB_PREVIEW.JOB_TYPES' | translate }}
+                        </ng-container>
+
+                        <span>
+                            {{ jobPreview.types.join(', ') }}
+                        </span>
+
+                    </div>
+
+                    <div class="job-embryo__type">
+
+                        <span translate="JOB_PREVIEW.DUE_DATE"></span>:
+                        {{ jobPreview.dateRange[1] | date: 'dd/MM/yyyy' }}
+
+                    </div>
+
+                </mat-card-content>
+
+            </mat-card>
+
+        </div>
+
+    </div>
+
+    <div class="form-group m-form__group row">
+
+        <div class="col-lg-12 col-xl-12">
+
+            <mat-card class="job-details-embryo">
+
+                <mat-card-header>
+
+                    <img mat-card-avatar src="{{ benefitLogo }}" />
+
+                    <mat-card-title class="job-details-embryo__title">
+                        {{ 'JOB_PREVIEW.BENEFIT' | translate }}
+                    </mat-card-title>
+
+                </mat-card-header>
+
+                <mat-card-content class="job-details-embryo__content">
+
+                    <mat-chip-list>
+                        <mat-chip *ngFor="let benefit of jobPreview.benefits">
+                            {{ benefit }}
+                        </mat-chip>
+                    </mat-chip-list>
+
+                </mat-card-content>
+
+            </mat-card>
+
+        </div>
+
+    </div>
+
+    <div class="form-group m-form__group row">
+
+        <div class="col-lg-12 col-xl-12">
+
+            <mat-card class="job-details-embryo">
+
+                <mat-card-header>
+
+                    <img mat-card-avatar src="{{ addressLogo }}" />
+
+                    <mat-card-title class="job-details-embryo__title">
+                        {{ 'JOB_PREVIEW.LOCATION' | translate }}
+                    </mat-card-title>
+
+                </mat-card-header>
+
+                <mat-card-content class="job-details-embryo__content">
+
+                    <p *ngIf="jobPreview.workingAddress && jobPreview.workingAddress.length > 0">
+                        {{ jobPreview.workingAddress }}</p>
+
+                    <p *ngIf="!jobPreview.workingAddress || jobPreview.workingAddress.length == 0">
+                        {{ 'JOB_PREVIEW.APPLIED_UNITS_LOCATIONS' | translate }}
+                    </p>
+
+                </mat-card-content>
+
+            </mat-card>
+
+        </div>
+
+    </div>
+
+    <div class="form-group m-form__group row">
+
+        <div class="col-lg-12 col-xl-12">
+
+            <mat-card class="job-details-embryo">
+
+                <mat-card-header>
+
+                    <img mat-card-avatar src="{{ descriptionLogo }}" />
+
+                    <mat-card-title class="job-details-embryo__title">
+                        {{ 'JOB_PREVIEW.DESCRIPTION' | translate }}
+                    </mat-card-title>
+
+                </mat-card-header>
+
+                <mat-card-content class="job-details-embryo__content">
+
+                    <p *ngIf="jobPreview.jobDescription && jobPreview.jobDescription.length > 0">
+                        {{ jobPreview.jobDescription }}</p>
+
+                    <p *ngIf="!jobPreview.jobDescription || jobPreview.jobDescription.length == 0">
+                        {{ jobPreview.jobDescription }}</p>
+
+                </mat-card-content>
+
+            </mat-card>
+
+        </div>
+
+    </div>
+
+    <div class="form-group m-form__group row">
+
+        <div class="col-lg-12 col-xl-12">
+
+            <mat-card class="job-details-embryo">
+
+                <mat-card-header>
+
+                    <img mat-card-avatar src="{{ requirementLogo }}" />
+
+                    <mat-card-title class="job-details-embryo__title">
+                        {{ 'JOB_PREVIEW.REQUIREMENT' | translate }}
+                    </mat-card-title>
+
+                </mat-card-header>
+
+                <mat-card-content class="job-details-embryo__content">
+
+                    <p *ngIf="jobPreview.requirements && jobPreview.requirements.length > 0">
+                        {{ jobPreview.requirements }}</p>
+
+                    <p *ngIf="!jobPreview.requirements || jobPreview.requirements.length == 0">
+                        {{ jobPreview.requirements }}</p>
+
+                </mat-card-content>
+
+            </mat-card>
+
+        </div>
+
+    </div>
+
+</div>

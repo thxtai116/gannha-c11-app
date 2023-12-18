@@ -1,0 +1,39 @@
+<div class="icon-container">
+
+    <div class="icon" *ngFor="let res of viewData.utilities$ | async; let i = index">
+
+        <div class="icon-body">
+
+            <div class="icon-thumb">
+
+                <span class="remover">
+
+                    <mat-icon *ngIf="!readonly" color="warn" (click)="onRemove(i)">close
+                    </mat-icon>
+
+                </span>
+
+                <img class="img-fluid" src="{{ storageEndpoint + res + '.png' }}"
+                    default="{{ storageEndpoint + res + '.png' }}" />
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <ng-container *ngIf="!readonly">
+
+        <div class="upload-icon" (click)="onAdd()">
+
+            <span class="uploader">
+
+                <mat-icon color="primary">add</mat-icon>
+
+            </span>
+
+        </div>
+
+    </ng-container>
+
+</div>

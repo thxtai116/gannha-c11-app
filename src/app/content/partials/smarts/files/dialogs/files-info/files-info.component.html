@@ -1,0 +1,102 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+
+        <div class="m-portlet__head-title">
+
+            <h3 class="m-portlet__head-text" translate="RESOURCES.BASIC_INFO.TITLE">
+            </h3>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form [formGroup]="form">
+
+            <div class="form-group m-form__group row">
+
+                <div class="col-xl-6 col-lg-6">
+
+                    <mat-form-field class="mat-form-field-fluid">
+
+                        <mat-label>
+                            <span translate="RESOURCES.BASIC_INFO.NAME"></span>
+                        </mat-label>
+
+                        <input matInput formControlName="Name">
+
+                        <mat-error *ngIf="ctrlName.invalid && (ctrlName.dirty || ctrlName.touched)">
+                            <m-error-parser [ngControl]="ctrlName"></m-error-parser>
+                        </mat-error>
+
+                    </mat-form-field>
+
+                </div>
+
+                <div class="col-xl-6 col-lg-6">
+
+                    <mat-form-field class="mat-form-field-fluid">
+
+                        <mat-label>
+                            <span translate="RESOURCES.BASIC_INFO.CAPTION"></span>
+                        </mat-label>
+
+                        <input matInput formControlName="Caption">
+
+                        <mat-error *ngIf="ctrlCaption.invalid && (ctrlCaption.dirty || ctrlCaption.touched)">
+                            <m-error-parser [ngControl]="ctrlCaption"></m-error-parser>
+                        </mat-error>
+
+                    </mat-form-field>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+    <ng-container mPortletFooter>
+
+        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+
+            <div class="m-form__actions m-form__actions--solid">
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <div class="button-group text-right">
+
+                            <button type="button" class="btn btn-success m-btn m-btn--icon text-uppercase" type="button"
+                                (click)="onSubmit()">
+                                <span>
+                                    <i class="fa fa-check"></i>
+                                    <span translate="BUTTONS.CONFIRM"></span>
+                                </span>
+                            </button>
+                            <button type="button" class="btn btn-default m-btn m-btn--icon text-uppercase" type="button"
+                                cdkFocusInitial (click)="onCancel()">
+                                <span>
+                                    <i class="fa fa-times"></i>
+                                    <span translate="BUTTONS.CLOSE"></span>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

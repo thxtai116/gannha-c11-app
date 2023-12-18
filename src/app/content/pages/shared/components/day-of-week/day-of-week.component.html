@@ -1,0 +1,3 @@
+<button *ngFor="let day of dayEntities;let i = index"
+  [ngClass]="{ 'btn-primary': day.selected,'btn-default': !day.selected }" class="btn btn-mini waves-effect waves-light"
+  (click)="onDayChecked(i)">{{ day.name }}</button>

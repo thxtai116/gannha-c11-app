@@ -1,0 +1,39 @@
+<div class="row">
+
+    <div class="col-lg-1 col-xl-1">
+        <span class="row grid-row-title"></span>
+        <span class="row grid-row-title" *ngFor="let row of rows">
+            {{ ('DAYOFWEEK.' + row.title.toUpperCase() + '_SHORT') | translate }}
+        </span>
+    </div>
+
+    <div class="col-lg-11 col-xl-11">
+
+        <mat-grid-list cols="48" rowHeight="25px" [gutterSize]="0">
+
+            <ng-template ngFor let-tile [ngForOf]="headerRow">
+
+                <mat-grid-tile class="grid-time-marker" [colspan]="tile.cols" [rowspan]="tile.rows">
+                    <div class="display-time">
+                        {{ tile.markerTime }}
+                    </div>
+                </mat-grid-tile>
+
+            </ng-template>
+
+            <ng-template ngFor let-row [ngForOf]="rows" let-u="index">
+
+                <mat-grid-tile *ngFor="let tile of row.tiles; let i = index" [colspan]="tile.cols" [rowspan]="tile.rows"
+                    matTooltip="{{ tile.displayTime || tile.time }}"
+                    [ngClass]="tile.interacting? 'btn-time-slot-interacting' : (tile.selected? 'btn-time-slot-selected' : 'btn-time-slot')"
+                    (mousedown)="onTileMouseDown(tile, u, i)" (mouseup)="onTileMouseUp()"
+                    (mouseover)="onTileMouseOver(u, i)" (dragstart)="$event.preventDefault()">
+                </mat-grid-tile>
+
+            </ng-template>
+
+        </mat-grid-list>
+
+    </div>
+
+</div>

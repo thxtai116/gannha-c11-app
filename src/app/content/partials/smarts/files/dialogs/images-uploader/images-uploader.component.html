@@ -1,0 +1,190 @@
+<m-portlet>
+
+    <ng-container mPortletBody>
+
+        <div class="m-form">
+
+            <div class="form-group m-form__group row">
+
+                <div class="col-xl-3 col-lg-3 col-md-3">
+
+                    <mat-card>
+
+                        <mat-card-header>
+
+                            <mat-card-title>
+
+                                <span translate="RESOURCES.IMAGES_UPLOADER.CARD_LABELS.IMAGES_LIST"></span>
+
+                            </mat-card-title>
+
+                        </mat-card-header>
+
+                        <mat-card-content>
+
+                            <input [hidden]="true" multiple="true" type="file" accept="image/*"
+                                (change)="onFileChange($event)" #imageInput />
+
+                            <mat-grid-list cols="1" rowHeight="110px" gutterSize="15px">
+
+                                <mat-grid-tile *ngFor="let image of viewData.previewImages"
+                                    (click)="onImageClicked(image)"
+                                    [ngClass]="image.Selected ? 'img-grid__item--selected' : ''" class="img-grid__item">
+                                    <div>
+                                        <img src="{{ image.PreviewUrl }}" />
+
+                                        <mat-icon class="delete-icon pointer" color="warn"
+                                            *ngIf="viewData.previewImages.length > 1 && image.Selected"
+                                            (click)="removeImage(image)">
+                                            close</mat-icon>
+                                    </div>
+
+                                </mat-grid-tile>
+
+                                <mat-grid-tile (click)="onAddImage()" class="img-grid__item img-grid__item-add pointer">
+
+                                    <mat-icon>library_add</mat-icon>
+
+                                </mat-grid-tile>
+                                
+                            </mat-grid-list>
+
+                        </mat-card-content>
+
+                    </mat-card>
+
+                </div>
+
+                <div class="col-xl-2 col-lg-2 col-md-3">
+
+                    <mat-card>
+
+                        <mat-card-header>
+
+                            <mat-card-title>
+
+                                <span translate="RESOURCES.IMAGES_UPLOADER.CARD_LABELS.RATIO"></span>
+
+                            </mat-card-title>
+
+                        </mat-card-header>
+
+                        <mat-card-content>
+
+                            <mat-radio-group [(ngModel)]="currentAspectRatioMode" (change)="changeRadio()"
+                                class="radio-group">
+
+                                <mat-radio-button class="radio-button" color="primary" [value]="FACEBOOK_MODE">
+                                    <span>191/100</span>
+                                </mat-radio-button>
+
+                                <mat-radio-button class="radio-button" color="primary" [value]="SQUARE_MODE">
+                                    <span>1:1</span>
+                                </mat-radio-button>
+
+                                <mat-radio-button class="radio-button" color="primary" [value]="LANDSCAPE_MODE">
+                                    <span>16:9</span>
+                                </mat-radio-button>
+
+                                <mat-radio-button class="radio-button" color="primary" [value]="FREE_MODE">
+                                    <span>Tự do</span>
+                                </mat-radio-button>
+
+                            </mat-radio-group>
+
+                        </mat-card-content>
+
+                    </mat-card>
+
+                </div>
+
+                <div class="col-xl-7 col-lg-7 col-md-6">
+
+                    <mat-card>
+
+                        <mat-card-header>
+
+                            <mat-card-title>
+
+                                <span translate="RESOURCES.IMAGES_UPLOADER.CARD_LABELS.PREVIEW"></span>
+
+                            </mat-card-title>
+
+                        </mat-card-header>
+
+                        <mat-card-content>
+
+                            <div class="row">
+
+                                <div class="col-lg-12 col-lg-12">
+
+                                    <div class="image-cropper-container">
+
+                                        <image-cropper class="image-cropper" [maintainAspectRatio]="isAspectRatio"
+                                            [imageFile]="currentImage" [aspectRatio]="aspectRatio" format="png, jpeg"
+                                            (imageLoaded)="imageLoaded()" [cropper]="currentCropPostion"
+                                            (imageCropped)="imageCropped($event)">
+                                        </image-cropper>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </mat-card-content>
+
+                    </mat-card>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletFooter>
+
+        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+
+            <div class="m-form__actions m-form__actions--solid">
+
+                <div class="row">
+
+                    <div class="col-xl-8 col-lg-8">
+
+                    </div>
+
+                    <div class="col-xl-4 col-lg-4">
+
+                        <div class="button-group text-right">
+
+                            <button class="btn btn-success m-btn m-btn--icon text-uppercase" type="button"
+                                (click)="onSubmit()">
+                                <span>
+                                    <i class="fa fa-check"></i>
+                                    <span translate="BUTTONS.CONFIRM"></span>
+                                </span>
+                            </button>
+                            <button class="btn btn-default m-btn m-btn--icon text-uppercase" type="button"
+                                (click)="onCancel()">
+                                <span>
+                                    <i class="fa fa-times"></i>
+                                    <span translate="BUTTONS.CLOSE"></span>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

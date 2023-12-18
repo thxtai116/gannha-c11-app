@@ -1,0 +1,13 @@
+<ng-container *ngIf="readonly">
+
+    {{ viewModel.provinceName.length === 0 ? 'N/A' : viewModel.provinceName }}
+
+</ng-container>
+
+<ng-container *ngIf="!readonly">
+
+    <m-single-select [data]="viewData.provinces$" [(ngModel)]="viewForm.provinceId" (change)="onProvinceChange()">
+        <span mSingleSelectLabel>{{ 'ADDRESS.PROVINCE' | translate }}</span>
+    </m-single-select>
+
+</ng-container>

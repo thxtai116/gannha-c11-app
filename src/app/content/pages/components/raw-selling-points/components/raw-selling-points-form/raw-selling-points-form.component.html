@@ -1,0 +1,551 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text text-uppercase">
+                <span translate="RAW_SELLING_POINTS.NEW_SELLING_POINT"></span>
+            </h3>
+        </div>
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <div class="row">
+
+            <div class="col-xl-6 col-lg-6">
+
+                <div class="m-form">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="m-form__heading">
+
+                            <h3 class="m-form__heading-title" translate="RAW_SELLING_POINTS.ITEM">
+                            </h3>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <label class="col-xl-3 col-lg-3 col-form-label">
+                                <span translate="FORM.FIELDS.FACEBOOK"></span>
+                            </label>
+
+                            <label class="col-xl-9 col-lg-9 col-form-label">
+                                <span class="m--font-brand">{{ viewData.post.PageId }}</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <label class="col-xl-3 col-lg-3 col-form-label">
+                                <span translate="FORM.FIELDS.ID"></span>
+                            </label>
+
+                            <label class="col-xl-9 col-lg-9 col-form-label">
+                                <span class="m--font-brand">{{ viewData.post.Id }}</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <label class="col-xl-3 col-lg-3 col-form-label">
+                                <span translate="FORM.FIELDS.LINK"></span>
+                            </label>
+
+                            <p class="col-xl-9 col-lg-9 col-form-label">
+                                <a href="{{ 'https://www.facebook.com/' + viewData.post.Id }}" target="_blank">
+                                    Link
+                                </a>
+                            </p>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <label class="col-xl-3 col-lg-3 col-form-label">
+                                <span translate="FORM.FIELDS.STATUS"></span>
+                            </label>
+
+                            <div class="col-xl-9 col-lg-9 col-form-label">
+
+                                <m-raw-unit-status-badge [status]="viewData.post.Status"></m-raw-unit-status-badge>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <label class="col-xl-3 col-lg-3 col-form-label">
+                                <span translate="FORM.FIELDS.CREATED_AT"></span>
+                            </label>
+
+                            <label class="col-xl-9 col-lg-9 col-form-label">
+                                <span
+                                    class="m--font-brand">{{ viewData.post.CreatedDate | date : 'dd MMM, yyyy' }}</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <label class="col-xl-3 col-lg-3 col-form-label">
+                                <span translate="FORM.FIELDS.UPDATED_AT"></span>
+                            </label>
+
+                            <label class="col-xl-9 col-lg-9 col-form-label">
+                                <span
+                                    class="m--font-brand">{{ viewData.post.UpdatedDate | date : 'dd MMM, yyyy' }}</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <label class="col-xl-3 col-lg-3 col-form-label">
+                                <span translate="FORM.FIELDS.DESCRIPTION"></span>
+                            </label>
+
+                            <label class="col-xl-9 col-lg-9 col-form-label">
+                                <span class="m--font-brand">{{ viewData.post.Message }}</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <label class="col-xl-3 col-lg-3 col-form-label">
+                                <span translate="FORM.FIELDS.IMAGE"></span>
+                            </label>
+
+                            <div class="col-xl-9 col-lg-9 col-form-label">
+
+                                <img src="{{ viewData.post.Picture }}" class="img-fluid" />
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            <div class="col-xl-6 col-lg-6">
+
+                <form class="m-form" [formGroup]="viewForm.spForm">
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <div class="m-form__heading">
+
+                            <h3 class="m-form__heading-title" translate="SELLING_POINTS.NEW_SELLING_POINT">
+                            </h3>
+
+                        </div>
+
+                        <div class="form-group m-form__group row">
+
+                            <label class="col-xl-3 col-lg-3 col-form-label">
+                                <span translate="FORM.FIELDS.BRAND"></span>
+                                <span class="m--font-danger">&nbsp;(*)</span>
+                            </label>
+
+                            <div class="col-xl-9 col-lg-9">
+
+                                <m-single-select [data]="viewData.brands" formControlName="Brand"
+                                    (change)="onBrandSelected()">
+
+                                </m-single-select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <ng-container *ngIf="viewForm.spForm.get('Brand').value.length > 0">
+
+                        <div class="m-form__section">
+
+                            <div class="form-group m-form__group row">
+
+                                <label class="col-xl-3 col-lg-3 col-form-label">
+                                    <span translate="FORM.FIELDS.TITLE"></span>
+                                    <span class="m--font-danger">&nbsp;(*)</span>
+                                </label>
+                                <div class="col-xl-9 col-lg-9">
+
+                                    <mat-form-field class="mat-form-field-fluid" hintLabel="Tối đa 15 từ">
+
+                                        <input matInput formControlName="SellingPointTitle" #SellingPointTitle>
+
+                                        <mat-hint align="end">
+                                            {{ SellingPointTitle.value | wordsCounter }}/{{ sellingPointMaxWords.MaxTitle }}
+                                        </mat-hint>
+
+                                        <mat-error
+                                            *ngIf="viewForm.spForm.get('SellingPointTitle').invalid && viewForm.spForm.get('SellingPointTitle').touched">
+                                            <m-error-parser [ngControl]="viewForm.spForm.get('SellingPointTitle')">
+                                            </m-error-parser>
+                                        </mat-error>
+
+                                    </mat-form-field>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group m-form__group row">
+
+                                <label class="col-xl-3 col-lg-3 col-form-label">
+                                    <span translate="FORM.FIELDS.TITLE_EN"></span>
+                                </label>
+
+                                <div class="col-xl-9 col-lg-9">
+
+                                    <mat-form-field class="mat-form-field-fluid" hintLabel="Tối đa 15 từ">
+
+                                        <input matInput formControlName="SellingPointTitleEn" #SellingPointTitleEn>
+
+                                        <mat-hint align="end">
+                                            {{ SellingPointTitleEn.value | wordsCounter }}/{{ sellingPointMaxWords.MaxTitle }}
+                                        </mat-hint>
+
+                                    </mat-form-field>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group m-form__group row">
+
+                                <label class="col-xl-3 col-lg-3 col-form-label">
+                                    <span translate="FORM.FIELDS.DESCRIPTION"></span>
+                                    <span class="m--font-danger">&nbsp;(*)</span>
+                                </label>
+
+                                <div class="col-xl-9 col-lg-9">
+
+                                    <mat-form-field class="mat-form-field-fluid" hintLabel="Tối đa 300 từ">
+
+                                        <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
+                                            formControlName="SellingPointDescription"
+                                            #SellingPointDescription></textarea>
+
+                                        <mat-hint align="end">
+                                            {{ SellingPointDescription.value | wordsCounter }}/{{ sellingPointMaxWords.MaxDescription }}
+                                        </mat-hint>
+
+                                        <mat-error
+                                            *ngIf="viewForm.spForm.get('SellingPointDescription').invalid && viewForm.spForm.get('SellingPointDescription').touched">
+                                            <m-error-parser
+                                                [ngControl]="viewForm.spForm.get('SellingPointDescription')">
+                                            </m-error-parser>
+                                        </mat-error>
+
+                                    </mat-form-field>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group m-form__group row">
+
+                                <label class="col-xl-3 col-lg-3 col-form-label">
+                                    <span translate="FORM.FIELDS.DESCRIPTION_EN"></span>
+                                </label>
+
+                                <div class="col-xl-9 col-lg-9">
+
+                                    <mat-form-field class="mat-form-field-fluid" hintLabel="Tối đa 300 từ">
+
+                                        <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
+                                            formControlName="SellingPointDescriptionEn"
+                                            #SellingPointDescriptionEn></textarea>
+
+                                        <mat-hint align="end">
+                                            {{ SellingPointDescriptionEn.value | wordsCounter }}/{{ sellingPointMaxWords.MaxDescription }}
+                                        </mat-hint>
+
+                                    </mat-form-field>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group m-form__group row">
+
+                                <label class="col-xl-3 col-lg-3 col-form-label">
+                                    <span translate="FORM.FIELDS.VIDEO">VIDEO</span>
+                                </label>
+
+                                <div class="col-xl-4 col-lg-4">
+
+                                    <rbp-files-control formControlName="Video" [acceptedType]="['Video','Folder']"
+                                        [limitted]="1" [templates]="['global']" [buttons]="['video','folder']">
+                                    </rbp-files-control>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group m-form__group row">
+
+                                <label class="col-xl-3 col-lg-3 col-form-label">
+
+                                    <span translate="FORM.FIELDS.IMAGE"></span>
+                                    <span class="m--font-danger">&nbsp;(*)</span>
+
+                                </label>
+
+                                <div class="col-xl-9 col-lg-9">
+
+                                    <rbp-files-control formControlName="Posters" [limitted]="6" [quickUpload]="1">
+
+                                        <ng-container ImagesSelectErrors
+                                            *ngIf="form.get('Posters').invalid && (form.get('Posters').touched || form.get('Posters').dirty)">
+
+                                            <m-error-parser [ngControl]="form.get('Posters')">
+                                            </m-error-parser>
+
+                                        </ng-container>
+
+                                    </rbp-files-control>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="m-separator m-separator--dashed m-separator--sm"></div>
+
+                        <div class="m-form__section">
+
+                            <div class="form-group m-form__group row">
+
+                                <label class="col-xl-3 col-lg-3 col-form-label">
+                                    <span translate="FORM.FIELDS.TYPE">
+
+                                    </span>
+                                    <span class="m--font-danger">&nbsp;(*)</span>
+                                </label>
+
+                                <div class="col-xl-4 col-lg-4">
+
+                                    <m-single-select [data]="viewData.icons$" formControlName="Icon"
+                                        [touched]="viewForm.spForm.get('Icon').touched" [required]="true">
+
+                                        <ng-container mSingleSelectError
+                                            *ngIf="viewForm.spForm.get('Icon').invalid && viewForm.spForm.get('Icon').touched">
+                                            <m-error-parser [ngControl]="viewForm.spForm.get('Icon')">
+                                            </m-error-parser>
+                                        </ng-container>
+
+                                    </m-single-select>
+
+                                </div>
+
+                                <label class="col-xl-3 col-lg-3 col-form-label">
+                                    <span translate="FORM.FIELDS.ORDER">ORDER</span>
+                                </label>
+
+                                <div class="col-xl-2 col-lg-2">
+
+                                    <mat-form-field class="mat-form-field-fluid">
+
+                                        <input matInput type="number" step="1" min="0" max="100"
+                                            formControlName="Order">
+
+                                    </mat-form-field>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group m-form__group row">
+
+                                <label class="col-xl-3 col-lg-3 col-form-label">
+                                    <span translate="FORM.FIELDS.TAGS">
+                                    </span>
+                                    <span class="m--font-danger">&nbsp;(*)</span>
+                                </label>
+
+                                <div class="col-xl-9 col-lg-9">
+
+                                    <m-tags formControlName="Tags">
+
+                                        <ng-container mTagsHint>
+                                            {{ 'FORM.FIELDS.TAGS_HINT' | translate }}
+                                        </ng-container>
+
+                                        <ng-container mTagsError
+                                            *ngIf="viewForm.spForm.get('Tags').invalid && viewForm.spForm.get('Tags').touched">
+                                            <m-error-parser [ngControl]="viewForm.spForm.get('Tags')">
+                                            </m-error-parser>
+                                        </ng-container>
+
+                                    </m-tags>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group m-form__group row">
+
+                                <label class="col-xl-3 col-lg-3 col-form-label">
+                                    <span translate="FORM.FIELDS.ACTIONS"></span>
+                                    <span class="m--font-danger">&nbsp;(*)</span>
+                                </label>
+
+                                <div class="col-xl-9 col-lg-9">
+
+                                    <m-selling-point-service [readonly]="false" formControlName="Actions">
+                                    </m-selling-point-service>
+
+                                    <mat-error class="mat-error-alike"
+                                        *ngIf="viewForm.spForm.get('Actions').invalid && viewForm.spForm.get('Actions').touched">
+                                        <m-error-parser [ngControl]="viewForm.spForm.get('Actions')">
+                                        </m-error-parser>
+                                    </mat-error>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="m-separator m-separator--dashed m-separator--sm"></div>
+
+                        <div class="m-form__section">
+
+                            <div class="form-group m-form__group row">
+
+                                <label class="col-xl-3 col-lg-3 col-form-label">
+                                    <span translate="FORM.FIELDS.DATE_RANGE">DATE</span>
+                                </label>
+
+                                <div class="col-xl-9 col-lg-9">
+
+                                    <m-date-range-picker formControlName="DateRanges"></m-date-range-picker>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group m-form__group row">
+
+                                <div class="col-xl-12 col-lg-12">
+
+                                    <m-schedule-repeat formControlName="Repeat">
+                                    </m-schedule-repeat>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group m-form__group row">
+
+                                <label class="col-xl-3 col-lg-3 col-form-label">
+                                    <span translate="FORM.FIELDS.TIME_RANGE"></span>
+                                    <span class="m--font-danger">&nbsp;(*)</span>
+                                </label>
+
+                                <div class="col-xl-9 col-lg-9">
+
+                                    <m-time-ranges [readonly]="false" formControlName="TimeRanges">
+                                    </m-time-ranges>
+
+                                    <mat-error class="mat-error-alike"
+                                        *ngIf="viewForm.spForm.get('TimeRanges').invalid && viewForm.spForm.get('TimeRanges').touched">
+                                        <m-error-parser [ngControl]="viewForm.spForm.get('TimeRanges')">
+                                        </m-error-parser>
+                                    </mat-error>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="m-separator m-separator--dashed m-separator--sm"></div>
+
+                        <div class="m-form__section">
+
+                            <div class="form-group m-form__group row">
+
+                                <label class="col-xl-3 col-lg-3 col-form-label">
+                                    <span translate="FORM.FIELDS.APPLY_FOR"></span>
+                                </label>
+
+                                <div class="col-xl-9 col-lg-9 col-form-label">
+
+                                    <mat-checkbox color="primary" formControlName="ApplyForSomeUnits">
+                                        {{ 'FORM.FIELDS.ALL_UNITS' | translate }}</mat-checkbox>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group m-form__group row"
+                                *ngIf="!viewForm.spForm.get('ApplyForSomeUnits').value">
+
+                                <div class="col-xl-12 col-lg-12">
+
+                                    <ng-container *ngIf="!viewForm.spForm.get('ApplyForSomeUnits').value">
+
+                                        <m-units-list [readonly]="false" [brandId]="viewForm.spForm.get('Brand').value"
+                                            formControlName="Units">
+                                        </m-units-list>
+
+                                    </ng-container>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </ng-container>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+    <ng-container mPortletFooter>
+
+        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+
+            <div class="m-form__actions m-form__actions--solid">
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <div class="button-group text-right">
+
+                            <button class="btn btn-success m-btn m-btn--icon text-uppercase" type="button"
+                                (click)="onSubmit()">
+                                <span>
+                                    <i class="fa fa-save"></i>
+                                    <span translate="COMMON.SAVE"></span>
+                                </span>
+                            </button>
+
+                            <button class="btn btn-default m-btn m-btn--icon text-uppercase" type="button"
+                                cdkFocusInitial (click)="onCancelClick()">
+                                <span>
+                                    <i class="fa fa-times"></i>
+                                    <span translate="COMMON.CLOSE">CLOSE</span>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

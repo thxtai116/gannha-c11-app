@@ -1,0 +1,110 @@
+<m-portlet [loading$]="viewControl.loading$"
+    [options]="{class: ['m-portlet--body-progress', 'm-portlet--body-progress-overlay']}">
+
+    <ng-container mPortletHeadTitle>
+        <div class="m-portlet__head-title">
+            <h3 class="m-portlet__head-text text-uppercase">
+                <span translate="ACTION_API.PROMOTION_CODE.NAME"></span>
+            </h3>
+        </div>
+    </ng-container>
+
+    <ng-container mPortletBody>
+
+        <form class="m-form" id="m_form" [formGroup]="form">
+
+            <div class="m-form__section m-form__section--first">
+
+                <div class="form-group m-form__group row">
+
+                    <div class="col-xl-6 col-lg-6">
+
+                        <mat-form-field class="mat-form-field-fluid">
+
+                            <mat-label>
+                                <span translate="ACTION_API.PROMOTION_CODE.TITLE"></span>
+                            </mat-label>
+
+                            <input matInput formControlName="Title">
+
+                            <mat-error *ngIf="form.get('Title').invalid && form.get('Title').touched">
+                                <m-error-parser [ngControl]="form.get('Title')">
+                                </m-error-parser>
+                            </mat-error>
+
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6">
+
+                        <mat-form-field class="mat-form-field-fluid">
+
+                            <mat-label>
+                                <span translate="ACTION_API.PROMOTION_CODE.CAMPAIGN"></span>
+                            </mat-label>
+
+                            <mat-select formControlName="CampaignId">
+                                <mat-option *ngFor="let cam of viewData.campaigns" value="{{ cam.Id }}">
+                                    {{ cam.Name | mLanguage }}
+                                </mat-option>
+                            </mat-select>
+
+                            <mat-error *ngIf="form.get('CampaignId').invalid && form.get('CampaignId').touched">
+                                <m-error-parser [ngControl]="form.get('CampaignId')">
+                                </m-error-parser>
+                            </mat-error>
+
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </ng-container>
+
+    <ng-container mPortletFooter>
+
+        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+
+            <div class="m-form__actions m-form__actions--solid">
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <div class="button-group text-right">
+
+                            <button class="btn btn-success m-btn m-btn--icon text-uppercase" type="button"
+                                (click)="onSubmit()">
+                                <span>
+                                    <i class="fa fa-check-circle"></i>
+                                    <span translate="COMMON.CONFIRM">CONFIRM</span>
+                                </span>
+                            </button>
+
+                            <button class="btn btn-default m-btn m-btn--icon text-uppercase" type="button"
+                                cdkFocusInitial (click)="onCancelClick()">
+                                <span>
+                                    <i class="fa fa-times"></i>
+                                    <span translate="COMMON.CLOSE">CLOSE</span>
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</m-portlet>

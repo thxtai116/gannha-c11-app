@@ -1,0 +1,139 @@
+<div class="form-group">
+
+    <mat-card class="embryo-card" *ngIf="fullPreview">
+
+        <mat-card-header class="embryo-title">
+
+            <mat-card-subtitle class="embryo-address">
+
+                <p translate="BRAND_PREVIEW.ADDRESS"></p>
+
+            </mat-card-subtitle>
+
+            <mat-card-title class="embryo-brand-name">
+
+                <div *ngIf="brandPreview.Name && brandPreview.Name.length > 0">{{ brandPreview.Name }}</div>
+                <div *ngIf="!brandPreview.Name || brandPreview.Name.length === 0" translate="BRAND_PREVIEW.NAME">
+                </div>
+
+            </mat-card-title>
+
+            <mat-card-subtitle class="embryo-slogan">
+
+                <p *ngIf="brandPreview.Slogan && brandPreview.Slogan.length > 0">{{ brandPreview.Slogan }}</p>
+                <p *ngIf="!brandPreview.Slogan || brandPreview.Slogan.length === 0" translate="BRAND_PREVIEW.SLOGAN">
+                </p>
+
+            </mat-card-subtitle>
+
+        </mat-card-header>
+
+        <mat-card-content class="embryo-card-content">
+
+            <p *ngIf="brandPreview.SellingPointTitle && brandPreview.SellingPointTitle.length > 0">
+                {{ brandPreview.SellingPointTitle }}</p>
+            <p *ngIf="!brandPreview.SellingPointTitle || brandPreview.SellingPointTitle.length === 0"
+                translate="BRAND_PREVIEW.SELLING_POINT.TITLE">
+            </p>
+
+        </mat-card-content>
+
+    </mat-card>
+
+</div>
+
+<div class="form-group">
+
+    <mat-card class="embryo-card">
+
+        <mat-card-header class="embryo-title">
+
+            <mat-card-title class="embryo-brand-name">
+
+                <div *ngIf="brandPreview.Name && brandPreview.Name.length > 0">{{ brandPreview.Name }}</div>
+                <div *ngIf="!brandPreview.Name || brandPreview.Name.length === 0" translate="BRAND_PREVIEW.NAME"></div>
+
+            </mat-card-title>
+
+        </mat-card-header>
+
+        <mat-divider></mat-divider>
+
+        <mat-card-content class="embryo-card-content">
+
+            <p *ngIf="brandPreview.SellingPointTitle && brandPreview.SellingPointTitle.length > 0">
+                {{ brandPreview.SellingPointTitle }}</p>
+            <p *ngIf="!brandPreview.SellingPointTitle || brandPreview.SellingPointTitle.length === 0"
+                translate="BRAND_PREVIEW.SELLING_POINT.TITLE">
+            </p>
+
+            <img mat-card-image src="{{ displayBackground }}">
+
+            <p class="pre-line"
+                *ngIf="brandPreview.SellingPointDescription && brandPreview.SellingPointDescription.length > 0">
+                {{ brandPreview.SellingPointDescription }}</p>
+            <p *ngIf="!brandPreview.SellingPointDescription || brandPreview.SellingPointDescription.length === 0"
+                translate="BRAND_PREVIEW.SELLING_POINT.DESCRIPTION">
+            </p>
+
+        </mat-card-content>
+
+        <mat-card-actions>
+
+            <div class="row">
+
+                <div class="col-xl-8 col-lg-8">
+
+                    <div class="buttons--wrapper">
+
+                        <button *ngIf="brandPreview.Share && brandPreview.Share.IsVisible" type="button"
+                            class="btn btn-secondary btn-sm m-btn m-btn--icon">
+
+                            <span>
+                                <i *ngIf="brandPreview.Share.IsEnabled" class="fa fa-share-alt"></i>
+
+                                <i *ngIf="!brandPreview.Share.IsEnabled" class="fa fa-ban"></i>
+
+                                <span>{{ brandPreview.Share.Label[lang] }}</span>
+                            </span>
+
+                        </button>
+
+                        <button *ngIf="brandPreview.Appointment && brandPreview.Appointment.IsVisible" type="button"
+                            class="btn btn-secondary btn-sm m-btn m-btn--icon">
+
+                            <span>
+                                <i *ngIf="brandPreview.Appointment.IsEnabled" class="fa fa-user-friends"></i>
+
+                                <i *ngIf="!brandPreview.Appointment.IsEnabled" class="fa fa-ban"></i>
+
+                                <span>{{ brandPreview.Appointment.Label[lang] }}</span>
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="col-xl-4 col-lg-4">
+
+                    <div class="buttons--wrapper">
+
+                        <button type="button" class="btn btn-success btn-sm m-btn m-btn--icon pull-right">
+                            <span>
+                                <span translate="BRAND_PREVIEW.ACTIONS.ACTION_API"></span>
+                            </span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </mat-card-actions>
+
+    </mat-card>
+
+</div>
